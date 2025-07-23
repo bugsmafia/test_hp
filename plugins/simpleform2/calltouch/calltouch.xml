@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" method="upgrade" group="simpleform2">
+    <name>SimpleForm2 - Calltouch</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>March 2023</creationDate>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <version>1.1.0</version>
+    <description>Calltouch form handler</description>
+    <namespace path="src">Joomla\Plugin\Simpleform2\Calltouch</namespace>
+    <files>
+        <folder plugin="calltouch">services</folder>
+        <folder>src</folder>
+    </files>
+</extension>

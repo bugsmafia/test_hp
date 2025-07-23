@@ -1,0 +1,278 @@
+[
+    {
+        "name"  : "input",
+        "type"  : "class",
+        "value" : "Joomla\\CMS\\Input\\Input"
+    },
+    {
+        "name"  : "path",
+        "type"  : "class",
+        "value" : "JBZoo\\Path\\Path"
+    },
+    {
+        "name"  : "assets",
+        "type"  : "class",
+        "value" : "JBZoo\\Assets\\Manager"
+    },
+    {
+        "name"  : "route",
+        "type"  : "class",
+        "value" : "HYPERPC\\Router\\Route"
+    },
+    {
+        "name"  : "db",
+        "type"  : "class",
+        "value" : "JDatabaseDriverMysqli"
+    },
+    {
+        "name"  : "cms",
+        "type"  : "class",
+        "value" : "Joomla\\CMS\\Application\\CMSApplication"
+    },
+    {
+        "name"  : "params",
+        "type"  : "class",
+        "value" : "Joomla\\Registry\\Registry"
+    },
+    {
+        "name"  : "event",
+        "type"  : "class",
+        "value" : "HYPERPC\\Event\\Manager"
+    },
+    {
+        "name"  : "doc",
+        "type"  : "class",
+        "value" : "Joomla\\CMS\\Document\\HtmlDocument"
+    },
+    {
+        "name"  : "config",
+        "type"  : "class",
+        "value" : "JBZoo\\Data\\Data"
+    },
+    {
+        "name"  : "user",
+        "type"  : "class",
+        "value" : "HYPERPC\\ORM\\Entity\\User"
+    },
+    {
+        "name"  : "detect",
+        "type"  : "class",
+        "value" : "Detection\\MobileDetect"
+    },
+    {
+        "name"  : "app",
+        "type"  : "class",
+        "value" : "Joomla\\CMS\\Application\\CMSApplication"
+    },
+    {
+        "name"  : "helper",
+        "type"  : "container",
+        "value" : [
+            {
+                "name"  : "money",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\MoneyHelper"
+            },
+            {
+                "name"  : "route",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\RouteHelper"
+            },
+            {
+                "name"  : "meta",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\MetaHelper"
+            },
+            {
+                "name"  : "object",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\ObjectHelper"
+            },
+            {
+                "name"  : "assets",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\AssetsHelper"
+            },
+            {
+                "name"  : "module",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\ModuleHelper"
+            },
+            {
+                "name"  : "layout",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\LayoutHelper"
+            },
+            {
+                "name"  : "widgetkit",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\WidgetkitHelper"
+            },
+            {
+                "name"  : "render",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\RenderHelper"
+            },
+            {
+                "name"  : "html",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\HtmlHelper"
+            },
+            {
+                "name"  : "configurator",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\ConfiguratorHelper"
+            },
+            {
+                "name"  : "cart",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\CartHelper"
+            },
+            {
+                "name"  : "product",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\ProductHelper"
+            },
+            {
+                "name"  : "google",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\GoogleHelper"
+            },
+            {
+                "name"  : "part",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\PartHelper"
+            },
+            {
+                "name"  : "order",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\OrderHelper"
+            },
+            {
+                "name"  : "group",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\GroupHelper"
+            },
+            {
+                "name"  : "category",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\CategoryHelper"
+            },
+            {
+                "name"  : "macros",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\MacrosHelper"
+            },
+            {
+                "name"  : "session",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\SessionHelper"
+            },
+            {
+                "name"  : "string",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\StringHelper"
+            },
+            {
+                "name"  : "compare",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\CompareHelper"
+            },
+            {
+                "name"  : "requisites",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\RequisitesHelper"
+            },
+            {
+                "name"  : "uikit",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\UikitHelper"
+            },
+            {
+                "name"  : "configuration",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\ConfigurationHelper"
+            },
+            {
+                "name"  : "options",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\OptionsHelper"
+            },
+            {
+                "name"  : "request",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\RequestHelper"
+            },
+            {
+                "name"  : "credit",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\CreditHelper"
+            },
+            {
+                "name"  : "lead",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\LeadHelper"
+            },
+            {
+                "name"  : "promocode",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\PromocodeHelper"
+            },
+            {
+                "name"  : "crm",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\CrmHelper"
+            },
+            {
+                "name"  : "fps",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\FpsHelper"
+            },
+            {
+                "name"  : "game",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\GameHelper"
+            },
+            {
+                "name"  : "worker",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\WorkerHelper"
+            },
+            {
+                "name"  : "status",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\StatusHelper"
+            },
+            {
+                "name"  : "auth",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\AuthHelper"
+            },
+            {
+                "name"  : "yandex",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\YandexHelper"
+            },
+            {
+                "name"  : "dadata",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\DadataHelper"
+            },
+            {
+                "name"  : "user",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\UserHelper"
+            },
+            {
+                "name"  : "mindbox",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\MindboxHelper"
+            },
+            {
+                "name"  : "moysklad",
+                "type"  : "class",
+                "value" : "HYPERPC\\Helper\\MoySkladHelper"
+            }
+        ]
+    }
+]

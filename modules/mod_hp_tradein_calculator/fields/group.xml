@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <field name="group_name" type="text" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_GROUP_NAME_LABEL" required="true" />
+    <field name="parts" type="subform"
+        formsource="modules/mod_hp_tradein_calculator/fields/part.xml" multiple="true"
+        label="MOD_HP_TRADEIN_CALCULATOR_FIELD_PARTS_LABEL" description=""
+        layout="joomla.form.field.subform.repeatable-table" />
+</form>

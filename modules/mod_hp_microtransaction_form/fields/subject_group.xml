@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <field name="subjects_group_title" type="text"
+           label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECTS_GROUP_TITLE_LABEL"
+           description="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECTS_GROUP_TITLE_DESC" />
+    <field name="subject_group" type="subform"
+        formsource="modules/mod_hp_microtransaction_form/fields/subject.xml" multiple="true"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECTS_LABEL" description=""
+        layout="joomla.form.field.subform.repeatable-table" />
+</form>

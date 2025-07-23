@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form
+        addrulepath="/components/com_hyperpc/models/rules"
+        addfieldpath="/administrator/components/com_hyperpc/models/fields"
+>
+    <field name="id" type="hidden" />
+    <field name="cid" type="hidden" required="true" />
+    <field name="total" type="hidden" required="true" class="jsTotalPriceValue"/>
+    <field name="elements" type="hidden" validate="elements" />
+    <field name="parts" type="hidden" />
+    <field name="positions" type="hidden" />
+    <field name="products" type="hidden" />
+    <field name="form_type" type="hidden" />
+    <field name="worker_id" type="text"/>
+    <field name="form" default="0" type="hidden" />
+    <field name="promo_code" type="cartpromocode" label=""
+           hint="COM_HYPERPC_CART_PROMO_CODE_HINT" />
+    <field name="delivery_type" default="0" type="hidden" class="jsDeliveryType"/>
+    <field name="payment_type" default="0" type="hidden" class="jsPaymentType"/>
+
+    <fieldset name="captcha">
+        <field name="captcha" type="captcha" validate="captcha" />
+    </fieldset>
+</form>

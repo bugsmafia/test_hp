@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov © <kalistratov.s.m@gmail.com>
+-->
+<form addrulepath="/components/com_hyperpc/models/rules">
+    <fieldset name="data">
+        <field name="username" type="text" required="required" class="uk-input uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_CLIENT_NAME"/>
+
+        <field name="phone" type="text" required="required" class="uk-input uk-form-large"
+               label="COM_HYPERPC_FORM_PLACEHOLDER_MOBILE_PHONE"/>
+
+        <field name="email" type="email" required="required" class="uk-input uk-form-large"
+               label="COM_HYPERPC_AUTH_EMAIL_LABEL"/>
+
+        <field name="amo_lead_id" type="text" class="uk-input uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_LEAD_ID_LABEL"/>
+
+        <field name="amo_kakaja_bol" type="text" class="uk-input uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_BOL_LABEL"/>
+
+        <field name="amo_cel_pokupki" type="text" class="uk-input uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_CEL_LABEL"/>
+
+        <field name="amo_sroshnost_pokupki" type="list" default="1" class="uk-select uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_SROCHNOST_LABEL">
+            <option value="">HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_SROCHNOST_OPTION</option>
+            <option value="151295">HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_SROCHNOST_OPTION_1</option>
+            <option value="151297">HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_SROCHNOST_OPTION_2</option>
+            <option value="151299">HYPER_ELEMENT_CONFIGURATION_ACTIONS_DATA_AMO_SROCHNOST_OPTION_3</option>
+        </field>
+
+    </fieldset>
+</form>

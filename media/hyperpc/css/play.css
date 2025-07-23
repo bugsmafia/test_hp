@@ -1,0 +1,17 @@
+@font-face{
+    font-family:'Play';
+    src:url("../fonts/play/play-regular.woff2") format("woff2"),
+        url("../fonts/play/play-regular.woff") format("woff"),
+        url("../fonts/play/play-regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face{
+    font-family:'Play';
+    src:url("../fonts/play/play-bold.woff2") format("woff2"),
+        url("../fonts/play/play-bold.woff") format("woff"),
+        url("../fonts/play/play-bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}

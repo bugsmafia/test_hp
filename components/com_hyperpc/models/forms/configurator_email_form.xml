@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+    @author     Artem Vyshnevskiy
+-->
+<form addrulepath="/components/com_hyperpc/models/rules">
+    <fieldset name="configurator-email-form">
+        <field name="username" type="text" class="uk-input uk-form-large"
+               label="COM_HYPERPC_CONFIG_EMAIL_FORM_USERNAME_LABEL" />
+
+        <field name="email" type="email" class="uk-input uk-form-large" required="required" validate="email"
+               label="COM_HYPERPC_CONFIG_EMAIL_FORM_EMAIL_LABEL" />
+
+        <field name="product_id" type="hidden" required="required" validate="product"/>
+        <field name="context" type="hidden" required="required" validate="configurationcontext"/>
+    </fieldset>
+
+    <fieldset name="captcha">
+        <field name="captcha" type="captcha" validate="captcha" namespace="configurator-email-form"
+               label="COM_HYPERPC_CONFIG_EMAIL_CAPTCHA_LABEL" />
+    </fieldset>
+</form>

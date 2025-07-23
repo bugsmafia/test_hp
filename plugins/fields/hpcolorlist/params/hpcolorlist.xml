@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field
+		name="default_value"
+		type="hidden"
+		default=""
+	/>
+	<fields name="fieldparams">
+		<fieldset name="fieldparams" addfieldprefix="HYPERPC\Plugin\Fields\ColorList\Field">
+			<field
+				name="options"
+				type="subform.color"
+				label="PLG_FIELDS_HPCOLORLIST_PARAMS_OPTIONS_LABEL"
+				layout="joomla.form.field.subform.repeatable-table"
+				icon="list"
+				multiple="true"
+				>
+				<form hidden="true" name="list_templates_modal" repeat="true">
+					<field
+						name="name"
+						type="multilanguagetext"
+						class="w-100"
+						label="PLG_FIELDS_HPCOLORLIST_PARAMS_OPTIONS_NAME_LABEL"
+					/>
+
+					<field
+						name="key"
+						type="hidden"
+					/>
+
+					<field
+						name="value"
+						type="media"
+						required="true"
+						label="PLG_FIELDS_HPCOLORLIST_PARAMS_OPTIONS_VALUE_LABEL"
+					/>
+				</form>
+			</field>
+		</fieldset>
+	</fields>
+	<fields name="params">
+		<fieldset name="basic">
+			<fieldset name="formoptions">
+				<field
+					name="form_layout"
+					type="list"
+					label="COM_FIELDS_FIELD_FORM_LAYOUT_LABEL"
+					class="form-select"
+					>
+					<option value="joomla.form.field.list">JOPTION_USE_DEFAULT</option>
+				</field>
+			</fieldset>
+		</fieldset>
+	</fields>
+</form>

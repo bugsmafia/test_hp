@@ -1,0 +1,85 @@
+{
+    "name"              : "hyper-pc/hyperpc",
+    "type"              : "project",
+    "description"       : "HYPERPC framework package",
+    "license"           : "proprietary",
+    "minimum-stability" : "stable",
+    "authors"           : [
+        {
+            "name"  : "Sergey Kalistratov",
+            "email" : "kalistratov.s.m@gmail.com",
+            "role"  : "developer"
+        },
+        {
+            "name"  : "Artem Vyshnevskiy",
+            "email" : "thecrowpath@gmail.com",
+            "role"  : "developer"
+        }
+    ],
+    "require"           : {
+        "php"                          : ">=7.4,<8.1",
+        "pimple/pimple"                : "^3.0.2",
+        "jbzoo/event"                  : "3.0.2",
+        "jbzoo/jbdump"                 : "^1.5.1",
+        "jbzoo/simpletypes"            : "^1.4.2",
+        "jbzoo/profiler"               : "1.0.5",
+        "jbzoo/data"                   : "^5.0",
+        "jbzoo/path"                   : "4.0",
+        "jbzoo/less"                   : "^5.0",
+        "jbzoo/image"                  : "^6.0",
+        "jbzoo/assets"                 : "^5.0",
+        "jbzoo/utils"                  : "^5.0",
+        "symfony/var-dumper"           : "~3.2",
+        "cakephp/utility"              : "^3.5",
+        "dompdf/dompdf"                : "^3.1.0",
+        "sabberworm/php-css-parser"    : "^8.3",
+        "phenx/php-svg-lib"            : "^0.3.3",
+        "mindbox/sdk"                  : "^1.0",
+        "facebook/php-business-sdk"    : ">=5.0.5",
+        "cdekmarketteam/moysklad"      : "^1.5",
+        "spatie/data-transfer-object"  : "^2.8",
+        "xpaw/php-source-query-class"  : "^2.1",
+        "mobiledetect/mobiledetectlib" : "^3.74",
+        "cssjanus/cssjanus"            : "^2.1"
+    },
+    "require-dev"       : {
+        "jbzoo/phpunit"       : "^4.13",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "autoload"          : {
+        "psr-4" : {
+            "HYPERPC\\" : "./administrator/components/com_hyperpc/framework"
+        }
+    },
+    "autoload-dev"      : {
+    },
+    "config"            : {
+        "vendor-dir" : "./libraries/hyperpc/vendor",
+        "allow-plugins": {
+            "yogarine/doctrine-annotation-autoload": true
+        }
+    },
+    "scripts"           : {
+        "test"             : [
+            "@manifest",
+            "@autoload",
+            "@phpunit",
+            "@phpmd",
+            "@phpcs",
+            "@phpcpd",
+            "@phploc"
+        ],
+        "update-all"       : [
+            "composer self-update --no-interaction",
+            "composer update --no-interaction --optimize-autoloader"
+        ],
+        "manifest"         : "composer validate --no-interaction",
+        "autoload"         : "composer dump-autoload --optimize --no-interaction",
+        "phpunit"          : "php ./libraries/hyperpc/vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml.dist",
+        "phpmd"            : "php ./libraries/hyperpc/vendor/phpmd/phpmd/src/bin/phpmd ./src text ./libraries/hyperpc//vendor/jbzoo/misc/phpmd/jbzoo.xml --verbose",
+        "phpcs"            : "php ./libraries/hyperpc/vendor/squizlabs/php_codesniffer/scripts/phpcs ./src/com_hyperpc/admin/framework --standard=./libraries/hyperpc/vendor/jbzoo/misc/phpcs/JBZoo/ruleset.xml --report=full",
+        "phpcpd"           : "php ./libraries/hyperpc/vendor/sebastian/phpcpd/phpcpd ./src --verbose",
+        "phploc"           : "php ./libraries/hyperpc/vendor/phploc/phploc/phploc ./src --verbose",
+        "coveralls"        : "php ./libraries/hyperpc/vendor/satooshi/php-coveralls/bin/coveralls --verbose"
+    }
+}

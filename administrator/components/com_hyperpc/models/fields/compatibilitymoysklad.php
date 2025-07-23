@@ -1,0 +1,269 @@
+<?php
+/**
+ * HYPERPC - The shop of powerful computers.
+ *
+ * This file is part of the HYPERPC package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package     HYPERPC
+ * @license     Proprietary
+ * @copyright   Proprietary https://hyperpc.ru/license
+ * @link        https://github.com/HYPER-PC/HYPERPC".
+ *
+ * @author      Artem Vyshnevskiy
+ */
+
+defined('_JEXEC') or die('Restricted access');
+
+use JBZoo\Utils\Str;
+use HYPERPC\Data\JSON;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use HYPERPC\Joomla\Form\FormField;
+use HYPERPC\Joomla\Model\Entity\Field;
+use HYPERPC\Helper\ProductFolderHelper;
+use HYPERPC\Joomla\Model\Entity\ProductFolder;
+
+FormHelper::loadFieldClass('compatibility');
+
+/**
+ * Class JFormFieldCompatibilityMoysklad
+ *
+ * @since 2.0
+ */
+class JFormFieldCompatibilityMoysklad extends FormField
+{
+    protected static $groups;
+
+    /**
+     * Name of the layout being used to render the field.
+     *
+     * @var     string
+     *
+     * @since   2.0
+     */
+    protected $layout = 'joomla.form.field.compatibility.default';
+
+    /**
+     * The form field type.
+     *
+     * @var     string
+     *
+     * @since   2.0
+     */
+    protected $type = 'CompatibilityMoysklad';
+
+    /**
+     * Fields context
+     *
+     * @var     string
+     *
+     * @since   2.0
+     */
+    protected $fieldsContext = 'position';
+
+    /**
+     * Get value object.
+     *
+     * @return  JSON
+     *
+     * @since   2.0
+     */
+    public function getValue()
+    {
+        return new JSON((array) $this->value);
+    }
+
+    /**
+     * Render catalog group list select.
+     *
+     * @param   string $name
+     *
+     * @return  string
+     *
+     * @throws  \JBZoo\Utils\Exception
+     *
+     * @since    2.0
+     */
+    public function renderCatalogGroupList($name)
+    {
+        $name           = Str::clean($name);
+        $value          = new JSON((array) $this->value);
+        $productFolders = $this->_getGroups();
+
+        $options = [[
+            'value' => 1,
+            'text'  => Text::_('JGLOBAL_ROOT_PARENT')
+        ]];
+
+        foreach ($productFolders as $i => $productFolder) {
+            if ($productFolder->alias === 'root') {
+                $productFolder->title = Text::_('COM_HYPERPC_ROOT_CATEGORY_MENU_NAME');
+            }
+
+            $options[$i]['value'] = $productFolder->id;
+            $options[$i]['text']  = str_repeat('- ', $productFolder->level) . $productFolder->title;
+        }
+
+        $controlName = $this->name . $this->_toControlName($name);
+
+        $attrs = $this->hyper['helper']['html']->buildAttrs([
+            'class' => 'jsCompatibilityChangeGroup form-control form-select'
+        ]);
+
+        return HTMLHelper::_(
+            'select.genericlist',
+            $options,
+            $controlName,
+            $attrs,
+            'value',
+            'text',
+            $value->find($name),
+            $this->id
+        );
+    }
+
+    /**
+     * Render group field select list.
+     *
+     * @param   string $name
+     *
+     * @return  string
+     *
+     * @throws  \JBZoo\Utils\Exception
+     *
+     * @since   2.0
+     */
+    public function renderGroupFieldList($name)
+    {
+        $position   = current(explode('.', $name));
+        $value      = $this->getValue();
+        $groupId    = $value->find($position . '.group_id');
+        $fields     = ($groupId) ? $this->_getGroupFields($groupId) : [];
+
+        $options = [[
+            'value' => 1,
+            'text'  => Text::_('COM_HYPERPC_SELECT_CHOOSE_FIELD')
+        ]];
+
+        /**@var Field $field */
+        foreach ($fields as $field) {
+            $options[$field->id]['value'] = $field->id;
+            $options[$field->id]['text']  = $field->label;
+        }
+
+        $controlName = $this->name . $this->_toControlName($name);
+
+        $attrs = $this->hyper['helper']['html']->buildAttrs([
+            'class' => 'form-control form-select'
+        ]);
+
+        return HTMLHelper::_(
+            'select.genericlist',
+            $options,
+            $controlName,
+            $attrs,
+            'value',
+            'text',
+            $value->find($name),
+            $this->id
+        );
+    }
+
+    /**
+     * Method to get a control group with label and input.
+     *
+     * @param   array  $options  Options to be passed into the rendering of the field
+     *
+     * @return  string  A string containing the html for the control group
+     *
+     * @since   3.2
+     */
+    public function renderField($options = array())
+    {
+        $this->hyper['helper']['assets']
+            ->js('js:widget/admin/fields/compatibility.js')
+            ->widget('#' . $this->id, 'HyperPC.FieldCompatibility', [
+                'fieldsContext' => $this->fieldsContext
+            ]);
+
+        return parent::renderField($options); // TODO: Change the autogenerated stub
+    }
+
+    /**
+     * Get groups
+     *
+     * @return  ProductFolder[]
+     *
+     * @throws  \Exception
+     *
+     * @todo    move to own method
+     * @see     HyperPcViewConfigurator_Moysklad::_getGroupList()
+     *
+     * @since   2.0
+     */
+    protected function _getGroups()
+    {
+        if (!static::$groups) {
+            /** @var ProductFolderHelper */
+            $productFolderHelper = $this->hyper['helper']['productFolder'];
+
+            $db = $productFolderHelper->getDbo();
+            $conditions = ['NOT ' . $db->qn('a.alias') . ' = ' . $db->q('root')];
+
+            $rootFolderId = $this->hyper['params']->get('configurator_root_category', 1);
+            $rootFolder = $productFolderHelper->findById($rootFolderId);
+
+            if ($rootFolder->id) {
+                $conditions[] = $db->qn('a.lft') . ' > ' . $db->q($rootFolder->lft);
+                $conditions[] = $db->qn('a.rgt') . ' < ' . $db->q($rootFolder->rgt);
+            }
+
+            static::$groups = $productFolderHelper->findAll([
+                'conditions' => $conditions,
+                'order' => $db->qn('a.lft') . ' ASC'
+            ]);
+        }
+
+        return static::$groups;
+    }
+
+    /**
+     * Get group fields
+     *
+     * @param   int $groupId
+     *
+     * @return  Field[]
+     *
+     * @throws  \RuntimeException
+     *
+     * @since   2.0
+     */
+    protected function _getGroupFields($groupId)
+    {
+        return $this->hyper['helper']['fields']->getGroupFields($groupId, $this->fieldsContext);
+    }
+
+    /**
+     * String to control input name.
+     *
+     * @param   string $name
+     *
+     * @return  string
+     *
+     * @since   2.0
+     */
+    protected function _toControlName($name)
+    {
+        $output  = [];
+        $details = explode('.', $name);
+
+        foreach ($details as $item) {
+            $output[] = "[{$item}]";
+        }
+
+        return implode('', $output);
+    }
+}

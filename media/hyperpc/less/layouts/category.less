@@ -1,0 +1,125 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+// @author     Artem Vyshnevskiy
+//
+
+.hp-category {
+    .hp-image-detail {
+        @media (max-width: 720px), (min-width: 960px) {
+            max-width: 150%;
+            transform: translateX(-15%);
+        }
+    }
+}
+
+.hp-product-teaser {
+
+    &__rating {
+        [data-score] {
+            line-height: 1;
+        }
+
+        .star-on-png,
+        .star-off-png,
+        .star-half-png {
+            font-size: 1rem
+        }
+    }
+
+    &-fps {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+
+        &__bar {
+            margin-top: 5px;
+        }
+    }
+
+    &__part-name {
+        padding-left: 35px;
+    }
+
+    &__part-icon {
+        margin-right: 10px;
+        position: relative;
+        top: 10px;
+    }
+
+    &--default {
+        .uk-card-body {
+            @media (min-width: @breakpoint-large) and (max-width: @breakpoint-large-max) {
+                padding: 10px 10px;
+            }
+        }
+
+        .hp-product-teaser {
+            &__description {
+                overflow: hidden;
+            }
+        }
+
+    }
+
+    &--short,
+    &--credit {
+        max-width: 400px;
+
+        .hp-product-teaser {
+            &__divider {
+                margin: 5px 0;
+                height: 1px;
+            }
+        }
+    }
+
+    &--large {
+        .hp-product-teaser {
+
+            &__image {
+                max-width: 130%;
+                transform: translateX(-15%);
+            }
+
+            &__purchase {
+                &:extend(.hp-product-head__purchase all);
+            }
+        }
+
+        & + .hp-product-teaser--large {
+            margin-top: 70px;
+
+            @media (min-width: 1200px) {
+                margin-top: 140px;
+            }
+
+            &:nth-of-type(2n) {
+                & > .uk-flex {
+                    flex-direction: row-reverse;
+                }
+
+                .hp-product-teaser__image {
+                    transform: translateX(-8%);
+                }
+            }
+        }
+    }
+
+}
+
+.hp-product-teaser,
+.hp-notebook-teaser {
+    .hp-item-price {
+        font-size: 1.125rem;
+    }
+}

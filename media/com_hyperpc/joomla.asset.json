@@ -1,0 +1,121 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_hyperpc",
+  "version": "4.0.0",
+  "description": "This file contains details of the assets used by com_hyperpc",
+  "license": "Proprietary",
+  "namespace": "HYPERPC\\Joomla\\WebAsset",
+  "assets": [
+    {
+      "name": "jquery-factory",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/jquery-factory.min.js",
+      "dependencies": [
+        "jquery"
+      ]
+    },
+    {
+      "name": "jquery-fancybox",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/jquery.fancybox.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "package": "fancybox"
+    },
+    {
+      "name": "jquery-fancybox",
+      "type": "style",
+      "uri": "com_hyperpc/vendor/jquery.fancybox.min.css",
+      "package": "fancybox"
+    },
+    {
+      "name": "jquery-fancybox",
+      "type": "preset",
+      "dependencies": [
+        "jquery-fancybox#style",
+        "jquery-fancybox#script"
+      ]
+    },
+    {
+      "name": "jquery-mask",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/jquery-mask.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "package": "jquery-mask-plugin"
+    },
+    {
+      "name": "jquery-ui",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/jquery.ui.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "package": "jquery-ui"
+    },
+    {
+      "name": "jquery-sticky-sidebar",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/jquery-sticky-sidebar.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "package": "sticky-sidebar"
+    },
+    {
+      "name": "jquery-check-all",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/jquery-check-all.min.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "package": "jquery-check-all"
+    },
+    {
+      "name": "fields.fps",
+      "type": "script",
+      "uri": "com_hyperpc/fields/fps.js",
+      "dependencies": [
+        "jquery-factory",
+        "jquery-fancybox"
+      ]
+    },
+    {
+      "name": "fields.fps",
+      "type": "preset",
+      "dependencies": [
+        "jquery-fancybox#style",
+        "fields.fps#script"
+      ]
+    },
+    {
+      "name": "vue",
+      "type": "script",
+      "uri": "com_hyperpc/vendor/vue.prod.js"
+    },
+    {
+      "name": "product.teaser",
+      "type": "script",
+      "uri": "com_hyperpc/apps/dist/common/product/teaser/product-teaser.js",
+      "class": "ProductTeaserAssetItem",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "vue",
+        "core"
+      ]
+    },
+    {
+      "name": "views.shortcode",
+      "type": "script",
+      "uri": "com_hyperpc/views/shortcode.js",
+      "dependencies": [
+        "jquery",
+        "core"
+      ]
+    }
+  ]
+}

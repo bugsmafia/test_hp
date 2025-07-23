@@ -1,0 +1,2 @@
+# Пакет Joomla! расширений для HYPERPC
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HYPER-PC/hyperpc/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HYPER-PC/hyperpc/?branch=master) [![Build Status](https://travis-ci.org/HYPER-PC/hyperpc.svg?branch=master)](https://travis-ci.org/HYPER-PC/hyperpc) [![Coverage Status](https://coveralls.io/repos/github/HYPER-PC/hyperpc/badge.svg?branch=master)](https://coveralls.io/github/HYPER-PC/hyperpc?branch=master)

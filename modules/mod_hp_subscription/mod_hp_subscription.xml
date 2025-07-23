@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<extension type="module" version="2.5" method="upgrade" client="site">
+    <version>1.0.0</version>
+    <name>mod_hp_subscription</name>
+    <author>Sergey Kalistratov</author>
+    <creationDate>2017 09</creationDate>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <authorEmail>kalistratov.s.m@gmail.com</authorEmail>
+    <description>MOD_HP_SUBSCRIPTION_DESCRIPTION</description>
+    <copyright>Copyright (C) hyperpc.ru, All rights reserved.</copyright>
+
+    <files>
+        <folder>assets</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+        <filename module="mod_hp_subscription">mod_hp_subscription.php</filename>
+    </files>
+
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_subscription.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_subscription.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params"
+                addfieldpath="/administrator/components/com_hyperpc/models/fields">
+
+            <fieldset name="basic"
+                      addfieldpath="/modules/mod_hp_subscription/form/fields">
+                <field name="leads_type" type="leadtypes" label="MOD_HP_SUBSCRIPTION_FIELD_LEADS_TYPE_LABEL"
+                       description="MOD_HP_SUBSCRIPTION_FIELD_LEADS_TYPE_DESC"/>
+
+                <field name="btn_label" type="text" label="MOD_HP_SUBSCRIPTION_BTN_LABEL_LABEL"/>
+
+                <field name="enable_phone" type="radio" class="btn-group btn-group-yesno" default="0"
+                       label="MOD_HP_SUBSCRIPTION_FIELD_ENABLE_PHONE_LABEL"
+                       description="MOD_HP_SUBSCRIPTION_FIELD_ENABLE_PHONE_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field name="save_url" type="radio" class="btn-group btn-group-yesno" default="0"
+                       label="MOD_HP_SUBSCRIPTION_FIELD_SAVE_URL_LABEL">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field type="hpseparator" title="MOD_HP_SUBSCRIPTION_FIELD_MSG_SEPARATOR" />
+
+                <field name="success_msg" type="textarea" label="MOD_HP_SUBSCRIPTION_SUCCESS_MSG_LABEL"/>
+
+                <field type="hpseparator" title="MOD_HP_SUBSCRIPTION_FIELD_MODAL_FORM" />
+
+                <field name="modal_title" type="text" label="MOD_HP_SUBSCRIPTION_MODAL_TITLE_LABEL"/>
+
+                <field name="modal_btn_label" type="text" label="MOD_HP_SUBSCRIPTION_BTN_LABEL_LABEL"/>
+            </fieldset>
+
+            <fieldset name="advanced">
+                <field name="moduleclass_sfx" type="textarea" rows="3" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                       description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+
+                <field name="cache" type="hidden" default="0"/>
+                <field name="owncache" type="hidden" default="0"/>
+                <field name="cache_time" type="hidden" default="0"/>
+                <field name="cachemode" type="hidden" default="itemid"/>
+            </fieldset>
+
+        </fields>
+    </config>
+
+</extension>

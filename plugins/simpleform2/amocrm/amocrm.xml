@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+    @author     Artme Vyshnevskiy
+-->
+<extension type="plugin" version="3.1" group="simpleform2">
+    <name>SimpleForm2 - AmoCRM</name>
+    <version>1.0.0</version>
+    <description>PLG_SIMPLEFORM2_AMOCRM_XML_DESCRIPTION</description>
+    <creationDate>February 2018</creationDate>
+    <author>Sergey Kalistratov Vyshnevskiy</author>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+    <files>
+        <filename plugin="amocrm">amocrm.php</filename>
+        <folder>plugins</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_simpleform2_amocrm.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_simpleform2_amocrm.sys.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.plg_simpleform2_amocrm.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.plg_simpleform2_amocrm.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="default_tags" type="text"
+                    description="PLG_SIMPLEFORM2_AMOCRM_FIELD_TAGS_DESC"
+                    label="PLG_SIMPLEFORM2_AMOCRM_FIELD_TAGS_LABEL"
+                />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

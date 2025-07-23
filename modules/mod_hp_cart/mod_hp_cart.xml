@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<extension type="module" method="upgrade" client="site">
+    <version>2.0.0</version>
+    <name>MOD_HP_CART</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>September 2023</creationDate>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <authorEmail>artem_v@hyperpc.ru</authorEmail>
+    <description>MOD_HP_CART_XML_DESCRIPTION</description>
+    <copyright>Copyright (C) hyperpc.ru, All rights reserved.</copyright>
+
+    <files>
+        <filename module="mod_hp_cart">mod_hp_cart.php</filename>
+        <folder>assets</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+        <filename>mod_hp_cart.xml</filename>
+    </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.mod_hp_cart.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.mod_hp_cart.sys.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_cart.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_cart.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+
+            <fieldset name="advanced">
+
+                <field name="configurator_menu_item" type="menuitem" published="1"
+                       label="MOD_HP_CART_PARAM_CONFIGURATOR_MENU_ITEM_LABEL"
+                       description="MOD_HP_CART_PARAM_CONFIGURATOR_MENU_ITEM_DESC" />
+
+                <field name="moduleclass_sfx" type="textarea" rows="3" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                       description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+
+                <field name="cache" type="hidden" default="0"/>
+                <field name="owncache" type="hidden" default="0"/>
+                <field name="cache_time" type="hidden" default="0"/>
+                <field name="cachemode" type="hidden" default="itemid"/>
+            </fieldset>
+
+        </fields>
+    </config>
+
+</extension>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="console" method="upgrade">
+    <name>Console - HYPERPC</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>August 2024</creationDate>
+    <copyright>Copyright (C) HYPERPC, All rights reserved.</copyright>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <version>1.0.0</version>
+    <description>HYPERPC console plugin</description>
+    <namespace path="src">HYPERPC\Plugin\Console</namespace>
+    <files>
+        <folder plugin="hyperpc">services</folder>
+        <folder>src</folder>
+    </files>
+</extension>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true"/>
+
+    <field name="context" type="list" label="COM_HYPERPC_REVIEW_CONTEXT_LABEL">
+        <option value="com_hyperpc.product">COM_HYPERPC_REVIEW_CONTEXT_TITLE_PRODUCT</option>
+        <option value="com_hyperpc.position">COM_HYPERPC_REVIEW_CONTEXT_TITLE_POSITION</option>
+    </field>
+
+    <field name="published" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+           filter="intval" size="1" default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field>
+
+    <field name="item_id" type="reviewitem" label="COM_HYPERPC_REVIEW_ITEM_ID_LABEL"/>
+
+    <field name="rating" required="required" type="rating" label="COM_HYPERPC_REVIEW_RATING_LABEL"/>
+
+    <field name="virtues" type="textarea" label="COM_HYPERPC_REVIEW_VIRTUES_LABEL"
+           filter="HYPERPC\Helper\ReviewHelper::formFilter"/>
+
+    <field name="limitations" type="textarea" label="COM_HYPERPC_REVIEW_LIMITATIONS_LABEL"
+           filter="HYPERPC\Helper\ReviewHelper::formFilter"/>
+
+    <field name="comment" type="textarea" label="COM_HYPERPC_REVIEW_COMMENT_LABEL"
+           filter="HYPERPC\Helper\ReviewHelper::formFilter"/>
+
+    <field name="order_id" type="text" label="COM_HYPERPC_REVIEW_ORDER_ID_LABEL"/>
+
+    <field name="created_time" type="calendar" label="JGLOBAL_CREATED_DATE" translateformat="true"
+           showtime="true" size="22" filter="user_utc"/>
+
+    <field name="created_user_id" type="user" label="JGLOBAL_FIELD_CREATED_BY_LABEL"/>
+
+    <field name="modified_time" type="calendar" label="JGLOBAL_FIELD_MODIFIED_LABEL"
+           class="readonly" translateformat="true" showtime="true" size="22" readonly="true" filter="user_utc"/>
+
+    <field name="modified_user_id" type="user" label="JGLOBAL_FIELD_MODIFIED_BY_LABEL" class="readonly"
+           readonly="true" filter="unset"/>
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="jparams">
+
+            <field name="image" type="hpimage" label="COM_HYPERPC_REVIEW_IMAGE"/>
+
+            <field name="user_name" type="text" label="COM_HYPERPC_REVIEW_USERNAME"/>
+            <field name="user_avatar" type="media" label="COM_HYPERPC_REVIEW_USER_AVATAR"/>
+            <field name="user_review_url" type="text" label="COM_HYPERPC_REVIEW_USER_REAL_REVIEW_URL"/>
+
+        </fieldset>
+    </fields>
+
+</form>

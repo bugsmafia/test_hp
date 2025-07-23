@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <field name="field_key" type="text" required="true"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_FIELD_KEY_LABEL"
+        description="MOD_HP_MICROTRANSACTION_FORM_FIELD_FIELD_KEY_DESC" />
+    <field name="field_label" type="text" required="true"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_FIELD_LABEL_LABEL" />
+
+    <field name="values" type="subform"
+        formsource="modules/mod_hp_microtransaction_form/fields/value.xml" multiple="true"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_FIELD_VALUE_LABEL" description=""
+        layout="joomla.form.field.subform.repeatable-table" />
+</form>

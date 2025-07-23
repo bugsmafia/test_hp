@@ -1,0 +1,44 @@
+#
+# HYPERPC - The shop of powerful computers.
+#
+# This file is part of the HYPERPC package.
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+# @package    HYPERPC
+# @license    Proprietary https://hyperpc.ru/license
+# @copyright  Copyright (C) HYPERPC,  All rights reserved.
+# @link       https://hyperpc.ru
+# @author     Sergey Kalistratov <kalistratov.s.m@gmail.com>
+# @author     Artem Vyshnevskiy
+#
+
+.idea
+
+tmp/
+build/
+vendor
+resources/
+node_modules/
+bower_components/
+
+media/com_hyperpc/css/vendor
+media/com_hyperpc/js/apps/dist
+media/com_hyperpc/js/index.html
+media/com_hyperpc/js/vendor
+
+media/hyperpc/fonts/*
+!media/hyperpc/fonts/inter
+!media/hyperpc/fonts/play
+media/hyperpc/js/libs/
+media/hyperpc/css/libs/
+media/hyperpc/css/open-sans.min.css
+media/hyperpc/img/raty
+
+media/templates/site/hyperpc/js/vendor
+
+plugins/simpleform2/amocrm/counter.json
+
+composer.lock
+package-lock.json
+

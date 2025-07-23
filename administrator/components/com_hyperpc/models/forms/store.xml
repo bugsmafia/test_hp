@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form>
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="name" type="text" label="JGLOBAL_TITLE" description="JFIELD_TITLE_DESC"
+            class="input-xxlarge input-large-text" required="true" />
+
+    <field name="geoid" type="text" label="COM_HYPERPC_FIELD_GEO_ID_LABEL" />
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="jparams">
+            <field name="city" type="multilanguagetext" label="COM_HYPERPC_STORE_CITY_LABEL" hint="COM_HYPERPC_STORE_CITY_HINT" />
+
+            <field name="address" type="multilanguagetext" label="COM_HYPERPC_STORE_ADDRESS_LABEL" hint="COM_HYPERPC_STORE_ADDRESS_HINT" />
+
+            <field name="schedule_string" type="multilanguagetext" label="COM_HYPERPC_STORE_SCHEDULE_LABEL" hint="COM_HYPERPC_STORE_SCHEDULE_HINT" />
+
+            <field name="map_link" type="textarea" rows="3" label="COM_HYPERPC_STORE_MAP_LINK_LABEL" class="input-xxlarge" />
+
+            <field name="schedule" type="schedule" label="COM_HYPERPC_STORE_SCHEDULE_LABEL" />
+
+            <field name="primary" type="radio"
+                   label="COM_HYPERPC_STORE_ROLE_LABEL" description="COM_HYPERPC_STORE_ROLE_DESC"
+                   default="0" class="btn-group">
+                <option value="1">COM_HYPERPC_STORE_ROLE_PRIMARY</option>
+                <option value="0">COM_HYPERPC_STORE_ROLE_SECONDARY</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

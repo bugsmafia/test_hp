@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addrulepath="/components/com_hyperpc/models/rules">
+    <field name="username" type="text" class="uk-input uk-form-width-large" required="required"
+           label="MOD_HP_SUBSCRIPTION_USERNAME_LABEL"
+           hint="MOD_HP_SUBSCRIPTION_USERNAME_HINT" />
+
+    <field name="email" type="hidden" class="uk-input uk-form-width-large" required="required" validate="uniquelead"
+           label="MOD_HP_SUBSCRIPTION_EMAIL_LABEL"
+           hint="MOD_HP_SUBSCRIPTION_EMAIL_HINT"/>
+
+    <field name="consent" type="checkbox" checked="checked" class="uk-checkbox" description="MOD_HP_SUBSCRIPTION_CONSENT_DESC"
+           value="1" default="1" />
+
+    <field type="hidden" name="type"/>
+    <field type="hidden" name="module_id"/>
+    <field type="hidden" name="history"/>
+
+    <field name="created" type="text" label="JGLOBAL_CREATED_DATE" class="readonly"
+           filter="unset" readonly="true" />
+
+    <field name="modified" type="text" label="JGLOBAL_FIELD_MODIFIED_LABEL" class="readonly"
+           filter="unset" readonly="true" />
+
+    <fields name="params">
+        <field type="hidden" name="page_url"/>
+    </fields>
+</form>

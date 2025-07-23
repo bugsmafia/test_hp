@@ -1,0 +1,96 @@
+<?php
+/**
+ * HYPERPC - The shop of powerful computers.
+ *
+ * This file is part of the HYPERPC package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package     HYPERPC
+ * @license     Proprietary
+ * @copyright   Proprietary https://hyperpc.ru/license
+ * @link        https://github.com/HYPER-PC/HYPERPC".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ *
+ * @var         HyperPcViewReview $this
+ */
+
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\LayoutHelper;
+
+defined('_JEXEC') or die('Restricted access');
+
+$this->useCoreUI = true;
+
+$formAction = $this->hyper['route']->build([
+    'id'   => '%id',
+    'view' => '%view'
+]);
+?>
+<form action="<?= $formAction ?>" method="post" name="adminForm" id="adminForm" class="main-card">
+    <?= HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general']); ?>
+    <?= HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_HYPERPC_REVIEW')) ?>
+    <div class="row">
+        <div class="col-lg-8">
+            <?= LayoutHelper::render('joomla.edit.global', $this) ?>
+        </div>
+
+        <div class="col-lg-4">
+            <?= LayoutHelper::render('joomla.edit.params', $this) ?>
+        </div>
+    </div>
+    <?= HTMLHelper::_('uitab.endTab') ?>
+    <?= HTMLHelper::_('uitab.addTab', 'myTab', 'published', Text::_('JGLOBAL_FIELDSET_PUBLISHING')) ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="control-group">
+                    <div class="control-label">
+                        <?= $this->form->getLabel('id') ?>
+                    </div>
+                    <div class="controls">
+                        <?= $this->form->getInput('id') ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?= $this->form->getLabel('created_time') ?>
+                    </div>
+                    <div class="controls">
+                        <?= $this->form->getInput('created_time') ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?= $this->form->getLabel('created_user_id') ?>
+                    </div>
+                    <div class="controls">
+                        <?= $this->form->getInput('created_user_id') ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?= $this->form->getLabel('modified_time') ?>
+                    </div>
+                    <div class="controls">
+                        <?= $this->form->getInput('modified_time') ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?= $this->form->getLabel('modified_user_id') ?>
+                    </div>
+                    <div class="controls">
+                        <?= $this->form->getInput('modified_user_id') ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?= HTMLHelper::_('uitab.endTab') ?>
+    <?= HTMLHelper::_('uitab.endTabSet') ?>
+
+    <input type="hidden" name="task" />
+    <input type="hidden" name="boxchecked" />
+    <?= HTMLHelper::_('form.token'); ?>
+</form>
+

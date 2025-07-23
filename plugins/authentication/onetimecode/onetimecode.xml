@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="authentication" method="upgrade">
+    <name>Authentication - One-time Code</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>January 2025</creationDate>
+    <copyright>Copyright (C) HYPERPC, All rights reserved.</copyright>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <version>1.0.0</version>
+    <description>HYPERPC authentication plugin that allows authentication using one-time codes</description>
+    <namespace path="src">HYPERPC\Plugin\Authentication\OneTimeCode</namespace>
+    <files>
+        <folder plugin="onetimecode">services</folder>
+        <folder>src</folder>
+    </files>
+    <config/>
+</extension>

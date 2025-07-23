@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<extension version="3.2" type="plugin" group="user" method="upgrade">
+    <version>2.0</version>
+    <name>plg_user_hyperpc</name>
+    <creationDate>2017</creationDate>
+    <author>Sergey Kalistratov</author>
+    <authorEmail>kalistratov.s.m@gmail.com</authorEmail>
+    <description>PLG_USER_HYPERPC_XML_DESCRIPTION</description>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+    <files>
+        <filename plugin="hyperpc">hyperpc.php</filename>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field name="registration_fields" type="fields" multiple="true" value_key="name" context="com_users.user"
+                       label="PLG_USER_HYPERPC_FIELD_REGISTRATION_FIELDS_LABEL"
+                       description="PLG_USER_HYPERPC_FIELD_REGISTRATION_FIELDS_DESC"/>
+
+                <field name="phone_field" type="fields" value_key="name" context="com_users.user"
+                       label="PLG_USER_HYPERPC_FIELD_PHONE_FIELD_LABEL"
+                       description="PLG_USER_HYPERPC_FIELD_PHONE_FIELD_DESC"/>
+
+                <field type="note" note="PLG_USER_HYPERPC_FIELD_PHONE_FIELD_NOTE" />
+
+                <field name="enable_captcha" type="radio" class="btn-group btn-group-yesno" default="1"
+                       label="PLG_USER_HYPERPC_FIELD_ENABLE_CAPTCHA_LABEL"
+                       description="PLG_USER_HYPERPC_FIELD_ENABLE_CAPTCHA_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="send_to_amo" type="radio" class="btn-group btn-group-yesno" default="1"
+                       label="PLG_USER_HYPERPC_FIELD_SEND_TO_AMO_LABEL"
+                       description="PLG_USER_HYPERPC_FIELD_SEND_TO_AMO_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="default_pipeline" type="pipelines" label="PLG_USER_HYPERPC_FIELD_DEFAULT_PIPELINE_LABEL"/>
+
+                <field name="tags" type="textarea" label="PLG_USER_HYPERPC_FIELD_TAGS_LABEL"
+                       description="PLG_USER_HYPERPC_FIELD_TAGS_DESC"/>
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>

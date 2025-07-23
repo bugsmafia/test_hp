@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC.
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<extension type="component" version="3.2" method="upgrade">
+    <version>2.0</version>
+    <name>com_hyperpc</name>
+    <creationDate>2017</creationDate>
+    <author>Sergey Kalistratov</author>
+    <authorEmail>kalistratov.s.m@gmail.com</authorEmail>
+    <description>COM_HYPERPC_XML_DESCRIPTION</description>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+
+    <!-- HYPERPC Site component -->
+    <languages folder="site/language">
+        <language tag="ru-RU">ru-RU/ru-RU.com_hyperpc.ini</language>
+        <language tag="en-GB">en-GB/en-GB.com_hyperpc.ini</language>
+    </languages>
+
+    <files folder="site">
+        <folder>assets</folder>
+        <folder>controller</folder>
+        <folder>language</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+        <filename>controller.php</filename>
+        <filename>hyperpc.php</filename>
+        <filename>router.php</filename>
+    </files>
+
+    <!-- Install SQL data -->
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.sql</file>
+        </sql>
+    </install>
+
+    <!-- Uninstall SQL data -->
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.sql</file>
+        </sql>
+    </uninstall>
+
+    <!-- Update sql data -->
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <!-- HYPERPC Admin component -->
+    <administration>
+        <menu img="class:hyperpc">COM_HYPERPC</menu>
+
+        <languages folder="admin/language">
+            <language tag="ru-RU">ru-RU/ru-RU.com_hyperpc.ini</language>
+            <language tag="ru-RU">ru-RU/ru-RU.com_hyperpc.sys.ini</language>
+        </languages>
+
+        <files folder="admin">
+            <folder>assets</folder>
+            <folder>controller</folder>
+            <folder>framework</folder>
+            <folder>language</folder>
+            <folder>layouts</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+            <filename>access.xml</filename>
+            <filename>bootstrap.php</filename>
+            <filename>config.xml</filename>
+            <filename>controller.php</filename>
+            <filename>defines.php</filename>
+            <filename>hyperpc.php</filename>
+            <filename>hyperpc.xml</filename>
+        </files>
+    </administration>
+</extension>

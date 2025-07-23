@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="name" type="text" label="JGLOBAL_TITLE" description="JFIELD_TITLE_DESC"
+            class="input-xxlarge input-large-text" required="true" />
+
+    <field name="alias" type="text" label="JFIELD_ALIAS_LABEL" description="JFIELD_ALIAS_DESC"
+            hint="JFIELD_ALIAS_PLACEHOLDER" />
+
+    <field name="published" type="radio" label="JSTATUS"  description="JFIELD_PUBLISHED_DESC" default="1"
+           class="btn-group btn-group-yesno">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field>
+
+    <field name="default_game" type="radio" label="COM_HYPERPC_FIELD_SHOW_IN_TABLE_LABEL"
+           description="COM_HYPERPC_FIELD_SHOW_IN_TABLE_DESC" default="0"
+           class="btn-group btn-group-yesno">
+        <option value="0">JNO</option>
+        <option value="1">JYES</option>
+    </field>
+
+    <field name="ordering" type="text" label="JFIELD_ORDERING_LABEL" />
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="jparams" addfieldpath="/administrator/components/com_content/models/fields">
+            <field name="image" type="media" label="COM_HYPERPC_FIELD_IMAGE_LABEL"
+                   description="COM_HYPERPC_FIELD_IMAGE_DESC" />
+
+            <field name="short_desc" type="editor" label="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_LABEL"
+                   description="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            <field name="fps" type="fps" />
+        </fieldset>
+    </fields>
+</form>

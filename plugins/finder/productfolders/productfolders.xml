@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov
+-->
+<extension version="3.1" type="plugin" group="finder" method="upgrade">
+    <name>plg_finder_productfolders</name>
+    <author>HYPERPC Project</author>
+    <creationDate>April 2023</creationDate>
+    <copyright>(C) HYPERPC. All rights reserved.</copyright>
+    <license>HYPERPC General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>roman_e@hyperpc.ru</authorEmail>
+    <authorUrl>hyperpc.ru</authorUrl>
+    <version>1.0.0</version>
+    <description>PLG_FINDER_PRODUCTFOLDER_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="productfolders">productfolders.php</filename>
+    </files>
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.plg_finder_productfolders.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.plg_finder_productfolders.sys.ini</language>
+    </languages>
+</extension>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<extension type="module" version="2.5" method="upgrade" client="site">
+    <version>1.0.0</version>
+    <name>mod_hp_microtransaction_form</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>June 2022</creationDate>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <authorEmail>thecrowpath@yandex.ru</authorEmail>
+    <description>MOD_HP_MICROTRANSACTION_FORM_MODULE_DESCRIPTION</description>
+    <copyright>Copyright (C) hyperpc.ru, All rights reserved.</copyright>
+
+    <files>
+        <folder>assets</folder>
+        <folder>fields</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+        <filename module="mod_hp_microtransaction_form">mod_hp_microtransaction_form.php</filename>
+    </files>
+
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_microtransaction_form.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_microtransaction_form.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="player_field_label" type="text"
+                       label="MOD_HP_MICROTRANSACTION_FORM_PLAYER_FIELD_LABEL_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_PLAYER_FIELD_LABEL_DESC"/>
+
+                <field name="player_field_placeholder" type="text"
+                       label="MOD_HP_MICROTRANSACTION_FORM_PLAYER_FIELD_PLACEHOLDER_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_PLAYER_FIELD_PLACEHOLDER_DESC"/>
+
+                <field name="server_request_type" type="radio" class="btn-group" default="rcon"
+                       label="MOD_HP_MICROTRANSACTION_FORM_SERVER_REQUEST_TYPE_LABEL">
+                    <option value="rcon">RCON</option>
+                    <option value="post">POST</option>
+                </field>
+
+                <field name="servers" type="subform"
+                       formsource="modules/mod_hp_microtransaction_form/fields/server.xml" multiple="true"
+                       label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SERVERS_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_FIELD_SERVERS_DESC"
+                       layout="joomla.form.field.subform.repeatable-table" />
+
+                <field name="server_request" type="text" class="input-xxlarge" required="true"
+                       label="MOD_HP_MICROTRANSACTION_FORM_SERVER_REQUEST_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_SERVER_REQUEST_DESC"/>
+
+                <field name="player_check" type="radio" class="btn-group btn-group-yesno" default="0"
+                       label="MOD_HP_MICROTRANSACTION_FORM_PLAYER_CHECK_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="player_check_request" type="text" class="input-xxlarge"
+                       label="MOD_HP_MICROTRANSACTION_FORM_PLAYER_CHECK_REQUEST_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_PLAYER_CHECK_REQUEST_DESC"/>
+
+                <field name="player_check_route" type="text" class="input-large"
+                       label="MOD_HP_MICROTRANSACTION_FORM_PLAYER_CHECK_ROUTE_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_PLAYER_CHECK_ROUTE_DESC"/>
+
+                <field name="fields" type="subform"
+                        formsource="modules/mod_hp_microtransaction_form/fields/field.xml" multiple="true"
+                        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_FIELDS_LABEL" description=""
+                        layout="joomla.form.field.subform.repeatable-table" />
+
+                <field name="default_state" type="text" class="input-xlarge"
+                       label="MOD_HP_MICROTRANSACTION_FORM_DEFAULT_STATE_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_DEFAULT_STATE_DESC"/>
+
+                <field name="subjects" type="subform"
+                        formsource="modules/mod_hp_microtransaction_form/fields/subject_group.xml" multiple="true"
+                        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECTS_LABEL" description=""
+                        layout="joomla.form.field.subform.repeatable-table" />
+            </fieldset>
+
+            <fieldset name="acquiring">
+                <field name="production" type="radio" class="btn-group btn-group-yesno" default="0"
+                       label="MOD_HP_MICROTRANSACTION_FORM_MODE_LABEL">
+                    <option value="0">TEST</option>
+                    <option value="1">PROD</option>
+                </field>
+
+                <field type="hpseparator" title="MOD_HP_MICROTRANSACTION_FORM_SEPARATOR_ACQUIRING_TEST_TOKENS" />
+
+                <field name="api_token_test" type="text" required="true"
+                       label="MOD_HP_MICROTRANSACTION_FORM_API_TOKEN_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_API_TOKEN_DESC"/>
+
+                <field name="callback_token_test" type="text" required="true"
+                       label="MOD_HP_MICROTRANSACTION_FORM_CALLBACK_TOKEN_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_CALLBACK_TOKEN_DESC"/>
+
+                <field type="hpseparator" title="MOD_HP_MICROTRANSACTION_FORM_SEPARATOR_ACQUIRING_PROD_TOKENS" />
+
+                <field name="api_token" type="text" required="true"
+                       label="MOD_HP_MICROTRANSACTION_FORM_API_TOKEN_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_API_TOKEN_DESC"/>
+
+                <field name="callback_token" type="text" required="true"
+                       label="MOD_HP_MICROTRANSACTION_FORM_CALLBACK_TOKEN_LABEL"
+                       description="MOD_HP_MICROTRANSACTION_FORM_CALLBACK_TOKEN_DESC"/>
+            </fieldset>
+        </fields>
+    </config>
+
+</extension>

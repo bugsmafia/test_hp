@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<extension type="system" version="3.1" group="hyperpc">
+    <name>plg_system_crm</name>
+    <version>1.0.0</version>
+    <description>PLG_SYSTEM_CRM_XML_DESCRIPTION</description>
+    <creationDate>April 2023</creationDate>
+    <author>Artem Vyshnevskiy</author>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <copyright>Copyright (C) HYPERPC, All rights reserved.</copyright>
+    <files>
+        <filename plugin="crm">crm.php</filename>
+        <folder>language</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="platform" type="radio" class="btn-group" default="amocrm" label="PLG_SYSTEM_CRM_FIELD_PLATFORM_LABEL">
+                    <option value="amocrm">amoCRM</option>
+                    <option value="kommo">Kommo</option>
+                </field>
+
+                <field name="subdomain" type="text" required="required" label="PLG_SYSTEM_CRM_FIELD_SUBDOMAIN_LABEL" />
+
+                <field name="auth_method" type="radio" class="btn-group" label="PLG_SYSTEM_CRM_FIELD_AUTH_METHOD_LABEL" default="hash">
+                    <option value="hash">PLG_SYSTEM_CRM_FIELD_AUTH_METHOD_HASH</option>
+                    <option value="oauth">PLG_SYSTEM_CRM_FIELD_AUTH_METHOD_OAUTH</option>
+                </field>
+
+                <field name="login" type="text" label="PLG_SYSTEM_CRM_FIELD_LOGIN_LABEL" showon="auth_method:hash" />
+                <field name="hash" type="text" label="PLG_SYSTEM_CRM_FIELD_HASH_LABEL" showon="auth_method:hash" />
+
+                <field type="crmoauthbutton" label="PLG_SYSTEM_CRM_FIELD_OAUTH_BUTTON_LABEL" showon="auth_method:oauth" />
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="language" type="language" client="site" default="en-GB"
+                       label="PLG_SYSTEM_CRM_LANGUAGE_LABEL" />
+
+                <field type="hpseparator" title="PLG_SYSTEM_CRM_FIELD_SEPARATOR_CUSTOM_FIELDS" />
+
+                <field name="custom_field_ready_to_pay" type="crmleadcustomfieldcheckbox"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_READY_TO_PAY_LABEL"/>
+
+                <field name="custom_field_comment" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_COMMENT_LABEL"/>
+
+                <field name="custom_field_promocode" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PROMOCODE_LABEL"/>
+
+                <field name="custom_field_order_id" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_ORDER_ID_LABEL"/>
+
+                <field name="custom_field_configuration_id" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_CONFIGURATION_ID_LABEL"/>
+
+                <field name="custom_field_delivery_address" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_DELIVERY_ADDRESS_LABEL"/>
+
+                <field name="custom_field_moysklad_order_url" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_MOYSKLAD_ORDER_URL_LABEL"/>
+
+                <field name="custom_field_moysklad_sync" type="crmleadcustomfieldcheckbox"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_MOYSKLAD_SYNC_LABEL"/>
+
+                <field name="custom_field_commercial_proposal_created" type="crmleadcustomfieldcheckbox"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_COMMERCIAL_PROPOSAL_CREATED_LABEL"/>
+
+                <field name="custom_field_commercial_proposal_url" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_COMMERCIAL_PROPOSAL_URL_LABEL"/>
+
+                <field name="custom_field_issue" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_ISSUE_LABEL"/>
+
+                <field name="custom_field_purchase_purpose" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PURCHASE_PURPOSE_LABEL"/>
+
+                <field name="custom_field_product_name" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_NAME_LABEL"/>
+
+                <field type="hpseparator" title="PLG_SYSTEM_CRM_FIELD_SEPARATOR_PRODUCT" />
+
+                <field name="custom_field_product" type="crmleadcustomfieldenum"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_LABEL"/>
+
+                <field name="custom_field_enum_value_product_pc" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_PC_LABEL"/>
+
+                <field name="custom_field_enum_value_product_concept" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_CONCEPT_LABEL"/>
+
+                <field name="custom_field_enum_value_product_station" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_STATION_LABEL"/>
+
+                <field name="custom_field_enum_value_product_workstation" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_WORKSTATION_LABEL"/>
+
+                <field name="custom_field_enum_value_product_server" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_SERVER_LABEL"/>
+
+                <field name="custom_field_enum_value_product_notebook" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_NOTEBOOK_LABEL"/>
+
+                <field name="custom_field_enum_value_product_accessory" type="crmleadcustomfieldenumvalue" related="custom_field_product"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PRODUCT_ACCESSORY_LABEL"/>
+
+                <field type="hpseparator" title="PLG_SYSTEM_CRM_FIELD_SEPARATOR_PAYMENT" />
+
+                <field name="custom_field_payment" type="crmleadcustomfieldenum"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PAYMENT_LABEL"/>
+
+                <field name="custom_field_enum_value_payment_spot" type="crmleadcustomfieldenumvalue" related="custom_field_payment"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PAYMENT_SPOT_LABEL"/>
+
+                <field name="custom_field_enum_value_payment_invoice" type="crmleadcustomfieldenumvalue" related="custom_field_payment"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PAYMENT_INVOICE_LABEL"/>
+
+                <field name="custom_field_enum_value_payment_card" type="crmleadcustomfieldenumvalue" related="custom_field_payment"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PAYMENT_CARD_LABEL"/>
+
+                <field name="custom_field_enum_value_payment_credit" type="crmleadcustomfieldenumvalue" related="custom_field_payment"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PAYMENT_CREDIT_LABEL"/>
+
+                <field name="custom_field_enum_value_payment_beznal" type="crmleadcustomfieldenumvalue" related="custom_field_payment"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PAYMENT_BEZNAL_LABEL"/>
+
+                <field type="hpseparator" title="PLG_SYSTEM_CRM_FIELD_SEPARATOR_DELIVERY" />
+
+                <field name="custom_field_delivery" type="crmleadcustomfieldenum"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_DELIVERY_LABEL"/>
+
+                <field name="custom_field_enum_value_delivery_pickup" type="crmleadcustomfieldenumvalue" related="custom_field_delivery"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_DELIVERY_PICKUP_LABEL"/>
+
+                <field name="custom_field_enum_value_delivery_shipping" type="crmleadcustomfieldenumvalue" related="custom_field_delivery"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_DELIVERY_SHIPPING_LABEL"/>
+
+                <field type="hpseparator" title="PLG_SYSTEM_CRM_FIELD_SEPARATOR_STATISTIC" />
+
+                <field name="custom_field_ym_counter" type="crmleadcustomfieldtrackingdata"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_YM_COUNTER_LABEL"/>
+
+                <field name="custom_field_ym_uid" type="crmleadcustomfieldtrackingdata"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_YM_UID_LABEL"/>
+
+                <field name="custom_field_roistat" type="crmleadcustomfieldtrackingdata"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_ROISTAT_LABEL"/>
+
+                <field name="custom_field_google_client_id" type="crmleadcustomfieldtrackingdata"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_GOOGLE_CLIENT_ID_LABEL"/>
+
+                <field name="custom_field_user_id" type="crmleadcustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_USER_ID_LABEL"/>
+
+                <field type="hpseparator" title="PLG_SYSTEM_CRM_FIELD_SEPARATOR_CONTACT" />
+
+                <field name="custom_field_contact_email" type="crmcontactcustomfieldmultitext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_EMAIL_LABEL"/>
+
+                <field name="custom_field_contact_phone" type="crmcontactcustomfieldmultitext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_PHONE_LABEL"/>
+
+                <field name="custom_field_company_inn" type="crmcompanycustomfieldtext"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_INN_LABEL"/>
+
+                <field name="custom_field_buyer_type" type="crmleadcustomfieldenum"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_BUYER_TYPE_LABEL"/>
+
+                <field name="custom_field_enum_value_buyer_type_individual" type="crmleadcustomfieldenumvalue" related="custom_field_buyer_type"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_BUYER_TYPE_INDIVIDUAL_LABEL"/>
+
+                <field name="custom_field_enum_value_buyer_type_legal" type="crmleadcustomfieldenumvalue" related="custom_field_buyer_type"
+                       label="PLG_SYSTEM_CRM_FIELD_CUSTOM_FIELD_BUYER_TYPE_LEGAL_LABEL"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

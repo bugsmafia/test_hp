@@ -1,0 +1,116 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Artem Vyshnevskiy
+//
+
+.hp-table-compare {
+    table-layout: fixed;
+
+    &__property-name {
+        td {
+            padding-bottom: 2px;
+        }
+    }
+
+    &__values {
+        border-top: none !important;
+
+        td {
+            padding-top: 2px;
+        }
+    }
+
+    &--slide {
+        margin: 0 20px;
+
+        tbody, tr {
+            display: block;
+        }
+
+        .hp-table-compare__head,
+        .hp-table-compare__buttons-row,
+        .hp-table-compare__values {
+            display: flex;
+
+            td {
+                box-sizing: border-box;
+                -webkit-box-flex: 0;
+                        -ms-flex: 0 0 360px;
+                            flex: 0 0 360px;
+
+                @media (max-width: @breakpoint-xsmall-max) {
+                    -webkit-box-flex: 0;
+                        -ms-flex: 0 0 280px;
+                            flex: 0 0 280px;
+                }
+            }
+        }
+
+    }
+}
+
+// TODO: change prefix to hp-
+.tm-table {
+    &-specs {
+
+        &__property-name {
+            vertical-align: top !important;
+            min-width: 220px;
+
+            .uk-icon {
+                width: 20px;
+            }
+        }
+
+        @media (max-width: 639px) {
+            display: block;
+
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            th, td {
+                padding: 8px 6px;
+            }
+
+            th:not(:first-child),
+            td:not(:first-child) { 
+                padding-top: 0 !important; 
+            }
+
+            th:not(:last-child),
+            td:not(:last-child) { 
+                padding-bottom: 0 !important; 
+            }
+
+        }
+
+        &--icons {
+            @media (max-width: @breakpoint-xsmall-max) {
+                th {
+                    .uk-icon {
+                        position: relative;
+                        top: 10px;
+                    }
+                }
+
+                td:not([colspan="2"]) {
+                    padding-left: 38px;
+                }
+            }
+        }
+
+    }
+}

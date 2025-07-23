@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" method="upgrade" group="simpleform2">
+    <name>SimpleForm2 - Fill user data</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>December 2023</creationDate>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <version>1.0.0</version>
+    <description>Fill in the user's email and name when submitting the form</description>
+    <namespace path="src">Joomla\Plugin\Simpleform2\FillUser</namespace>
+    <files>
+        <folder plugin="filluser">services</folder>
+        <folder>src</folder>
+    </files>
+</extension>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+    @author     Artem Vyshnevskiy
+-->
+<form>
+    <fields name="filter">
+        <field name="search" type="text" label="COM_HYPERPC_FILTER_SEARCH_LABEL"
+               description="COM_HYPERPC_FILTER_SEARCH_DESC" hint="JSEARCH_FILTER" />
+
+        <field name="status" type="orderstatus" label="COM_HYPERPC_FILTER_ORDER_STATUS_LABEL" class="js-select-submit-on-change"/>
+
+        <field name="payment_type" type="list" label="COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_LABEL" class="js-select-submit-on-change">
+            <option value="">COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_ALL</option>
+            <option value="spot">COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_SPOT</option>
+            <option value="card">COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_CARD</option>
+            <option value="invoice">COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_INVOICE</option>
+            <option value="credit">COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_CREDIT</option>
+            <option value="beznal">COM_HYPERPC_FILTER_ORDER_PAYMENT_TYPE_BEZNAL</option>
+        </field>
+    </fields>
+
+    <fields name="list">
+        <field name="limit" type="limitbox" label="JGLOBAL_LIST_LIMIT" default="25" class="js-select-submit-on-change" />
+    </fields>
+</form>

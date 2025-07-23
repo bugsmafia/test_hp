@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<metadata>
+    <layout title="COM_HYPERPC_CREDIT_CALCULATE_VIEW_DEFAULT_TITLE" option="COM_HYPERPC">
+        <message>
+            <![CDATA[COM_HYPERPC_CREDIT_CALCULATE_VIEW_DEFAULT_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="request" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+        <fieldset name="request">
+            <field name="id" type="hplist" context="moyskladProduct" order="a.name ASC" label="COM_HYPERPC_FIELD_PRODUCT_PART_NAME_HINT"/>
+            <field name="type" type="text" default="product" readonly="true" label="COM_HYPERPC_FIELD_PRODUCT_TYPES_LABEL"/>
+        </fieldset>
+    </fields>
+</metadata>

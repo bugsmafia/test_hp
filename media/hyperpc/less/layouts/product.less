@@ -1,0 +1,205 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+// @author     Artem Vyshnevskiy
+//
+
+.hp-product {
+
+    &-head {
+
+        &__logos {
+            > .uk-container {
+                @media (min-width: @breakpoint-large) {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
+            }
+
+            @media (max-width: @breakpoint-xsmall-max) {
+                img {
+                    max-height: 40px;
+                    width: auto;
+                }
+            }
+        }
+
+        &__image > div {
+            max-width: 200%;
+            width: 200%;
+            transform: translateX(-3%);
+
+            @media (min-width: @breakpoint-small) {
+                &__image > div {
+                    max-width: 150%;
+                    width: 150%;
+                    transform: translateX(6%);
+                }
+            }
+        }
+
+        &__rating {
+            [data-score] {
+                line-height: 1;
+            }
+
+            .star-on-png,
+            .star-off-png,
+            .star-half-png {
+                font-size: 1.5rem
+            }
+        }
+
+        @media (min-width: @breakpoint-large) {
+            &__text {
+                width: 45%;
+            }
+        }
+
+    }
+
+    .hp-equipment-part {
+        overflow: hidden;
+        position: relative;
+
+        @media (max-width: @breakpoint-small-max) {
+            padding-top: 10px;
+
+            .uk-section-small {
+                padding-top: 0;
+            }
+        }
+
+        &:nth-of-type(2n) .hp-equipment-part__grid {
+            flex-direction: row-reverse;
+        }
+
+        &__link {
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+    }
+
+    &-dimensions {
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+    }
+
+    &-images {
+        padding: 0 !important;
+
+        li {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: contain
+        }
+
+    }
+
+}
+
+.hp-product-head__purchase {
+    .uk-button {
+        font-size: .9375rem;
+        line-height: 50px;
+
+        @media (max-width: @breakpoint-xsmall-max) {
+            width: 100%;
+            margin-left: 0 !important;
+            margin-top: 10px;
+        }
+    }
+
+    .hp-item-price {
+        font-size: 1.3125rem;
+
+        @media (min-width: @breakpoint-large) and (max-width: 1319px) {
+            font-size: 1.1875rem;
+        }
+    }
+
+    @media (max-width: @breakpoint-xsmall-max) {
+        .hp-item-price {
+            margin: 0 auto;
+        }
+
+        .hp-cart-btn {
+            white-space: normal;
+            width: 100%;
+        }
+    }
+}
+
+.hp-feature-block {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 2560px;
+
+    @media (max-width: @breakpoint-small-max) {
+        padding-bottom: 0;
+    }
+
+    &__image,
+    &__image--left {
+        max-width: 320%;
+        transform: translateX(-50%);
+    }
+
+    &__image--left {
+        transform: translateX(-18%);
+    }
+}
+
+.hp-group-slider-part {
+    @media (min-width: 640px) {
+        &__name {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 639px) {
+        padding: 3px;
+
+        .uk-card-body,
+        .uk-card-footer {
+            padding: 15px;
+        }
+
+        .uk-card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-wrapper {
+            width: 46%;
+        }
+
+        &__name {
+            font-size: 1rem;
+            margin: 0;
+            min-width: 1px;
+        }
+
+        &__price-label {
+            font-size: .875rem;
+        }
+    }
+
+}

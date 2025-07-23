@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true"/>
+
+    <field name="code" type="promocode" label="COM_HYPERPC_PROMO_CODE_CODE_LABEL"
+           size="100" required="true" hint="COM_HYPERPC_PROMO_CODE_CODE_HINT" />
+
+    <field name="description" type="textarea" label="JGLOBAL_DESCRIPTION" description="COM_HYPERPC_FIELD_DESCRIPTION_DESC"/>
+
+    <field name="positions" type="promocodepositions" label="COM_HYPERPC_POSITION_ID_LABEL" showon="context:com_hyperpc.position"/>
+
+    <field name="rate" type="number" label="COM_HYPERPC_RATE_LABEL" showon="type:1[OR]type:2"/>
+    <field name="limit" type="number" label="COM_HYPERPC_PROMO_CODE_QUANTITY_LIMIT"/>
+    <field name="used" type="number" readonly="true" disabled="true" label="COM_HYPERPC_PROMO_CODE_QUANTITY"/>
+
+    <field
+        name="publish_up"
+        type="calendar"
+        label="COM_HYPERPC_PROMO_CODE_DATE_FROM_LABEL"
+        description="COM_HYPERPC_PROMO_CODE_DATE_FROM_DESC"
+        translateformat="true"
+        showtime="true"
+        filter="user_utc"
+    />
+
+    <field
+        name="publish_down"
+        type="calendar"
+        label="COM_HYPERPC_PROMO_CODE_DATE_TO_LABEL"
+        description="COM_HYPERPC_PROMO_CODE_DATE_TO_DESC"
+        translateformat="true"
+        showtime="true"
+        filter="user_utc"
+    />
+
+    <field name="published" type="list" label="JSTATUS"  description="JFIELD_PUBLISHED_DESC" default="1"
+           class="chzn-color-state" size="1" filter="int">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field>
+
+    <field name="type" type="list" label="COM_HYPERPC_PROMO_CODE_TYPE_LABEL" default="1"
+           class="chzn-color-state" size="1" filter="int">
+        <option value="1">COM_HYPERPC_PROMO_CODE_TYPE_SALE</option>
+        <option value="2">COM_HYPERPC_PROMO_CODE_TYPE_SALE_FIXED</option>
+        <option value="0">COM_HYPERPC_PROMO_CODE_TYPE_GIFT</option>
+    </field>
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="basic">
+        </fieldset>
+    </fields>
+</form>

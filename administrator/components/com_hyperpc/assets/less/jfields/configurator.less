@@ -1,0 +1,80 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+//
+
+.hp-configurator-field {
+
+    .hp-no-publish {
+
+        td {
+            background: #ffe8e8 !important;
+        }
+
+    }
+
+    #groupTab {
+
+        a.active {
+             margin-bottom: 0;
+             border-radius: 4px 0 0;
+
+             & + #categoryTab {
+                 display: block;
+             }
+
+         }
+
+        #categoryTab {
+            display: none;
+            background: #f0f0f0;
+            border-left: 1px solid #d8d8d8;
+            border-bottom: 1px solid #d8d8d8;
+            padding-left: 22px;
+            font-size: 12px;
+
+            li {
+                a {
+                    float: none;
+                    padding: 6px 14px;
+                }
+            }
+
+        }
+
+    }
+
+    #categoryTab {
+
+        .check-all-group {
+            display: inline-block;
+            float: left;
+            margin-right: 4px;
+            margin-top: 10px;
+        }
+
+        > li {
+            margin-right: 16px;
+
+            > a {
+                float: left;
+            }
+
+        }
+
+    }
+
+    .form-check-input[readonly] {
+        background-color: var(--gray-500);
+    }
+
+}

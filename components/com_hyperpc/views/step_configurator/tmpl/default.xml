@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov <roman_e@hyperpc.ru>
+    @author     Artem Vyshnevskiy
+-->
+<metadata>
+    <layout title="COM_HYPERPC_STEP_CONFIGURATOR_VIEW_TITLE" option="COM_HYPERPC">
+        <message>
+            <![CDATA[COM_HYPERPC_STEP_CONFIGURATOR_VIEW_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="request" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+        <fieldset name="request">
+            <field name="category_id" type="hpcategory" description="COM_HYPERPC_CATEGORIES_REQUEST_ID_FIELD_DESC"
+                   label="COM_HYPERPC_CATEGORIES_REQUEST_ID_FIELD_LABEL" required="true" />
+        </fieldset>
+    </fields>
+
+    <fields name="params">
+        <fieldset name="basic">
+            <field name="prev_step" type="menuitem" published="1">
+                <option value="">JNONE</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

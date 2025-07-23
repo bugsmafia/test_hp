@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<metadata>
+    <layout title="COM_HYPERPC_PRODUCTS_IN_STOCK_VIEW_DEFAULT_TITLE" option="COM_HYPERPC">
+        <message>
+            <![CDATA[COM_HYPERPC_PRODUCTS_IN_STOCK_VIEW_DEFAULT_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="params" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+        <fieldset name="basic">
+            <field name="meta_title_pc" type="textarea" rows="3" parentclass="stack span-2-inline" label="COM_HYPERPC_FIELD_META_TITLE_PC_LABEL"/>
+            <field name="meta_desc_pc" type="textarea" rows="3" parentclass="stack span-4-inline" label="COM_HYPERPC_FIELD_META_DESCRIPTION_PC_LABEL"/>
+
+            <field name="meta_title_concept" type="textarea" rows="3" parentclass="stack span-2-inline" label="COM_HYPERPC_FIELD_META_TITLE_CONCEPT_LABEL"/>
+            <field name="meta_desc_concept" type="textarea" rows="3" parentclass="stack span-4-inline" label="COM_HYPERPC_FIELD_META_DESCRIPTION_CONCEPT_LABEL"/>
+
+            <field name="meta_title_workstation" type="textarea" rows="3" parentclass="stack span-2-inline" label="COM_HYPERPC_FIELD_META_TITLE_WORKSTATION_LABEL"/>
+            <field name="meta_desc_workstation" type="textarea" rows="3" parentclass="stack span-4-inline" label="COM_HYPERPC_FIELD_META_DESCRIPTION_WORKSTATION_LABEL"/>
+
+            <field name="meta_title_server" type="textarea" rows="3" parentclass="stack span-2-inline" label="COM_HYPERPC_FIELD_META_TITLE_SERVER_LABEL"/>
+            <field name="meta_desc_server" type="textarea" rows="3" parentclass="stack span-4-inline" label="COM_HYPERPC_FIELD_META_DESCRIPTION_SERVER_LABEL"/>
+
+            <field name="meta_title_notebook" type="textarea" rows="3" parentclass="stack span-2-inline" label="COM_HYPERPC_FIELD_META_TITLE_NOTEBOOK_LABEL"/>
+            <field name="meta_desc_notebook" type="textarea" rows="3" parentclass="stack span-4-inline" label="COM_HYPERPC_FIELD_META_DESCRIPTION_NOTEBOOK_LABEL"/>
+
+            <field name="meta_title_station" type="textarea" rows="3" parentclass="stack span-2-inline" label="COM_HYPERPC_FIELD_META_TITLE_STATION_LABEL"/>
+            <field name="meta_desc_station" type="textarea" rows="3" parentclass="stack span-4-inline" label="COM_HYPERPC_FIELD_META_DESCRIPTION_STATION_LABEL"/>
+
+            <field name="description" type="editor" label="COM_HYPERPC_FIELD_MARKUP_FOR_PAGE_DESCRIPTION"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+        </fieldset>
+    </fields>
+</metadata>

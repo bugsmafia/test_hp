@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<form>
+    <field name="root" type="text" label="COM_HYPERPC_FIELD_COMPARE_TREE_PARENT_LABEL"
+           multiple="false" class="input-xxlarge" />
+    <field name="rootShort" type="text" label="COM_HYPERPC_FIELD_COMPARE_TREE_PARENT_SHORT_TITLE_LABEL"
+           multiple="false" class="input-xxlarge" />
+    <field name="child" type="hpfolders" label="COM_HYPERPC_FIELD_COMPARE_TREE_CHILD_LABEL"
+           multiple="true" class="input-xxlarge input-large-text" filter="int" />
+</form>

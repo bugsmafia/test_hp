@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov
+-->
+<form>
+    <field name="commercial_proposal_price" class="input-xxlarge" default="0" type="text" label="COM_HYPERPC_FIELD_COMMERCIAL_PROPOSAL_PRICE_LABEL"
+           description="COM_HYPERPC_FIELD_COMMERCIAL_PROPOSAL_PRICE_DESC" />
+    <field name="commercial_proposal_text" class="input-xxlarge"  type="multilanguagetextarea" label="COM_HYPERPC_FIELD_COMMERCIAL_PROPOSAL_TEXT_LABEL"
+           description="COM_HYPERPC_FIELD_COMMERCIAL_PROPOSAL_TEXT_DESC" />
+</form>

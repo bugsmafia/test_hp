@@ -1,0 +1,225 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+// @author     Artem Vyshnevskiy
+//
+
+.hp-cart {
+
+    &-table {
+        .hp-cart-cell-img {
+            width: 120px;
+            padding: 0;
+            text-align: center;
+        }
+
+        tfoot {
+            font-size: 1rem;
+
+            .uk-text-emphasis {
+                font-size: 1.25rem;
+            }
+        }
+
+    }
+
+    &-quantity {
+        min-width: 92px;
+
+        input {
+            width: 34px;
+        }
+
+        .jsItemMinus,
+        .jsItemPlus {
+            line-height: 34px;
+            padding: 0 4px;
+
+            &.uk-disabled {
+                opacity: 0.25;
+            }
+        }
+
+        &-compact {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+
+            .jsItemMinus,
+            .jsItemPlus {
+                line-height: 0;
+            }
+
+            input {
+                background: none;
+                border: none;
+                max-height: 14px;
+            }
+
+            @media (min-width: @breakpoint-small) {
+                margin-right: 20px;
+            }
+        }
+    }
+
+    &-checkout {
+        td:first-child {
+            padding-left: 0;
+        }
+
+        td:last-child {
+            padding-right: 0;
+        }
+    }
+
+    &-pickup-points-list tr,
+    &-delivery-options-list tr,
+    &-payment-element label {
+        cursor: pointer;
+    }
+
+    &-sticky-bottom {
+        position: fixed;
+        padding: 8px 15px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: 0;
+        background: #fff;
+    }
+}
+
+.hp-promo-code {
+    @media (max-width: @breakpoint-small-max) {
+        #jform_promo_code {
+            height: 34px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .uk-button {
+            line-height: 32px;
+        }
+    }
+}
+
+.view-cart #pickup-points {
+    .uk-modal-header,
+    .uk-modal-body {
+        @media (max-width: @breakpoint-xsmall-max) {
+            padding-left: 15px;
+            padding-right: 15px;
+
+            .uk-h1 {
+                font-size: 1.5rem;
+            }
+
+            .uk-table-shrink {
+                padding-right: 0;
+            }
+        }
+    }
+}
+
+.device-table-yes,
+.device-mobile-yes {
+    .hp-cart {
+        &-item-row {
+
+            &__price {
+                > * {
+                    display: inline-block;
+
+                    &:first-child {
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            &__availability {
+                > * {
+                    display: inline-block;
+                    margin-right: 5px;
+                    font-style: normal;
+                }
+            }
+
+            &__remove {
+                margin-left: 10px;
+            }
+
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .hp-cart-table {
+        display: block;
+
+        thead {
+            display: none;
+        }
+
+        tbody, tfoot, th, td, tr {
+            display: block;
+        }
+
+        tfoot {
+            th[colspan="2"]  {
+                padding-top: 6px;
+                text-align: right;
+            }
+        }
+
+        td {
+            padding: 8px;
+
+            &::before {
+                white-space: nowrap;
+            }
+
+        }
+
+        .hp-item-row {
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .hp-cart-cell {
+            &-img {
+                margin-right: 10px;
+                float: left;
+            }
+
+            &-title {
+                padding-right: 36px;
+            }
+
+            &-action {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            &-price4one {
+                display: none;
+            }
+        }
+
+        .hp-cart-cell-quantity,
+        .hp-cart-item-total {
+            display: inline-block;
+            padding: 2px 8px;
+        }
+
+    }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="fields" method="upgrade">
+	<name>plg_fields_hpcolorlist</name>
+	<author>Artem Vyshnevskiy</author>
+	<creationDate>November 2024</creationDate>
+	<copyright>Copyright (C) HYPERPC, All rights reserved.</copyright>
+	<license>Proprietary https://hyperpc.ru/license</license>
+	<version>1.0.0</version>
+	<description>PLG_FIELDS_HPCOLORLIST_XML_DESCRIPTION</description>
+	<namespace path="src">HYPERPC\Plugin\Fields\ColorList</namespace>
+	<files>
+		<folder>params</folder>
+		<folder plugin="hpcolorlist">services</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+	<languages>
+		<language tag="ru-RU">language/ru-RU/plg_fields_hpcolorlist.ini</language>
+		<language tag="ru-RU">language/ru-RU/plg_fields_hpcolorlist.sys.ini</language>
+	</languages>
+</extension>

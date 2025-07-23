@@ -1,0 +1,26 @@
+{
+    "name": "hyperpc",
+    "description": "HYPERPC",
+    "version": "1.0.2",
+    "keywords": [],
+    "author": "Artem Vyshnevskiy",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "css-element-queries": "^1.2.3",
+        "fancybox": "^3.5.7",
+        "hyperpc-js-widget": "~3",
+        "jbzoo-jquery-factory": "*",
+        "jbzoo-utils": "^1.1.0",
+        "jquery-check-all": "markgx/jquery-check-all#^0.5.0",
+        "jquery-mask-plugin": "~1.14",
+        "jquery-nice-select": "^1.1.0",
+        "jquery-ui": "jquery/jquery-ui#^1.13.1",
+        "open-sans-fontface": "~1.4",
+        "raty": "^2.9.0",
+        "sticky-sidebar": "^3.3.3"
+    }
+}

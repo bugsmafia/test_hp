@@ -1,0 +1,57 @@
+<?php
+/**
+ * HYPERPC - The shop of powerful computers.
+ *
+ * This file is part of the HYPERPC package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package     HYPERPC
+ * @license     Proprietary
+ * @copyright   Proprietary https://hyperpc.ru/license
+ * @link        https://github.com/HYPER-PC/HYPERPC".
+ *
+ * @author      Artem Vyshnevskiy
+ */
+
+namespace HYPERPC\MoySklad\Client;
+
+use HYPERPC\MoySklad\Http\RequestExecutor;
+use MoySklad\Entity\Metadata\VariantMetadata;
+use MoySklad\Util\Exception\ApiClientException;
+use HYPERPC\MoySklad\Client\Endpoint\DeleteEntitiesEndpoint;
+use HYPERPC\MoySklad\Client\Endpoint\DeleteEntityEndpoint;
+use HYPERPC\MoySklad\Client\Endpoint\GetEntitiesListEndpoint;
+use HYPERPC\MoySklad\Client\Endpoint\GetEntityEndpoint;
+use HYPERPC\MoySklad\Client\Endpoint\PostEntitiesEndpoint;
+use HYPERPC\MoySklad\Client\Endpoint\PostEntityEndpoint;
+use HYPERPC\MoySklad\Client\Endpoint\PutEntityEndpoint;
+use MoySklad\Client\VariantClient as VariantClientBase;
+
+class VariantClient extends VariantClientBase
+{
+    use
+        GetEntitiesListEndpoint,
+        PostEntityEndpoint,
+        PostEntitiesEndpoint,
+        DeleteEntityEndpoint,
+        DeleteEntitiesEndpoint,
+        GetEntityEndpoint,
+        PutEntityEndpoint;
+
+    /**
+     * @return VariantMetadata
+     *
+     * @throws ApiClientException
+     */
+    public function getMetadata(): VariantMetadata
+    {
+        /** @var VariantMetadata $variantMetadata */
+        $variantMetadata = RequestExecutor::path(
+            $this->getApi(),
+            $this->getPath().'metadata'
+        )->get(VariantMetadata::class);
+
+        return $variantMetadata;
+    }
+}

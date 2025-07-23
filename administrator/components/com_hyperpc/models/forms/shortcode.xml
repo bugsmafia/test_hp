@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov <roman_e@hyperpc.ru>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="type" type="list" label="COM_HYPERPC_MOYSKLAD_POSITION_TYPE" default="product">
+        <option value="product">COM_HYPERPC_MOYSKLAD_POSITION_TYPE_PRODUCT</option>
+        <option value="part">COM_HYPERPC_MOYSKLAD_POSITION_TYPE_PART</option>
+        <option value="service">COM_HYPERPC_MOYSKLAD_POSITION_TYPE_SERVICE</option>
+    </field>
+
+    <field name="product-folder-ids" type="hpfolders" label="COM_HYPERPC_SHORTCODE_PRODUCT_FOLDER_IDS_LABEL" multiple="true" order="a.lft ASC" published="true" showon="type:part[OR]type:service"/>
+
+    <field name="position-product-ids" type="hplist" context="moyskladProduct" label="COM_HYPERPC_SHORTCODE_IDS_LABEL" multiple="true" order="a.name ASC" published="true" showon="type:product"/>
+    <field name="position-part-ids" type="hplist" context="moyskladPart" label="COM_HYPERPC_SHORTCODE_IDS_LABEL" multiple="true" order="a.name ASC" published="true" showon="type:part"/>
+    <field name="position-service-ids" type="hplist" context="moyskladService" label="COM_HYPERPC_SHORTCODE_IDS_LABEL" multiple="true" order="a.name ASC" published="true" showon="type:service"/>
+
+    <field name="field" type="fields" context="com_hyperpc.position" value_key="name" showon="type:part" label="COM_HYPERPC_SHORTCODE_FIELD_LABEL"/>
+    <field name="field-value" type="text" label="COM_HYPERPC_SHORTCODE_FIELD_VALUE_LABEL" description="COM_HYPERPC_SHORTCODE_FIELD_VALUE_DESC" showon="type:part[AND]field!:1"/>
+
+    <field name="load-unavailable" type="checkbox" label="COM_HYPERPC_SHORTCODE_SHOW_UNAVAILABLE" value="true" showon="type:product"/>
+
+    <field name="ids" type="text" label="COM_HYPERPC_SHORTCODE_IDS_LABEL" />
+    <field name="config" type="text" label="COM_HYPERPC_SHORTCODE_CONFIG_LABEL" description="COM_HYPERPC_SHORTCODE_CONFIG_DESC" showon="type:product"/>
+    <field name="game" type="games" resolutions="true" label="COM_HYPERPC_SHORTCODE_GAMES_LABEL" showon="type:product"/>
+    <field name="platform" type="list" label="COM_HYPERPC_PARAM_PRODUCT_TYPE_LABEL"
+           description="COM_HYPERPC_PARAM_PRODUCT_TYPE_DESC" multiple="true" showon="type:product">
+        <option value="pc">COM_HYPERPC_PARAM_PRODUCT_TYPE_PC</option>
+        <option value="concept">COM_HYPERPC_PARAM_PRODUCT_TYPE_CONCEPT</option>
+        <option value="notebook">COM_HYPERPC_PARAM_PRODUCT_TYPE_NOTEBOOK</option>
+        <option value="workstation">COM_HYPERPC_PARAM_PRODUCT_TYPE_WORKSTATION</option>
+        <option value="server">COM_HYPERPC_PARAM_PRODUCT_TYPE_SERVER</option>
+        <option value="station">COM_HYPERPC_PARAM_PRODUCT_TYPE_STATION</option>
+    </field>
+    <field name="show-fps" type="radio" label="COM_HYPERPC_SHORTCODE_SHOW_FPS_LABEL"
+           description="COM_HYPERPC_SHORTCODE_SHOW_FPS_DESC" showon="type:product" default="1"
+           layout="joomla.form.field.radio.switcher">
+        <option value="0">JNO</option>
+        <option value="1">JYES</option>
+    </field>
+    <field name="instock" type="list" label="COM_HYPERPC_SHORTCODE_INSTOCK_LABEL"
+           description="COM_HYPERPC_SHORTCODE_INSTOCK_DESC" showon="type:product" default="except">
+        <option value="default">COM_HYPERPC_SHORTCODE_INSTOCK_OPTION_DEFAULT</option>
+        <option value="except">COM_HYPERPC_SHORTCODE_INSTOCK_OPTION_EXCEPT</option>
+        <option value="only">COM_HYPERPC_SHORTCODE_INSTOCK_OPTION_ONLY</option>
+    </field>
+    <field name="price-range" type="text" label="COM_HYPERPC_SHORTCODE_PRICE_LABEL" />
+    <field name="initial-amount" type="text" label="COM_HYPERPC_SHORTCODE_INITIAL_AMOUNT" />
+    <field name="limit" type="text" label="COM_HYPERPC_SHORTCODE_LIMIT" />
+    <field name="product-layout" path="media:hyperpc/render/product/teaser" type="elementlayout" default="default" label="COM_HYPERPC_SHORTCODE_LAYOUT_LABEL" showon="type:product"/>
+    <field name="order" type="list" label="COM_HYPERPC_PARAM_ORDER_LABEL"
+           description="COM_HYPERPC_PARAM_ORDER_DESC" default="a.price ASC">
+        <option value="a.price ASC">COM_HYPERPC_FILTER_ORDERING_PRICE_ASC</option>
+        <option value="a.price DESC">COM_HYPERPC_FILTER_ORDERING_PRICE_DESC</option>
+        <option value="a.ordering ASC">COM_HYPERPC_FILTER_ORDERING_ORDERING_ASC</option>
+        <option value="a.ordering DESC">COM_HYPERPC_FILTER_ORDERING_ORDERING_DESC</option>
+        <option value="a.name ASC">JGLOBAL_TITLE_ASC</option>
+        <option value="a.name DESC">JGLOBAL_TITLE_DESC</option>
+        <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+        <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+    </field>
+</form>

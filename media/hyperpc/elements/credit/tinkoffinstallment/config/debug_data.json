@@ -1,0 +1,27 @@
+{
+    "id": "\u042091653",
+    "status": "approved",
+    "created_at": "2023-01-27T13:48:16.410Z",
+    "demo": true,
+    "committed": false,
+    "first_payment": 0,
+    "order_amount": 257790,
+    "credit_amount": null,
+    "product": "installment_credit",
+    "term": 6,
+    "monthly_payment": null,
+    "first_name": "\u041f",
+    "last_name": "\u041f",
+    "middle_name": "\u041f",
+    "phone": "+7900*****00",
+    "loan_number": null,
+    "email": "s**e@hyperpc.ru",
+    "appropriate_signing_types": [
+        "bank",
+        "sms",
+        "ses"
+    ],
+    "signing_type": null,
+    "chosen_bank": "\u041c\u0422\u0421 \u0411\u0430\u043d\u043a",
+    "expected_overdue_at": null
+}

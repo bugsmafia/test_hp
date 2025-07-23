@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<form addrulepath="/components/com_hyperpc/models/rules">
+    <fieldset name="data">
+        <field name="client_name" type="text" required="required" class="uk-input uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_COMMERCIAL_PROPOSAL_CLIENT_NAME_LABEL"/>
+
+        <field name="amo_lead_url" type="url" required="required" class="uk-input uk-form-large"
+               label="HYPER_ELEMENT_CONFIGURATION_ACTIONS_COMMERCIAL_PROPOSAL_AMO_LEAD_URL_LABEL"/>
+    </fieldset>
+</form>

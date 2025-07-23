@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+    <version>2.0.0</version>
+    <name>mod_hp_navbar_user</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>September 2024</creationDate>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <authorEmail>avyshnevskiy@hyperpc.ru</authorEmail>
+    <description>MOD_HP_NAVBAR_USER_XML_DESCRIPTION</description>
+    <copyright>Copyright (C) hyperpc.ru, All rights reserved.</copyright>
+
+    <namespace path="src">HYPERPC\Module\NavbarUser</namespace>
+
+    <files>
+        <folder>language</folder>
+        <folder module="mod_hp_navbar_user">services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="layout"
+                    type="modulelayout"
+                    label="JFIELD_ALT_LAYOUT_LABEL"
+                    class="form-select"
+                    default="_:default"
+                    validate="moduleLayout"
+                />
+
+                <field
+                    name="chat_in_tabbar"
+                    type="radio"
+                    layout="joomla.form.field.radio.switcher"
+                    label="MOD_HP_NAVBAR_USER_PARAM_CHAT_IN_TABBAR_LABEL"
+                    default="0"
+                    filter="integer"
+                    >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="configurator_menu_item" type="menuitem" published="1"
+                       label="MOD_HP_NAVBAR_USER_PARAM_CONFIGURATOR_MENU_ITEM_LABEL"
+                       description="MOD_HP_NAVBAR_USER_PARAM_CONFIGURATOR_MENU_ITEM_DESC" />
+
+                <field name="catalog_menu_item" type="menuitem" published="1" showon="layout:_:tabbar"
+                       label="MOD_HP_NAVBAR_USER_PARAM_MODELS_MENU_ITEM_LABEL"
+                       description="MOD_HP_NAVBAR_USER_PARAM_MODELS_MENU_ITEM_DESC" />
+
+                <field name="chat_modal_content" type="multilanguageeditor" label="MOD_HP_NAVBAR_USER_PARAM_CHAT_MODAL_CONTENT_LABEL"
+                       filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" showon="layout:_:tabbar[AND]chat_in_tabbar:1" />
+            </fieldset>
+        </fields>
+    </config>
+
+</extension>

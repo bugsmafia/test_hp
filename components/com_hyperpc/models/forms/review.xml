@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+
+    <field name="context" type="hidden" />
+    <field name="published" type="hidden" />
+    <field name="item_id" type="hidden" />
+
+    <field name="rating" required="required" type="rating" label="COM_HYPERPC_REVIEW_RATING_LABEL"/>
+
+    <field name="virtues" type="textarea" label="COM_HYPERPC_REVIEW_VIRTUES_LABEL" class="uk-textarea"
+           hint="COM_HYPERPC_REVIEW_VIRTUES_HINT"
+           filter="HYPERPC\Helper\ReviewHelper::formFilter" />
+
+    <field name="limitations" type="textarea" label="COM_HYPERPC_REVIEW_LIMITATIONS_LABEL" class="uk-textarea"
+           hint="COM_HYPERPC_REVIEW_LIMITATIONS_HINT"
+           filter="HYPERPC\Helper\ReviewHelper::formFilter" />
+
+    <field name="comment" type="textarea" label="COM_HYPERPC_REVIEW_COMMENT_LABEL" class="uk-textarea"
+           hint="COM_HYPERPC_REVIEW_COMMENT_HINT"
+           filter="HYPERPC\Helper\ReviewHelper::formFilter" />
+
+    <field name="order_id" required="required" type="text" label="COM_HYPERPC_REVIEW_ORDER_ID_LABEL" filter="int"
+           hint="COM_HYPERPC_REVIEW_ORDER_ID_HINT" class="uk-input uk-width-1-2" />
+
+    <field name="created_user_id" required="true" />
+</form>

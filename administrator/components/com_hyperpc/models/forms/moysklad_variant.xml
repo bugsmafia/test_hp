@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is = of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="product_folder_id" type="hpfolders" label="COM_HYPERPC_FIELD_GROUPS_LABEL"
+           description="COM_HYPERPC_FIELD_GROUPS_DESC" class="input-xxlarge input-large-text jsGroups" />
+
+    <field name="name" type="text" label="JGLOBAL_TITLE" description="JFIELD_TITLE_DESC"
+           class="input-xxlarge input-large-text" required="true" readonly="true"/>
+
+    <field name="alias" type="text" label="JFIELD_ALIAS_LABEL" description="JFIELD_ALIAS_DESC"
+           hint="JFIELD_ALIAS_PLACEHOLDER" />
+
+    <field name="part_id" type="hplist" context="MoyskladPart" order="a.product_folder_id ASC" class="readonly" readonly="true"
+           label="COM_HYPERPC_OPTION_PART_ID_LABEL"/>
+
+    <field name="vendor_code" type="text" label="COM_HYPERPC_FIELD_PART_VENDOR_CODE_LABEL" readonly="true"/>
+
+    <field name="ordering" type="int" default="1" label="COM_HYPERPC_PART_OPTION_SORTING"/>
+
+    <field name="description" type="multilanguageeditor" label="JGLOBAL_DESCRIPTION" description="COM_HYPERPC_FIELD_DESCRIPTION_DESC"
+           filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+    <field name="list_price" type="number" label="COM_HYPERPC_FIELD_PRICE_LABEL"
+           description="COM_HYPERPC_FIELD_PRICE_DESC" required="true" readonly="true"/>
+
+    <field name="sale_price" type="number" label="COM_HYPERPC_FIELD_SALE_PRICE_LABEL"
+           description="COM_HYPERPC_FIELD_PRICE_DESC" required="true" readonly="true"/>
+
+    <field name="ordering" type="number" label="COM_HYPERPC_FIELD_ORDERING_LABEL"
+           description="COM_HYPERPC_FIELD_ORDERING_DESC" />
+
+    <field name="state" type="moyskladstate" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" />
+
+    <field name="balance" type="text" label="COM_HYPERPC_FIELD_BALANCE_LABEL" default="0" filter="int"
+           description="COM_HYPERPC_FIELD_BALANCE_DESC" disabled="true" readonly="true"/>
+
+    <field name="preorder" type="list" label="COM_HYPERPC_FIELD_PART_PREORDER_LABEL" description="COM_HYPERPC_FIELD_PART_PREORDER_DESC"
+           default="-1" filter="int" class="chzn-color-state">
+        <option value="-1">COM_HYPERPC_FROM_GROUP_PARAMS</option>
+        <option value="1">JYES</option>
+        <option value="0">JNO</option>
+    </field>
+
+    <field name="moysklad_store_items" type="moyskladstoreitems" label="COM_HYPERPC_FIELD_BALANCE_LABEL"/>
+
+    <field name="created_user_id" type="user" label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+           desc="JGLOBAL_FIELD_CREATED_BY_DESC" />
+
+    <field name="created_time" type="calendar" label="JGLOBAL_CREATED_DATE" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <field name="modified_user_id" type="user" label="JGLOBAL_FIELD_MODIFIED_BY_LABEL" class="readonly"
+           readonly="true" filter="unset" />
+
+    <field name="modified_time" type="calendar" label="JGLOBAL_FIELD_MODIFIED_LABEL" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <fields name="images" label="COM_CONTENT_FIELD_IMAGE_OPTIONS">
+        <field name="image" type="media" label="COM_HYPERPC_FIELD_IMAGE_LABEL"
+               description="COM_HYPERPC_FIELD_IMAGE_DESC" />
+
+        <field name="image_gallery" type="hpimage" label="COM_HYPERPC_GALLERY" />
+
+        <field name="image_y_market" type="media" label="COM_HYPERPC_FIELD_IMAGE_Y_MARKET_LABEL" />
+
+        <field name="image_assembled" type="media" label="COM_HYPERPC_FIELD_IMAGE_ASSEMBLED_LABEL"
+               description="COM_HYPERPC_FIELD_IMAGE_ASSEMBLED_DESC" />
+    </fields>
+
+    <field name="balance" type="text" label="COM_HYPERPC_FIELD_BALANCE_LABEL" default="0" filter="int"
+           description="COM_HYPERPC_FIELD_BALANCE_DESC" />
+
+    <field name="options_count" type="text" label="COM_HYPERPC_FIELD_OPTIONS_COUNT_LABEL" default="0"  filter="int"
+           description="COM_HYPERPC_FIELD_OPTIONS_COUNT_DESC" readonly="true" />
+
+    <field name="vendor_code" type="text" label="COM_HYPERPC_FIELD_PART_VENDOR_CODE_LABEL"/>
+
+    <field name="preorder" type="list" label="COM_HYPERPC_FIELD_PART_PREORDER_LABEL" description="COM_HYPERPC_FIELD_PART_PREORDER_DESC"
+           default="-1" filter="int" class="chzn-color-state">
+        <option value="-1">COM_HYPERPC_FROM_GROUP_PARAMS</option>
+        <option value="1">JYES</option>
+        <option value="0">JNO</option>
+    </field>
+
+    <field name="width" type="text" filter="float" label="COM_HYPERPC_FIELD_PART_WIDTH_LABEL"/>
+    <field name="height" type="text" label="COM_HYPERPC_FIELD_PART_HEIGHT_LABEL"/>
+    <field name="length" type="text" label="COM_HYPERPC_FIELD_PART_LENGTH_LABEL"/>
+    <field name="weight" type="text" label="COM_HYPERPC_FIELD_PART_WEIGHT_LABEL"/>
+
+    <field name="retail" type="radio" label="COM_HYPERPC_FIELD_CAN_BUY_LABEL"  description="COM_HYPERPC_FIELD_CAN_BUY_DESC"
+           default="0" class="btn-group btn-group-yesno">
+        <option value="1">JYES</option>
+        <option value="0">JNO</option>
+    </field>
+
+    <field name="review" type="multilanguagetabs" filter="raw"/>
+
+    <fields name="translatable_params" label="JGLOBAL_FIELDSET_DESCRIPTION">
+        <fieldset name="translatable_params">
+            <field name="configurator_title" type="multilanguagetext" label="COM_HYPERPC_FIELD_CONFIGURATOR_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_TITLE_DESC" />
+
+            <field name="short_desc" type="multilanguageeditor" label="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_LABEL"
+                   description="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+        </fieldset>
+    </fields>
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="jparams">
+            <field name="options" type="list" multiply="true"/>
+
+            <field name="related_comps" type="moyskladrelatedcomps" use-value="true" multiple="true" label=""/>
+
+            <field name="mini_image" type="media" label="COM_HYPERPC_FIELD_MINI_IMAGE_LABEL"/>
+
+            <field name="full_width" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_CONTENT_WIDTH">
+                <option value="0">COM_HYPERPC_CONTENT_WIDTH_CONTAINER</option>
+                <option value="1">COM_HYPERPC_CONTENT_FULL_WIDTH</option>
+            </field>
+
+            <field name="related_case" type="relatedcase"
+                   label="COM_HYPERPC_FIELD_RELATED_CASE_LABEL"
+                   description="COM_HYPERPC_FIELD_RELATED_CASE_DESC" class="col-12 col-lg-4" />
+
+            <field name="unpacking_variant_alert" type="note"
+                   note="COM_HYPERPC_FIELD_UNPACKING_VARIANT_ALERT" />
+
+            <field name="unpacked_case_position" type="relatedcase"
+                   label="COM_HYPERPC_FIELD_UNPACKED_CASE_LABEL" />
+
+            <field name="unpacked_customization_position" type="relatedpersonalization"
+                   label="COM_HYPERPC_FIELD_UNPACKED_CUSTOMIZATION_LABEL" />
+        </fieldset>
+    </fields>
+
+    <fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+        <fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+            <field name="meta_title" type="multilanguagetextarea" label="COM_HYPERPC_FIELD_PAGE_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_PAGE_TITLE_DESC" />
+
+            <field name="meta_desc" type="multilanguagetextarea" label="JFIELD_META_DESCRIPTION_LABEL"
+                   description="JFIELD_META_DESCRIPTION_DESC" rows="6" />
+
+            <field name="meta_keys" type="multilanguagetextarea" label="JFIELD_META_KEYWORDS_LABEL"
+                   description="JFIELD_META_KEYWORDS_DESC" rows="6" />
+
+            <field name="robots" type="multilanguagelist" label="JFIELD_METADATA_ROBOTS_LABEL"
+                   description="JFIELD_METADATA_ROBOTS_DESC" >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="index, follow" />
+                <option value="noindex, follow" />
+                <option value="index, nofollow" />
+                <option value="noindex, nofollow" />
+            </field>
+        </fieldset>
+    </fields>
+</form>

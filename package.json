@@ -1,0 +1,42 @@
+{
+    "name": "hyperpc",
+    "description": "HYPERPC",
+    "version": "1.0.2",
+    "keywords": [],
+    "author": "Artem Vyshnevskiy",
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^15.3.0",
+        "@rollup/plugin-terser": "^0.4.4",
+        "bower": "^1.8.14",
+        "gulp": "^4.0.2",
+        "gulp-concat": "^2.6.1",
+        "gulp-rename": "^1.4.0",
+        "gulp-replace": "^0.5.4",
+        "gulp-uglify": "^1.5.4",
+        "gulp-uglifycss": "^1.1.0",
+        "require-dir": "^0.3.2",
+        "rollup": "^4.27.3",
+        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-vue": "^6.0.0",
+        "vite": "^5.4.11",
+        "vite-plugin-external": "^4.3.1",
+        "vite-plugin-static-copy": "^1.0.6"
+    },
+    "scripts": {
+        "update": "bower update --save && npm update --save && gulp update",
+        "update-dev": "npm update --save-dev",
+        "vite:update": "bower update --save && npm update --save && npm run vite:update-template && npm run vite:update-component",
+        "vite:update-template": "vite build --config vite/vite.template.js",
+        "vite:update-component": "vite build --config vite/vite.component.js",
+        "vite:vue-build": "vite build --config vite/vite.vue.build.js",
+        "vite:vue-build-watch": "vite build --config vite/vite.vue.build.js --watch",
+        "rollup:vue-build": "node ./node_modules/rollup/dist/bin/rollup --config rollup.config.js --bundleConfigAsCjs",
+        "rollup:vue-build-watch": "node ./node_modules/rollup/dist/bin/rollup --config rollup.config.js --bundleConfigAsCjs --watch"
+    },
+    "dependencies": {
+        "@vitejs/plugin-vue": "^5.2.0",
+        "@vuelidate/core": "^2.0.3",
+        "@vuelidate/validators": "^2.0.4",
+        "vue": "^3.4.31"
+    }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<extension type="plugin" version="3.1" group="simpleform2">
+    <name>plg_simpleform2_notifyaftersubmit</name>
+    <version>1.0.0</version>
+    <description>PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_XML_DESCRIPTION</description>
+    <creationDate>February 2019</creationDate>
+    <author>Artem Vyshnevskiy</author>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+    <files>
+        <filename plugin="notifyaftersubmit">notifyaftersubmit.php</filename>
+        <folder>language</folder>
+    </files>
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.plg_simpleform2_notifyaftersubmit.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.plg_simpleform2_notifyaftersubmit.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="sender" type="email" validate="email"
+                    description="PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_FIELD_SENDER_DESC"
+                    label="PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_FIELD_SENDER_LABEL"
+                />
+
+                <field name="subject" type="text"
+                    description="PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_FIELD_SUBJECT_DESC"
+                    label="PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_FIELD_SUBJECT_LABEL"
+                />
+
+                <field name="message" type="editor" label="PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_FIELD_MESSAGE_LABEL"
+                    filter="JComponentHelper::filterText"
+                    description="PLG_SIMPLEFORM2_NOTIFYAFTERSUBMIT_FIELD_MESSAGE_DESC" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

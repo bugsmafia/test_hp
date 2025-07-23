@@ -1,0 +1,43 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+//
+
+// ***************************************** Media queries for different devices ***************************************
+// more info https://gist.github.com/gitawego/5803557
+@print:       ~"print";                               // print version of website
+@mobile-mini: ~"only screen and (min-width: 220px) and (max-width: 479px)";  // smartphones, iPhone, portrait 480x320 phones
+@mobile:      ~"only screen and (min-width: 480px) and (max-width: 599px)";  // smaller tablets 600 or 640 wide
+@tablet-mini: ~"only screen and (min-width: 600px) and (max-width: 800px)";  // portrait tablets, portrait iPad
+@tablet:      ~"only screen and (min-width: 801px) and (max-width: 1024px)";  // tablet, landscape iPad
+@desktop:     ~"only screen and (min-width: 1025px) and (max-width: 1280px)"; // big landscape tablets, laptops
+@desktop-xl:  ~"only screen and (min-width: 1281px) and (max-width: 1365px)"; // hi-res laptops and desktops
+@desktop-xxl: ~"only screen and (min-width: 1366px)"; //  desktops
+
+// devices with retina display (http://css-tricks.com/snippets/css/retina-display-media-query/)
+@retina: ~"only screen and (-webkit-min-device-pixel-ratio: 2)",
+         ~"only screen and (   min--moz-device-pixel-ratio: 2)",
+         ~"only screen and (     -o-min-device-pixel-ratio: 2/1)",
+         ~"only screen and (        min-device-pixel-ratio: 2)",
+         ~"only screen and (           min-resolution: 192dpi)",
+         ~"only screen and (            min-resolution: 2dppx)";
+
+// UIkit3 breakpoints
+@breakpoint-small:                             640px;  // Phone landscape
+@breakpoint-medium:                            960px;  // Tablet Landscape
+@breakpoint-large:                             1200px; // Desktop
+@breakpoint-xlarge:                            1600px; // Large Screens
+
+@breakpoint-xsmall-max:                        (@breakpoint-small - 1);
+@breakpoint-small-max:                         (@breakpoint-medium - 1);
+@breakpoint-medium-max:                        (@breakpoint-large - 1);
+@breakpoint-large-max:                         (@breakpoint-xlarge - 1);

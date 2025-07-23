@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<extension type="module" version="2.5" method="upgrade" client="site">
+    <version>1.0.0</version>
+    <name>mod_hp_tradein_calculator</name>
+    <author>Artem Vyshnevskiy</author>
+    <creationDate>December 2019</creationDate>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <authorEmail>thecrowpath@yandex.ru</authorEmail>
+    <description>MOD_HP_TRADEIN_CALCULATOR_MODULE_DESCRIPTION</description>
+    <copyright>Copyright (C) hyperpc.ru, All rights reserved.</copyright>
+
+    <files>
+        <folder>assets</folder>
+        <folder>fields</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+        <filename module="mod_hp_tradein_calculator">mod_hp_tradein_calculator.php</filename>
+    </files>
+
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_tradein_calculator.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_tradein_calculator.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="form_module" type="hpmodules" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_FORM_MODULE_LABEL"
+                    description="MOD_HP_TRADEIN_CALCULATOR_FIELD_FORM_MODULE_DESC"/>
+
+                <field name="groups" type="subform"
+                    formsource="modules/mod_hp_tradein_calculator/fields/group.xml" multiple="true" layout="joomla.form.field.subform.repeatable-table"
+                    label="MOD_HP_TRADEIN_CALCULATOR_FIELD_GROUPS_LABEL" />
+            </fieldset>
+
+            <fieldset name="advanced">
+                <field name="intro_text" type="textarea" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_INTRO_TEXT_LABEL" rows="6" />
+
+                <field name="disclaimer_text" type="textarea" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_DISCLAIMER_TEXT_LABEL" rows="6" />
+
+                <field name="form_text" type="textarea" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_FORM_TEXT_LABEL" rows="6" />
+            </fieldset>
+        </fields>
+    </config>
+
+</extension>

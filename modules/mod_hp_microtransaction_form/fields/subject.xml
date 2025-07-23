@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <field name="key" type="text" required="true"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECT_KEY_LABEL"
+        description="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECT_KEY_DESC" />
+    <field name="price" type="text" required="true" filter="int"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECT_PRICE_LABEL" />
+    <field name="description" type="text" required="true"
+        label="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECT_DESC_LABEL"
+        description="MOD_HP_MICROTRANSACTION_FORM_FIELD_SUBJECT_DESC_DESC" />
+</form>

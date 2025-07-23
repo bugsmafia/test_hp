@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov <roman_e@hyperpc.ru>
+-->
+<extension type="module" version="2.5" method="upgrade" client="site">
+    <version>1.0.0</version>
+    <name>MOD_HP_STOCK</name>
+    <author>Roman Evsyukov</author>
+    <creationDate>2021.03.24</creationDate>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <authorEmail>roman_e@hyperpc.ru</authorEmail>
+    <description>MOD_HP_STOCK_DESCRIPTION</description>
+    <copyright>Copyright (C) hyperpc.ru, All rights reserved.</copyright>
+
+    <files>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+        <filename module="mod_hp_stock">mod_hp_stock.php</filename>
+    </files>
+
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_stock.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_hp_stock.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+
+            <fieldset name="basic" addfieldpath="/modules/mod_hp_stock/form/fields">
+                <field name="title" type="text" label="MOD_HP_STOCK_TITLE_LABEL"/>
+
+                <field name="categories" type="hpfolders" label="MOD_HP_STOCK_CATEGORIES_LABEL"
+                       description="MOD_HP_STOCK_CATEGORIES_DESC" multiple="true"
+                       class="input-xxlarge input-large-text" filter="int" />
+
+                <field name="cols" type="list" label="MOD_HP_STOCK_COLS_LABEL" default="__global__">
+                    <option value="__global__">COM_HYPERPC_PARAM_GLOBAL</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </field>
+
+                <field name="content_after_header" type="editor" label="MOD_HP_STOCK_CONTENT_AFTER_HEADER_LABEL"
+                       filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            </fieldset>
+
+        </fields>
+    </config>
+
+</extension>

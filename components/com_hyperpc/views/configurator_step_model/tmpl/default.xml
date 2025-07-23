@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<metadata>
+    <layout title="COM_HYPERPC_CONFIGURATOR_STEP_MODEL_VIEW_TITLE" option="COM_HYPERPC">
+        <message>
+            <![CDATA[COM_HYPERPC_CONFIGURATOR_STEP_MODEL_VIEW_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="params" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+        <fieldset name="basic">
+            <field name="category_helper" type="hidden" value="category" />
+
+            <field name="description" type="hpmodules" />
+
+            <field name="categories" type="subform"
+               formsource="administrator/components/com_hyperpc/models/forms/subforms/compare_tree.xml" multiple="true" layout="joomla.form.field.subform.repeatable-table"
+               label="COM_HYPERPC_FIELD_COMPARE_TREE_LABEL" description="COM_HYPERPC_FIELD_COMPARE_TREE_DESC" />
+        </fieldset>
+    </fields>
+</metadata>

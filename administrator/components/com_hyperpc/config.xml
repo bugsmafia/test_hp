@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<config>
+    <fieldset name="global" label="JTOOLBAR_OPTIONS">
+
+        <field name="archive_pc_notify" type="text" label="COM_HYPERPC_PARAM_ARCHIVE_PC_NOTIFY_LABEL" />
+
+        <field name="site_context" type="context" default="hyperpc" label="COM_HYPERPC_PARAM_CONTEXT_LABEL" />
+
+        <field name="default_currency" type="list" default="rub" label="COM_HYPERPC_PARAM_DEFAULT_CURRENCY_LABEL">
+            <option value="rub">RUB</option>
+            <option value="usd">USD</option>
+            <option value="eur">EUR</option>
+            <option value="aed">AED</option>
+            <option value="kzt">KZT</option>
+        </field>
+
+        <field name="enable_gtm" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_GTM_ENABLE_LABEL" description="COM_HYPERPC_FIELD_GTM_ENABLE_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="gtm_container_id" type="text" label="COM_HYPERPC_FIELD_GTM_CONTAINER_ID_LABEL" />
+
+        <field name="ym_counter_id" type="text" label="COM_HYPERPC_FIELD_YM_COUNTER_ID_LABEL" />
+
+        <field name="calltouch_site_id" type="text" label="COM_HYPERPC_FIELD_CALLTOUCH_SITE_ID_LABEL" />
+
+        <field name="use_common_db" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_USE_COMMON_DB_LABEL" description="COM_HYPERPC_FIELD_USE_COMMON_DB_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="schedule" type="schedule"
+               label="COM_HYPERPC_PARAM_SHOP_SCHEDULE_LABEL"
+               description="COM_HYPERPC_PARAM_SHOP_SCHEDULE_DESC" />
+
+        <field name="schedule_string" type="multilanguagetext" label="COM_HYPERPC_STORE_SCHEDULE_LABEL" hint="COM_HYPERPC_STORE_SCHEDULE_HINT" />
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_AMO_CRM_SEPARATOR" />
+
+        <field name="amo_crm_debug_mode" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_AMO_CRM_DEBUG_LABEL" description="COM_HYPERPC_FIELD_AMO_CRM_DEBUG_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_SBERBANK_SEPARATOR" />
+
+        <field name="sberbank_username" type="text" label="COM_HYPERPC_PARAM_SBERBANK_USERNAME_LABEL" />
+        <field name="sberbank_password" type="text" label="COM_HYPERPC_PARAM_SBERBANK_PASSWORD_LABEL" />
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_DADATA_SEPARATOR" />
+
+        <field name="dadata_api_key" type="text" label="COM_HYPERPC_PARAM_DADATA_API_KEY_LABEL" />
+        <field name="dadata_secret_key" type="text" label="COM_HYPERPC_PARAM_DADATA_API_SECRET_LABEL" />
+
+        <field name="enable_dadata_api" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_ENABLE_DADATA_API_LABEL" description="COM_HYPERPC_FIELD_ENABLE_DADATA_API_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="moysklad" label="COM_HYPERPC_FIELDSET_MOYSKLAD"
+              description="COM_HYPERPC_FIELDSET_MOYSKLAD_DESC">
+        <field name="moysklad_login" type="text" label="COM_HYPERPC_FIELD_MOYSKLAD_LOGIN_LABEL" />
+        <field name="moysklad_password" type="text" label="COM_HYPERPC_FIELD_MOYSKLAD_PASSWORD_LABEL" />
+
+        <field name="create_entities_in_moysklad" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_CREATE_ENTITIES_IN_MOYSKLAD_LABEL" description="COM_HYPERPC_FIELD_CREATE_ENTITIES_IN_MOYSKLAD_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="moysklad_organization_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_ORGANIZATION_UUID_LABEL" description="COM_HYPERPC_FIELD_MOYSKLAD_ORGANIZATION_UUID_DESC"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD_CUSTOMER_ORDER" />
+
+        <field name="moysklad_sync_order_statuses" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_SYNC_ORDER_STATUSES_LABEL" description="COM_HYPERPC_FIELD_MOYSKLAD_SYNC_ORDER_STATUSES_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="moysklad_amo_lead_link_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_AMO_LEAD_LINK_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_amo_sync_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_AMO_SYNC_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_days_for_shipping_min_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_DAYS_FOR_SHIPPING_MIN_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_days_for_shipping_max_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_DAYS_FOR_SHIPPING_MAX_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_delivery_method_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_DELIVERY_METHOD_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_delivery_method_pickup_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_DELIVERY_METHOD_PICKUP_VALUE_LABEL" />
+
+        <field name="moysklad_delivery_method_shipping_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_DELIVERY_METHOD_SHIPPING_VALUE_LABEL" />
+
+        <field name="moysklad_shipping_service_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_SHIPPING_SERVICE_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_payment_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PAYMENT_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_payment_beznal_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PAYMENT_BEZNAL_VALUE_LABEL" />
+
+        <field name="moysklad_payment_card_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PAYMENT_CARD_VALUE_LABEL" />
+
+        <field name="moysklad_payment_credit_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PAYMENT_CREDIT_VALUE_LABEL" />
+
+        <field name="moysklad_payment_invoice_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PAYMENT_INVOICE_VALUE_LABEL" />
+
+        <field name="moysklad_payment_spot_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PAYMENT_SPOT_VALUE_LABEL" />
+
+        <field name="moysklad_promocode_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PROMOCODE_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_manager_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_MANAGER_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_order_product_create_mode" type="radio" class="btn-group" default="product"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_ORDER_PRODUCT_CREATE_MODE_LABEL" description="COM_HYPERPC_FIELD_MOYSKLAD_ORDER_PRODUCT_CREATE_MODE_DESC">
+            <option value="product">COM_HYPERPC_FIELD_MOYSKLAD_ORDER_PRODUCT_CREATE_MODE_PRODUCT</option>
+            <option value="variant">COM_HYPERPC_FIELD_MOYSKLAD_ORDER_PRODUCT_CREATE_MODE_VARIANT</option>
+        </field>
+
+        <field name="moysklad_product_uom_pcs_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PRODUCT_UOM_PCS_FIELD_UUID_LABEL"
+               showon="moysklad_order_product_create_mode:product" />
+
+        <field name="moysklad_product_config_id_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PRODUCT_CONFIG_ID_FIELD_UUID_LABEL"
+               showon="moysklad_order_product_create_mode:product" />
+
+        <field name="moysklad_config_id_characteristic_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_CONFIG_ID_CHARACTERISTIC_FIELD_LABEL"
+               showon="moysklad_order_product_create_mode:variant" />
+
+        <field name="moysklad_list_price_type_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_LIST_PRICE_TYPE_UUID_LABEL" />
+
+        <field name="moysklad_position_type_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_POSITION_TYPE_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_position_type_product_value" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_POSITION_TYPE_PRODUCT_VALUE_LABEL" />
+
+        <field name="moysklad_processingplan_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PROCESSINGPLAN_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_shipping_position" type="hplist" context="moyskladService" order="a.product_folder_id ASC"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_SHIPPING_POSITION_LABEL" />
+
+        <field name="moysklad_order_products_folder" type="hpfolders"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_ORDER_PRODUCTS_FOLDER_LABEL" />
+
+        <field name="moysklad_pc_instock_stores" type="hplist" context="moyskladStore" order="a.id" multiple="true"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_PC_INSTOCK_STORES_LABEL" />
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD_PROCESSINGPLAN" />
+
+        <field name="moysklad_check_availability_field_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_CHECK_AVAILABILITY_FIELD_UUID_LABEL" />
+
+        <field name="moysklad_folder_configs_from_orders_uuid" type="text" class="input-xlarge"
+               label="COM_HYPERPC_FIELD_MOYSKLAD_FOLDER_CONFIGS_FROM_ORDERS_UUID_LABEL" />
+
+    </fieldset>
+
+    <fieldset name="review" label="COM_HYPERPC_PARAM_REVIEW_LABEL">
+        <field name="show_reviews" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_SHOW_REVIEWS_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="review_tpl" path="media:hyperpc/render/reviews" type="elementlayout" default="default"
+               label="COM_HYPERPC_PARAM_REVIEW_TPL_LABEL" />
+
+        <field name="review_show_preview" type="list" default="5"  label="COM_HYPERPC_PARAM_REVIEW_SHOW_PREVIEW_LABEL">
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </field>
+
+        <field name="review_pre_moderation" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_PRE_MODERATION_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field type="text" name="review_img_width" default="220" label="COM_HYPERPC_PARAM_IMG_WIDTH_LABEL"/>
+        <field type="text" name="review_img_height" default="220"  label="COM_HYPERPC_PARAM_IMG_HEIGHT_LABEL"/>
+    </fieldset>
+
+    <fieldset name="account" label="COM_HYPERPC_PARAM_ACCOUNT_LABEL">
+
+        <field name="user_uid_field" type="fields" context="com_users.user" value_key="name"
+               label="COM_HYPERPC_PARAM_USER_UID_FIELD_TITLE"
+               description="COM_HYPERPC_PARAM_USER_UID_FIELD_DESC" />
+
+        <field name="user_uuid_field" type="fields" context="com_users.user" value_key="name"
+               label="COM_HYPERPC_PARAM_USER_UUID_FIELD_TITLE"
+               description="COM_HYPERPC_PARAM_USER_UUID_FIELD_DESC" />
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_SPAM_SEPARATOR" />
+
+        <field name="max_average_send_per_second" type="text" filter="float" default="0.4"
+               label="COM_HYPERPC_PARAM_MAX_AVERAGE_SEND_SMS_PER_SECOND_LABEL"
+               description="COM_HYPERPC_PARAM_MAX_AVERAGE_SEND_SMS_PER_SECOND_DESC"/>
+
+        <field name="ban_time" type="text" filter="intval" default="24"
+               label="COM_HYPERPC_PARAM_BAN_TIME_LABEL"
+               description="COM_HYPERPC_PARAM_BAN_TIME_DESC"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_AUTH_SEPARATOR" />
+
+        <field name="wait_time" type="text" filter="intval" default="60"
+               label="COM_HYPERPC_PARAM_WAIT_TIME_LABEL"
+               description="COM_HYPERPC_PARAM_WAIT_TIME_DESC"/>
+
+        <field name="auth" type="elementsposition" group="auth" filter="safehtml"
+               label="COM_HYPERPC_PARAM_AUTH_TYPES_LABEL"/>
+
+        <field name="configuration_actions" type="elementsposition" group="configuration_actions"
+               label="COM_HYPERPC_PARAM_CONFIGURATION_ACTIONS_LABEL"/>
+
+        <field name="account_allowed_status" type="pipelines" label="COM_HYPERPC_PARAM_ACCOUNT_ALLOWED_STATUS_LABEL" class="input-xxlarge"
+               description="COM_HYPERPC_PARAM_ACCOUNT_ALLOWED_STATUS_DESC" multiple="true" connector="table"/>
+
+        <field name="account_sell_status" type="pipelines" label="COM_HYPERPC_PARAM_ACCOUNT_SELL_STATUS_LABEL" class="input-xxlarge"
+               description="COM_HYPERPC_PARAM_ACCOUNT_SELL_STATUS_DESC" multiple="true" connector="table"/>
+
+        <field name="account_cancel_status" type="pipelines" label="COM_HYPERPC_PARAM_ACCOUNT_CANCEL_STATUS_LABEL" class="input-xxlarge"
+               description="COM_HYPERPC_PARAM_ACCOUNT_CANCEL_STATUS_DESC" multiple="true" connector="table"/>
+
+        <field name="user_manager_group" type="usergrouplist" multiple="true" label="COM_HYPERPC_PARAM_USER_MANAGER_GROUP_LABEL"/>
+    </fieldset>
+
+    <fieldset name="market" label="COM_HYPERPC_PARAM_MARKET_LABEL">
+
+        <field name="yandex_market_name" type="text" label="COM_HYPERPC_PARAM_YANDEX_MARKET_NAME_LABEL" />
+
+        <field name="yandex_market_company" type="text" label="COM_HYPERPC_PARAM_YANDEX_MARKET_COMPANY_LABEL" />
+
+        <field name="price_list" type="elementsposition" group="price_list"
+               label="COM_HYPERPC_PARAM_PRICE_LISTS_LABEL"/>
+
+    </fieldset>
+
+    <fieldset name="categories" label="COM_HYPERPC_PARAM_CATEGORIES_LABEL"
+              description="COM_HYPERPC_PARAM_CATEGORIES_DESC">
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_CATEGORY_TEASER_TITLE" />
+
+        <field name="cat_cols" type="list" label="COM_HYPERPC_PARAM_COLS_LABEL"
+               description="COM_HYPERPC_PARAM_COLS_DESC" default="4">
+            <option value="">COM_HYPERPC_PARAM_COLS_DESC_DEFAULT_OPTION</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </field>
+
+        <field name="product_folders_in_teaser_table" type="hpfolders" multiple="true"
+               label="COM_HYPERPC_FIELD_FOLDERS_IN_TEASER_TABLE_LABEL"
+               description="COM_HYPERPC_FIELD_FOLDERS_IN_TEASER_TABLE_DESC">
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_PARTS_TEASER_TITLE" />
+
+        <field name="parts_cols" type="list" label="COM_HYPERPC_PARAM_COLS_LABEL"
+               description="COM_HYPERPC_PARAM_PARTS_COLS_DESC" default="4">
+            <option value="">COM_HYPERPC_PARAM_COLS_DESC_DEFAULT_OPTION</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_PARTS_IMAGE_SIZE" />
+
+        <field name="catalog_part_img_width" type="text" label="COM_HYPERPC_PARAM_IMG_WIDTH_LABEL" default="319" />
+
+        <field name="catalog_part_img_height" type="text" label="COM_HYPERPC_PARAM_IMG_HEIGHT_LABEL" default="179" />
+
+    </fieldset>
+
+    <fieldset name="product" label="COM_HYPERPC_PARAM_PRODUCT_LABEL"
+              description="COM_HYPERPC_PARAM_PRODUCT_DESC">
+
+        <field name="product_cache" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_PRODUCT_CACHE_LABEL" description="COM_HYPERPC_FIELD_PRODUCT_CACHE_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_PRODUCTS_FILTER_SETTING" />
+
+        <field name="filter_debug" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_FILTER_DEBUG_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="filter_enabled_price" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_FILTER_ENABLED_PRICE_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="filter_enabled_category" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_FILTER_ENABLED_CATEGORY_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD" />
+
+        <field type="productIndex" name="index_fields_moysklad" context="com_hyperpc.position" label="COM_HYPERPC_PARAM_PRODUCT_INDEX_LABEL"/>
+
+        <field type="productfields" name="filter_product_allowed_moysklad" context="com_hyperpc.position" label="COM_HYPERPC_PARAM_PRODUCT_FILTER_LABEL"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_PRODUCTS_TEASER_TITLE" />
+
+        <field name="filter_type" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_FILTER_TYPE_LABEL" description="COM_HYPERPC_FIELD_FILTER_TYPE_DESC">
+            <option value="0">SERVER</option>
+            <option value="1">JS</option>
+        </field>
+
+        <field name="filter_enabled_stores" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_FILTER_ENABLED_STORES_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="product_order" type="list" label="COM_HYPERPC_PARAM_ORDER_LABEL"
+               description="COM_HYPERPC_PARAM_ORDER_DESC" default="a.id ASC" statuses="*,0,1,2,-2">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.price ASC">COM_HYPERPC_FILTER_ORDERING_PRICE_ASC</option>
+            <option value="a.price DESC">COM_HYPERPC_FILTER_ORDERING_PRICE_DESC</option>
+            <option value="a.ordering ASC">COM_HYPERPC_FILTER_ORDERING_ORDERING_ASC</option>
+            <option value="a.ordering DESC">COM_HYPERPC_FILTER_ORDERING_ORDERING_DESC</option>
+            <option value="a.name ASC">JGLOBAL_TITLE_ASC</option>
+            <option value="a.name DESC">JGLOBAL_TITLE_DESC</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_PRODUCTS_GALLERY_IMAGE_SIZE" />
+
+        <field name="product_gallery_width" type="text" label="COM_HYPERPC_PARAM_GALLERY_WIDTH_LABEL"
+               description="COM_HYPERPC_PARAM_GALLERY_WIDTH_DESC" default="300" />
+
+        <field name="product_gallery_height" type="text" label="COM_HYPERPC_PARAM_GALLERY_HEIGHT_LABEL"
+               description="COM_HYPERPC_PARAM_GALLERY_HEIGHT_DESC" default="200" />
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_PRODUCTS_TEASER_IMAGE_SIZE" />
+
+        <field name="product_img_teaser_width" type="text" label="COM_HYPERPC_PARAM_TEASER_WIDTH_LABEL"
+               description="COM_HYPERPC_PARAM_TEASER_WIDTH_DESC" />
+
+        <field name="product_img_teaser_height" type="text" label="COM_HYPERPC_PARAM_TEASER_HEIGHT_LABEL"
+               description="COM_HYPERPC_PARAM_TEASER_HEIGHT_DESC" />
+
+        <field name="product_colors_field" type="fields" context="com_hyperpc.position"
+               label="COM_HYPERPC_PARAM_PRODUCT_COLORS_FIELD_LABEL"
+               description="COM_HYPERPC_PARAM_PRODUCT_COLORS_FIELD_DESC" />
+
+        <field name="product_img_link" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_PRODUCT_IMG_LINK_LABEL" description="COM_HYPERPC_FIELD_PRODUCT_IMG_LINK_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="product_teaser_parts_order" type="list" label="COM_HYPERPC_PARAM_PRODUCT_TEASER_PARTS_ORDER_LABEL"
+               description="COM_HYPERPC_PARAM_PRODUCT_TEASER_PARTS_ORDER_LABEL" default="a.group_id ASC" statuses="*,0,1,2,-2">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="g.lft ASC">COM_HYPERPC_FILTER_ORDERING_GROUP_TREE_LFT_ASC</option>
+            <option value="a.group_id ASC">COM_HYPERPC_FILTER_ORDERING_GROUP_ID_ASC</option>
+            <option value="a.group_id DESC">COM_HYPERPC_FILTER_ORDERING_GROUP_ID_DESC</option>
+            <option value="a.name ASC">JGLOBAL_TITLE_ASC</option>
+            <option value="a.name DESC">JGLOBAL_TITLE_DESC</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+            <option value="a.price ASC">COM_HYPERPC_FILTER_ORDERING_PRICE_ASC</option>
+            <option value="a.price DESC">COM_HYPERPC_FILTER_ORDERING_PRICE_DESC</option>
+            <option value="a.ordering ASC">COM_HYPERPC_FILTER_ORDERING_ORDERING_ASC</option>
+            <option value="a.ordering DESC">COM_HYPERPC_FILTER_ORDERING_ORDERING_DESC</option>
+            <option value="a.balance ASC">COM_HYPERPC_FILTER_ORDERING_BALANCE_ASC</option>
+            <option value="a.balance DESC">COM_HYPERPC_FILTER_ORDERING_BALANCE_DESC</option>
+        </field>
+
+        <field name="buy_now_form_module" type="multilanguagemodules" label="COM_HYPERPC_PARAM_BUY_NOW_FORM_MODULE_LABEL"
+               description="COM_HYPERPC_PARAM_BUY_NOW_FORM_MODULE_DESC"/>
+
+        <field name="product_question_form_module_mode" type="radio" class="btn-group" default="simpleform"
+               label="COM_HYPERPC_PARAM_PRODUCT_QUESTION_FORM_MODULE_MODE_LABEL">
+            <option value="simpleform">SimpleForm2</option>
+            <option value="custom">HTML-код</option>
+        </field>
+
+        <field name="product_question_form_module" type="multilanguagemodules" label="COM_HYPERPC_PARAM_PRODUCT_QUESTION_FORM_MODULE_LABEL"
+               description="COM_HYPERPC_PARAM_PRODUCT_QUESTION_FORM_MODULE_DESC"/>
+
+        <field name="product_certificates" type="multilanguagemodules" label="COM_HYPERPC_FIELD_COMPUTER_CERTIFICATES_LABEL"
+               description="COM_HYPERPC_FIELD_COMPUTER_CERTIFICATES_DESC"/>
+
+        <field name="notebook_certificates" type="multilanguagemodules" label="COM_HYPERPC_FIELD_NOTEBOOK_CERTIFICATES_LABEL"
+               description="COM_HYPERPC_FIELD_NOTEBOOK_CERTIFICATES_DESC"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_ONLINE_SHOW_SEPARATOR_TITLE" />
+
+        <field name="online_show_stores" type="stores" multiple="true" label="COM_HYPERPC_PARAM_ONLINE_SHOW_STORES_LABEL" />
+
+        <field name="online_show_module" type="multilanguagemodules" label="COM_HYPERPC_PARAM_ONLINE_SHOW_MODULE_LABEL"
+               description="COM_HYPERPC_PARAM_ONLINE_SHOW_MODULE_DESC"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD" />
+
+        <field name="plugin_exclude_folders" type="hpfolders" label="COM_HYPERPC_PARAM_PLUGIN_EXCLUDE_CATEGORIES_LABEL"
+               description="COM_HYPERPC_PARAM_PLUGIN_EXCLUDE_CATEGORIES_DESC" multiple="true"
+               class="input-xxlarge input-large-text" filter="int" />
+    </fieldset>
+
+    <fieldset name="product_service" label="COM_HYPERPC_PARAM_PRODUCT_SERVICE_LABEL">
+
+        <field name="product_service_elements" type="elementsposition" group="product_service"
+               label="COM_HYPERPC_PARAM_PRODUCT_SERVICE_ELEMENTS_LABEL"/>
+
+        <field name="production_time_info_popup" type="multilanguagemodules" label="COM_HYPERPC_FIELD_PRODUCTION_TIME_INFO_POPUP_LABEL"
+               description="COM_HYPERPC_FIELD_PRODUCTION_TIME_INFO_POPUP_DESCRIPTION"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD" />
+
+        <field name="product_cart_service_folders" type="hpfolders" label="COM_HYPERPC_PARAM_PRODUCT_CART_SERVICE_FOLDERS_LABEL"
+               description="COM_HYPERPC_PARAM_PRODUCT_CART_SERVICE_FOLDERS_DESC" multiple="true"
+               class="input-xxlarge input-large-text" />
+
+        <field name="production_time_folder" type="hpfolders" label="COM_HYPERPC_FIELD_PRODUCTION_TIME_GROUP_LABEL"
+               class="input-xxlarge input-large-text"/>
+
+    </fieldset>
+
+    <fieldset name="part" label="COM_HYPERPC_PARAM_PART_LABEL" description="COM_HYPERPC_PARAM_PART_DESC">
+        <field name="part_question_form_module_mode" type="radio" class="btn-group" default="simpleform"
+               label="COM_HYPERPC_PARAM_PART_QUESTION_FORM_MODULE_MODE_LABEL">
+            <option value="simpleform">SimpleForm2</option>
+            <option value="custom">HTML-код</option>
+        </field>
+
+        <field name="part_question_form_module" type="multilanguagemodules" label="COM_HYPERPC_PARAM_PART_QUESTION_FORM_MODULE_LABEL"
+               description="COM_HYPERPC_PARAM_PART_QUESTION_FORM_MODULE_DESC"/>
+
+        <field name="notebook_groups" type="hpgroups" label="COM_HYPERPC_FIELD_NOTEBOOK_GROUPS_LABEL"
+               description="COM_HYPERPC_FIELD_NOTEBOOK_GROUPS_DESC" multiple="true"
+               class="input-xxlarge input-large-text" />
+
+        <!--        <field name="game_group" type="hpgroups" label="COM_HYPERPC_FIELD_GAME_GROUP_LABEL"-->
+        <!--               class="input-xxlarge input-large-text" />-->
+
+        <field name="parts_order" type="list" label="COM_HYPERPC_PARAM_PARTS_ORDER_LABEL"
+               description="COM_HYPERPC_PARAM_PARTS_ORDER_DESC" default="a.price ASC" statuses="*,0,1,2,-2">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.name ASC">JGLOBAL_TITLE_ASC</option>
+            <option value="a.name DESC">JGLOBAL_TITLE_DESC</option>
+            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+            <option value="a.price ASC">COM_HYPERPC_FILTER_ORDERING_PRICE_ASC</option>
+            <option value="a.price DESC">COM_HYPERPC_FILTER_ORDERING_PRICE_DESC</option>
+            <option value="a.ordering ASC">COM_HYPERPC_FILTER_ORDERING_ORDERING_ASC</option>
+            <option value="a.ordering DESC">COM_HYPERPC_FILTER_ORDERING_ORDERING_DESC</option>
+            <option value="a.balance ASC">COM_HYPERPC_FILTER_ORDERING_BALANCE_ASC</option>
+            <option value="a.balance DESC">COM_HYPERPC_FILTER_ORDERING_BALANCE_DESC</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_ACCESSORIES_IN_SHOWROOM_SEPARATOR"/>
+
+        <field name="upgrade_center_link" type="multilanguagetext" class="input-xlarge" label="COM_HYPERPC_FIELD_UPGRADE_CENTER_LINK_LABEL"
+               description="COM_HYPERPC_FIELD_UPGRADE_CENTER_LINK_DESC" />
+    </fieldset>
+
+    <fieldset name="credit" label="COM_HYPERPC_PARAM_CREDIT_LABEL">
+        <field name="credit_enable" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_CREDIT_ENABLE_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field type="text" filter="int" name="credit_clearance_day_limit"
+               label="COM_HYPERPC_PARAM_CREDIT_CLEARANCE_DAY_LIMIT_LABEL"/>
+
+        <field name="credit_calculate" type="elementsposition" group="credit_calculate"
+               label="COM_HYPERPC_FIELD_CREDIT_CALCULATE_LABEL"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_CREDIT_ELEMENT_FIELDS" />
+
+        <field name="credit" type="elementsposition" group="credit" filter="safehtml"
+               label="COM_HYPERPC_FIELD_CREDIT_METHODS_LABEL"/>
+
+        <field name="credit_info_popup" type="multilanguagemodules" label="COM_HYPERPC_FIELD_CREDIT_INFO_POPUP_LABEL"
+               description="COM_HYPERPC_FIELD_CREDIT_INFO_POPUP_DESCRIPTION"/>
+
+        <field name="credit_order_info" type="multilanguagemodules" label="COM_HYPERPC_FIELD_CREDIT_ORDER_INFO_LABEL"
+               description="COM_HYPERPC_FIELD_CREDIT_ORDER_INFO_DESCRIPTION"/>
+    </fieldset>
+
+    <fieldset name="delivery" label="COM_HYPERPC_PARAM_DELIVERY_LABEL">
+
+        <field name="delivery_type" type="list" default="Yandex" label="COM_HYPERPC_FIELD_DELIVERY_TYPE_LABEL" description="COM_HYPERPC_FIELD_DELIVERY_TYPE_DESC">
+            <option value="Yandex">Yandex</option>
+            <option value="Saferoute">Saferoute</option>
+            <option value="UAECustom">UAECustom</option>
+            <option value="KZCustom">KZCustom</option>
+        </field>
+
+        <field name="geo_type" type="radio" class="btn-group" default="cities"
+               label="COM_HYPERPC_FIELD_GEO_TYPE_LABEL" description="COM_HYPERPC_FIELD_GEO_TYPE_DESC">
+            <option value="cities">COM_HYPERPC_FIELD_GEO_TYPE_CITIES</option>
+            <option value="countries">COM_HYPERPC_FIELD_GEO_TYPE_COUNTRIES</option>
+        </field>
+
+        <field name="geo_cities" type="subform"
+               formsource="administrator/components/com_hyperpc/models/forms/subforms/geo_city.xml" multiple="true" layout="joomla.form.field.subform.repeatable-table"
+               label="COM_HYPERPC_FIELD_GEO_CITIES_LABEL" description="COM_HYPERPC_FIELD_GEO_CITIES_DESC" />
+
+        <field name="cash_on_delivery" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_CASH_ON_DELIVERY_LABEL" description="COM_HYPERPC_FIELD_CASH_ON_DELIVERY_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="courier_info_link" type="multilanguagetext" class="input-xlarge" label="COM_HYPERPC_FIELD_COURIER_INFO_LINK_LABEL"
+               description="COM_HYPERPC_FIELD_COURIER_INFO_LINK_DESC" />
+
+        <field name="connection_info_link" type="multilanguagetext" class="input-xlarge" label="COM_HYPERPC_FIELD_CONNECTION_INFO_LINK_LABEL"
+               description="COM_HYPERPC_FIELD_CONNECTION_INFO_LINK_DESC" />
+
+        <field name="connection_cost" type="number" class="input-small" label="COM_HYPERPC_FIELD_CONNECTION_COST_LABEL"
+               description="COM_HYPERPC_FIELD_CONNECTION_COST_DESC"
+               min="0" default="750" />
+
+        <field type="hpseparator" title="COM_HYPERPC_HYPERBOX_SEPARATOR"/>
+
+        <field name="package_group_moysklad" type="hpfolders" label="COM_HYPERPC_FIELD_PACKAGE_GROUP_MOYSKLAD_LABEL"
+               class="input-xxlarge input-large-text"/>
+
+        <field name="hyperbox_parts_moysklad" type="hplist" context="moyskladPart" order="a.product_folder_id ASC"
+               label="COM_HYPERPC_FIELD_HYPERBOX_PARTS_LABEL" description="COM_HYPERPC_FIELD_HYPERBOX_PARTS_DESC"
+               class="input-xxlarge input-large-text" multiple="true"/>
+
+        <field name="hyperbox_types" type="subform"
+               formsource="administrator/components/com_hyperpc/models/forms/subforms/hyperbox_types.xml" multiple="true" layout="joomla.form.field.subform.repeatable-table"
+               label="COM_HYPERPC_FIELD_HYPERBOX_TYPES_LABEL" />
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_MOYSKLAD_PART_BOXES_SEPARATOR"/>
+
+        <field name="product_part_boxes_moysklad" type="hplist" label="COM_HYPERPC_PARAM_PRODUCT_MOYSKLAD_PART_BOXES_LABEL"
+               description="COM_HYPERPC_PARAM_PRODUCT_PART_BOXES_DESC" context="moyskladPart" order="a.product_folder_id ASC"
+               class="input-xxlarge input-large-text" />
+
+        <field name="product_part_boxes_moysklad_weight" type="number" step="0.1" min="0.1" default="1" label="COM_HYPERPC_PARAM_MOYSKLAD_PART_BOXES_WEIGHT"/>
+
+        <field name="product_part_boxes_moysklad_length" type="number" min="1"  default="50" label="COM_HYPERPC_PARAM_MOYSKLAD_PART_BOXES_LENGTH"/>
+
+        <field name="product_part_boxes_moysklad_width" type="number" min="1" default="50" label="COM_HYPERPC_PARAM_MOYSKLAD_PART_BOXES_WIDTH"/>
+
+        <field name="product_part_boxes_moysklad_height" type="number" min="1" default="10" label="COM_HYPERPC_PARAM_MOYSKLAD_PART_BOXES_HEIGHT"/>
+
+    </fieldset>
+
+    <fieldset name="requisites" label="COM_HYPERPC_PARAM_REQUISITES_LABEL"
+              description="COM_HYPERPC_PARAM_REQUISITES_DESC">
+
+        <field name="vat" type="number" class="input-xxlarge" min="0" max="50" default="20"
+               label="COM_HYPERPC_FIELD_VAT_LABEL" />
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_REQUISITES_OF_COMPANY"/>
+
+        <field name="company_name" type="text" label="COM_HYPERPC_REQUISITE_SHORT_NAME_LABEL"/>
+
+        <field name="company_legal_address" type="text" class="input-xxlarge"
+               label="COM_HYPERPC_REQUISITE_LEGAL_ADDRESS_LABEL" description="COM_HYPERPC_REQUISITE_LEGAL_ADDRESS_DESC"/>
+
+        <field name="company_phones" type="text" class="input-xlarge"
+               label="COM_HYPERPC_REQUISITE_PHONES_LABEL" description="COM_HYPERPC_REQUISITE_PHONES_DESC"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_MICRODATA_ORGANIZATION"/>
+
+        <field name="microdata_organization_name" type="text"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_NAME_LABEL"/>
+
+        <field name="microdata_organization_description" type="textarea" class="input-xxlarge"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_DESCRIPTION_LABEL"/>
+
+        <field name="microdata_organization_logo" type="text" class="input-xxlarge"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_LOGO_LABEL" description="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_LOGO_DESC"/>
+
+        <field name="microdata_organization_country" type="text"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_COUNTRY_LABEL" />
+
+        <field name="microdata_organization_region" type="text"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_REGION_LABEL"/>
+
+        <field name="microdata_organization_locality" type="text"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_LOCALITY_LABEL"/>
+
+        <field name="microdata_organization_address" type="text" class="input-xxlarge"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_ADDRESS_LABEL"/>
+
+        <field name="microdata_organization_postal_code" type="text"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_POSTAL_CODE_LABEL"/>
+
+        <field name="microdata_organization_phone" type="text"
+               label="COM_HYPERPC_FIELD_MICRODATA_ORGANIZATION_PHONE_LABEL"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_SITE_PHONES"/>
+
+        <field name="site_phones" type="text" class="input-xxlarge"
+               label="COM_HYPERPC_FIELD_SITE_PHONES_LABEL" description="COM_HYPERPC_FIELD_SITE_PHONES_DESC"/>
+    </fieldset>
+
+    <fieldset name="configurator" label="COM_HYPERPC_PARAM_CONFIGURATOR_LABEL"
+              description="COM_HYPERPC_PARAM_CONFIGURATOR_DESC">
+
+        <field name="managers_configurator" type="hplist" context="moyskladProduct" order="a.name ASC" label="COM_HYPERPC_FIELD_MANAGERS_CONFIGURATOR_LABEL"
+               description="COM_HYPERPC_FIELD_MANAGERS_CONFIGURATOR_DESC"
+               class="input-xxlarge input-large-text" />
+
+        <field name="configurator_debug_form" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_CONFIGURATOR_DEBUG_FORM_LABEL"
+               description="COM_HYPERPC_FIELD_CONFIGURATOR_DEBUG_FORM_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="configurator_cart" type="hpmodules" label="COM_HYPERPC_FIELD_CONFIGURATOR_CART_LABEL"
+               description="COM_HYPERPC_FIELD_CONFIGURATOR_CART_DESC"/>
+
+        <field name="configurator_load_config" type="hpmodules" label="COM_HYPERPC_FIELD_CONFIGURATOR_LOAD_CONFIG_LABEL"
+               description="COM_HYPERPC_FIELD_CONFIGURATOR_LOAD_CONFIG_DESC"/>
+
+        <field name="configurator_instock_default" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_CONFIGURATOR_INSTOCK_DEFAULT_LABEL"
+               description="COM_HYPERPC_FIELD_CONFIGURATOR_INSTOCK_DEFAULT_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="configurator_instock_position" type="radio" class="btn-group" default="navbar"
+               label="COM_HYPERPC_FIELD_CONFIGURATOR_INSTOCK_POSITIONS_LABEL">
+            <option value="none">none</option>
+            <option value="navbar">navbar</option>
+            <option value="sidenav">sidenav</option>
+        </field>
+
+        <field name="warehouse_assembly" type="stores"  label="COM_HYPERPC_FIELD_CONFIGURATOR_WAREHOUSE_ASSEMBLY_LABEL"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_CONFIGURATOR_PARTS" />
+
+        <field name="configurator_part_img_width" type="text" label="COM_HYPERPC_PARAM_IMG_WIDTH_LABEL" default="319" />
+
+        <field name="configurator_part_img_height" type="text" label="COM_HYPERPC_PARAM_IMG_HEIGHT_LABEL" default="179" />
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_CONFIGURATOR_SAVE" />
+
+        <field name="conf_save_email" type="radio" class="btn-group btn-group-yesno" default="1"
+               label="COM_HYPERPC_FIELD_CONF_SAVE_EMAIL_LABEL" description="COM_HYPERPC_FIELD_CONF_SAVE_EMAIL_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="conf_save_email_form_content_before" showon="conf_save_email:1" type="multilanguagetextarea" rows="6" class="input-xxlarge" filter="safehtml"
+               label="COM_HYPERPC_FIELD_CONF_SAVE_EMAIL_FORM_CONTENT_BEFORE_LABEL" />
+
+        <field name="conf_save_email_form_content_after" showon="conf_save_email:1" type="multilanguagetextarea" rows="6" class="input-xxlarge" filter="safehtml"
+               label="COM_HYPERPC_FIELD_CONF_SAVE_EMAIL_FORM_CONTENT_AFTER_LABEL" />
+
+        <field name="conf_save_email_blacklist" showon="conf_save_email:1" type="textarea" rows="1" class="input-xxlarge"
+               label="COM_HYPERPC_FIELD_CONF_SAVE_EMAIL_BLACKLIST_LABEL"
+               description="COM_HYPERPC_FIELD_CONF_SAVE_EMAIL_BLACKLIST_DESC" />
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_CONFIGURATOR_ELEMENT_FIELDS" />
+
+        <!--        <field name="configurator_after_save" type="elementsposition" group="configurator_hook"-->
+        <!--               label="COM_HYPERPC_FIELD_CONFIGURATOR_HOOK_LABEL"/>-->
+
+        <field name="configurator_after_native_save" type="elementsposition" group="configurator_hook"
+               label="COM_HYPERPC_FIELD_CONFIGURATOR_HOOK_LABEL"/>
+
+        <field name="configurator_after_auth_save" type="elementsposition" execute="add_user,mail,pdf" group="configurator_hook"
+               label="COM_HYPERPC_FIELD_CONFIGURATOR_HOOK_LABEL"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD" />
+
+        <field name="configurator_root_category" type="hpfolders" label="COM_HYPERPC_FIELD_PRODUCT_CONFIGURATOR_ROOT_CATEGORY_LABEL"
+               description="COM_HYPERPC_FIELD_PRODUCT_CONFIGURATOR_ROOT_CATEGORY_DESC"
+               class="input-xxlarge input-large-text" />
+
+        <field name="cases_folder" type="hpfolders" label="COM_HYPERPC_FIELD_CASES_FOLDER_LABEL"
+               description="COM_HYPERPC_FIELD_CASES_FOLDER_DESC"
+               class="input-xxlarge input-large-text" />
+
+        <field name="product_customization_folders" type="hpfolders" label="COM_HYPERPC_FIELD_PRODUCT_CUSTOMIZATION_GROUPS_LABEL"
+               description="COM_HYPERPC_FIELD_PRODUCT_CUSTOMIZATION_GROUPS_DESC"
+               class="input-xxlarge input-large-text" multiple="true"/>
+
+        <field name="external_parts" type="hpfolders" label="COM_HYPERPC_FIELD_GROUP_OF_SINGLE_PART_LABEL"
+               description="COM_HYPERPC_FIELD_GROUP_OF_SINGLE_PART_DESC" multiple="true"
+               class="input-xxlarge input-large-text" />
+
+        <field name="folders_of_platform_components" type="hpfolders" label="COM_HYPERPC_PARAM_GROUPS_OF_PLATFORM_COMPONENTS_LABEL"
+               description="COM_HYPERPC_PARAM_GROUPS_OF_PLATFORM_COMPONENTS_DESC" multiple="true"
+               class="input-xxlarge input-large-text" />
+
+    </fieldset>
+
+    <fieldset name="cart" label="COM_HYPERPC_PARAM_CART_LABEL"
+              description="COM_HYPERPC_PARAM_CART_DESC">
+
+        <field name="order_min_price" type="text" label="COM_HYPERPC_CONF_ORDER_MIN_PRICE_LABEL"
+               description="COM_HYPERPC_CONF_ORDER_MIN_PRICE_DESC" default="3000" filter="int"/>
+
+        <field name="credit_min_price" type="text" label="COM_HYPERPC_CONF_CREDIT_MIN_PRICE_LABEL"
+               description="COM_HYPERPC_CONF_CREDIT_MIN_PRICE_DESC" default="40000" filter="int"/>
+
+        <field name="enable_promo_code" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_CONF_ENABLE_PROMO_CODE_LABEL" description="COM_HYPERPC_FIELD_CONF_ENABLE_PROMO_CODE_DESC">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field type="hpseparator" title="COM_HYPERPC_PARAM_ORDER_DEFAULT_STATUS_SEPARATOR_TITLE" />
+
+        <field name="order_default_status" type="pipelines" label="COM_HYPERPC_PARAM_ORDER_DEFAULT_STATUS_LABEL" connector="table"/>
+
+        <field name="order_default_status_credit" type="pipelines" label="COM_HYPERPC_PARAM_ORDER_DEFAULT_STATUS_CREDIT_LABEL" connector="table"/>
+
+        <field name="order_default_status_accessories" type="pipelines" label="COM_HYPERPC_PARAM_ORDER_DEFAULT_STATUS_ACCESSORIES_LABEL" connector="table"/>
+
+        <field name="order_default_status_accessories_upgrade" type="pipelines" label="COM_HYPERPC_PARAM_ORDER_DEFAULT_STATUS_ACCESSORIES_UPGRADE_LABEL" connector="table"/>
+
+        <field name="order_default_status_credit_upgrade" type="pipelines" label="COM_HYPERPC_PARAM_ORDER_DEFAULT_STATUS_CREDIT_UPGRADE_LABEL" connector="table"/>
+
+        <field type="hpseparator" title="COM_HYPERPC_SEPARATOR_CART_FIELDS" />
+
+        <field name="order_form" type="elementsposition" group="order,core" label="COM_HYPERPC_FIELD_CART_ORDER_FORM_LABEL"/>
+        <field name="payment" type="elementsposition" group="payment" label="COM_HYPERPC_FIELD_CART_PAYMENT_LABEL"/>
+
+        <field name="show_captcha" type="radio" class="btn-group btn-group-yesno" default="0"
+               label="COM_HYPERPC_FIELD_CART_SHOW_CAPTCHA_LABEL">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+
+        <field name="order_after_save" type="elementsposition" group="order_hook" label="COM_HYPERPC_FIELD_CART_ORDER_ORDER_AFTER_SAVE_LABEL"/>
+
+        <field name="order_agreement_text" type="multilanguagemodules" label="COM_HYPERPC_FIELD_ORDER_AGREEMENT_TEXT_LABEL"
+               description="COM_HYPERPC_FIELD_ORDER_AGREEMENT_TEXT_DESC"/>
+    </fieldset>
+
+    <fieldset name="compare" label="COM_HYPERPC_PARAM_COMPARE_LABEL">
+        <field name="compare_max" type="list" label="COM_HYPERPC_PARAM_COMPARE_MAX_LABEL" default="4">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </field>
+
+        <field name="compare_max_products" type="list" label="COM_HYPERPC_PARAM_COMPARE_MAX_PRODUCTS_LABEL" default="4">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="fps" label="COM_HYPERPC_PARAM_FPS_LABEL">
+        <field name="cpu_folder_id" type="hpfolders" label="COM_HYPERPC_PARAM_FPS_CPU_FOLDER_LABEL" />
+
+        <field name="gpu_folder_id" type="hpfolders" label="COM_HYPERPC_PARAM_FPS_GPU_FOLDER_LABEL" />
+
+        <field name="fps_gpu_field_id" type="fields" context="com_hyperpc.position" multiple="false"
+               label="COM_HYPERPC_PARAM_FPS_GPU"/>
+
+        <field name="fps_folders" type="hpfolders" label="COM_HYPERPC_PARAM_FPS_FOLDERS_LABEL"
+               description="COM_HYPERPC_PARAM_FPS_FOLDERS_DESC" multiple="true" />
+
+        <field name="fps_info_article" type="multilanguagetext" label="COM_HYPERPC_FIELD_FPS_INFO_LINK_LABEL"
+               description="COM_HYPERPC_FIELD_FPS_INFO_LINK_DESC" />
+
+        <field name="fps_resolutions" type="list" label="COM_HYPERPC_FIELD_FPS_RESOLUTIONS_LABEL"
+               description="COM_HYPERPC_FIELD_FPS_RESOLUTIONS_DESC" multiple="true"
+               layout="joomla.form.field.list-fancy-select">
+            <option value="fullhd">COM_HYPERPC_FIELD_FPS_RESOLUTIONS_FULLHD</option>
+            <option value="qhd">COM_HYPERPC_FIELD_FPS_RESOLUTIONS_QHD</option>
+            <option value="4k">COM_HYPERPC_FIELD_FPS_RESOLUTIONS_4K</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+        <field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" validate="rules" filter="rules"
+               component="com_hyperpc" section="component"/>
+    </fieldset>
+</config>

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="title" type="text" label="JGLOBAL_TITLE" description="JFIELD_TITLE_DESC"
+            class="input-xxlarge input-large-text" size="100" required="true" readonly="true"/>
+
+    <field name="alias" type="text" label="JFIELD_ALIAS_LABEL" description="JFIELD_ALIAS_DESC" size="45"
+            hint="JFIELD_ALIAS_PLACEHOLDER" />
+
+    <field name="parent_id" type="hpparent" label="COM_HYPERPC_FIELD_PARENT_LABEL"
+           description="COM_HYPERPC_FIELD_PARENT_DESC" model="product_folders" readonly="true"/>
+
+    <field name="uuid" type="text" label="uuid" description="uuid" readonly="true"/>
+
+    <field name="description" type="multilanguageeditor" label="JGLOBAL_DESCRIPTION" description="COM_HYPERPC_FIELD_DESCRIPTION_DESC"
+           filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+    <field name="published" type="moyskladstate" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" />
+
+    <field name="created_time" type="calendar" label="JGLOBAL_CREATED_DATE" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <field name="modified_time" type="calendar" label="JGLOBAL_FIELD_MODIFIED_LABEL" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <field name="lft" type="hidden" filter="unset" />
+    <field name="rgt" type="hidden" filter="unset" />
+    <field name="level" type="hidden" filter="unset" />
+
+    <field name="path" type="text" label="COM_CATEGORIES_PATH_LABEL" description="COM_CATEGORIES_PATH_DESC"
+           class="readonly" size="40" readonly="true" />
+
+    <fields name="translatable_params" label="JGLOBAL_FIELDSET_DESCRIPTION">
+        <fieldset name="translatable_params">
+            <field name="title" type="multilanguagetext" label="COM_HYPERPC_FIELD_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_TITLE_DESC" />
+
+            <field name="image_alt" type="multilanguagetext" label="COM_HYPERPC_FIELD_IMAGE_ALT_LABEL"
+                   description="COM_HYPERPC_FIELD_IMAGE_ALT_DESC" size="20"/>
+
+            <field name="product_option_select_name" type="multilanguagetext"
+                   label="COM_HYPERPC_FIELD_PRODUCT_OPTION_SELECT_NAME_LABEL"/>
+
+            <field name="add_service_text" type="multilanguagetext" label="COM_HYPERPC_FIELD_ADD_SERVICE_TEXT_LABEL"
+                   description="COM_HYPERPC_FIELD_ADD_SERVICE_TEXT_DESCRIPTION" class="input-xxlarge" />
+
+            <field name="service_desc" type="multilanguageeditor" label="COM_HYPERPC_FIELD_SERVICE_DESCRIPTION_LABEL"
+                   description="COM_HYPERPC_FIELD_SERVICE_DESCRIPTION_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            <field name="heading_in_teasers_table" type="multilanguagetext" label="COM_HYPERPC_FIELD_HEADING_IN_TEASERS_TABLE_LABEL"
+                   description="COM_HYPERPC_FIELD_HEADING_IN_TEASERS_TABLE_DESC" />
+
+            <field name="configurator_desc_heading" type="multilanguagetext" class="input-xxlarge" label="COM_HYPERPC_FIELD_CONFIGURATOR_DESCRIPTION_HEADING_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_DESCRIPTION_HEADING_DESC" />
+
+            <field name="configurator_desc" type="multilanguageeditor" label="COM_HYPERPC_FIELD_CONFIGURATOR_DESCRIPTION_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_DESCRIPTION_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            <field name="short_desc" type="multilanguageeditor" label="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_LABEL"
+                   description="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            <field name="content_before_promo" type="multilanguageeditor" label="COM_HYPERPC_FIELD_CONTENT_BEFORE_PROMO_LABEL"
+                   description="COM_HYPERPC_FIELD_CONTENT_BEFORE_PROMO_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            <field name="content_after_items" type="multilanguageeditor" label="COM_HYPERPC_FIELD_CONTENT_AFTER_ITEMS_LABEL"
+                   description="COM_HYPERPC_FIELD_CONTENT_AFTER_ITEMS_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+        </fieldset>
+    </fields>
+
+    <fields name="params" label="JGLOBAL_FIELDSET_BASIC">
+        <fieldset name="jparams">
+            <field name="show_title" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_SHOW_TITLE_LABEL" description="">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="image" type="media" label="COM_HYPERPC_FIELD_IMAGE_LABEL"
+                   description="COM_HYPERPC_FIELD_IMAGE_DESC" />
+
+            <field name="show_sub_categories" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_SHOW_SUB_CATEGORIES_LABEL" description="">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="filter_enabled_stores" type="list" class="btn-group btn-group-yesno"
+                   label="COM_HYPERPC_FIELD_FILTER_ENABLED_STORES_LABEL"
+                   description="COM_HYPERPC_FIELD_FILTER_ENABLED_STORES_DESC" default="-1">
+                <option value="-1">COM_HYPERPC_FROM_GLOBAL_PARAMS</option>
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="google_category_id" type="googlecategories" label="COM_HYPERPC_FIELD_GOOGLE_MERCHANT_ID_LABEL" description="COM_HYPERPC_FIELD_GOOGLE_MERCHANT_ID_DESC" />
+
+            <!-- Part Group -->
+            <field name="preorder" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_GROUP_PREORDER_LABEL" description="COM_HYPERPC_FIELD_GROUP_PREORDER_DESCRIPTION">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="retail" type="radio" label="COM_HYPERPC_FIELD_CAN_BUY_LABEL"  description="COM_HYPERPC_FIELD_CAN_BUY_DESC"
+                   default="0" class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="only_upgrade" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_FIELD_GROUP_SELL_ONLY_FOR_UPGRADE_LABEL" description="COM_HYPERPC_FIELD_GROUP_SELL_ONLY_FOR_UPGRADE_DESCRIPTION">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="part_filters_separator" type="hpseparator" title="COM_HYPERPC_FIELD_FILTER_SEPARATOR" />
+
+            <field name="use_parts_filter" type="radio" label="COM_HYPERPC_FIELD_USE_FOLDER_FILTER_LABEL"
+                   default="0" filter="bool"
+                   layout="joomla.form.field.radio.switcher"
+            >
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="parts_allow_filter_by_shops" type="radio" label="COM_HYPERPC_FIELD_FILTER_ENABLED_STORES_LABEL"
+                   default="1" filter="bool"
+                   showon="use_parts_filter:1"
+                   layout="joomla.form.field.radio.switcher"
+            >
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="parts_allow_filter_by_price" type="radio" label="COM_HYPERPC_FIELD_FILTER_ENABLED_PRICE_LABEL"
+                   default="1" filter="bool"
+                   showon="use_parts_filter:1"
+                   layout="joomla.form.field.radio.switcher"
+            >
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="allowed_filters" type="groupfields" label="COM_HYPERPC_FIELD_ALLOWED_FILTERS_LABEL" multiple="true"
+                   showon="use_parts_filter:1"
+                   layout="joomla.form.field.list-fancy-select"
+                   description="COM_HYPERPC_FIELD_ALLOWED_FILTERS_DESC" />
+
+            <field name="filter_type" type="list" class="btn-group btn-group-yesno"
+                   label="COM_HYPERPC_FIELD_FILTER_TYPE_LABEL"
+                   description="COM_HYPERPC_FIELD_FILTER_TYPE_DESC" default="-1">
+                <option value="-1">COM_HYPERPC_FROM_GLOBAL_PARAMS</option>
+                <option value="1">JS</option>
+                <option value="0">SERVER</option>
+            </field>
+
+            <field name="show_inactive" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_SHOW_INACTIVE_LABEL" description="">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="part_configurator_separator" type="hpseparator" title="COM_HYPERPC_CONFIGURATOR" />
+
+            <field name="configurator_filters" context="com_hyperpc.position" type="fields" assigned="true"
+                   label="COM_HYPERPC_FIELD_CONF_FILTERS_LABEL" description="COM_HYPERPC_FIELD_CONF_FILTERS_DESC" />
+
+            <field name="configurator_divide_by_availability" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_FIELD_CONFIGURATOR_DIVIDE_BY_AVAILABILITY_LABEL">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="configurator_min_count" type="list" label="COM_HYPERPC_FIELD_CONFIGURATOR_MIN_COUNT_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_MIN_COUNT_DESC" default="1">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+            </field>
+
+            <field name="configurator_max_count" type="list" label="COM_HYPERPC_FIELD_CONFIGURATOR_MAX_COUNT_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_MAX_COUNT_DESC" default="1">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+            </field>
+
+            <!-- services\parts -->
+            <field name="group_cols" type="list" label="COM_HYPERPC_PARAM_GROUP_COLS_LABEL"
+                   description="COM_HYPERPC_PARAM_GROUP_COLS_DESC" default="__global__">
+                <option value="__global__">COM_HYPERPC_PARAM_GLOBAL</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </field>
+
+            <field name="parts_order" type="list" label="COM_HYPERPC_PARAM_PARTS_ORDER_LABEL"
+                   description="COM_HYPERPC_PARAM_PARTS_ORDER_DESC" default="global" statuses="*,0,1,2,-2">
+                <option value="global">COM_HYPERPC_FROM_GLOBAL_PARAMS</option>
+                <option value="a.name ASC">JGLOBAL_TITLE_ASC</option>
+                <option value="a.name DESC">JGLOBAL_TITLE_DESC</option>
+                <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+                <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+                <option value="a.list_price ASC">COM_HYPERPC_FILTER_ORDERING_PRICE_ASC</option>
+                <option value="a.list_price DESC">COM_HYPERPC_FILTER_ORDERING_PRICE_DESC</option>
+                <option value="a.ordering ASC">COM_HYPERPC_FILTER_ORDERING_ORDERING_ASC</option>
+                <option value="a.ordering DESC">COM_HYPERPC_FILTER_ORDERING_ORDERING_DESC</option>
+                <option value="a.balance ASC">COM_HYPERPC_FILTER_ORDERING_BALANCE_ASC</option>
+                <option value="a.balance DESC">COM_HYPERPC_FILTER_ORDERING_BALANCE_DESC</option>
+            </field>
+
+            <field name="part_fields" type="partfields" label="COM_HYPERPC_PART_FIELDS_LABEL" multiple="true"
+                   description="COM_HYPERPC_PART_FIELDS_DESC" context="com_hyperpc.position" />
+
+            <field name="amo_product_custom_field" type="amoproductfields"
+                   label="COM_HYPERPC_FIELD_AMO_PRODUCT_CUSTOM_FIELD_LABEL"
+                   description="COM_HYPERPC_FIELD_AMO_PRODUCT_CUSTOM_FIELD_DESC" />
+
+            <field name="show_in_teaser" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_FIELD_SHOW_IN_TEASER_LABEL" description="COM_HYPERPC_FIELD_SHOW_IN_TEASER_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="show_in_teaser_large" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_FIELD_SHOW_IN_TEASER_LARGE_LABEL" description="COM_HYPERPC_FIELD_SHOW_IN_TEASER_LARGE_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="show_in_teaser_complectation" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_FIELD_SHOW_IN_TEASER_COMPLECTATION_LABEL" description="COM_HYPERPC_FIELD_SHOW_IN_TEASER_COMPLECTATION_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field type="hpseparator" name="teaser_table_setting_separator" title="COM_HYPERPC_TEASER_TABLE_SETTING"/>
+
+            <field name="teaser_table_field" context="com_hyperpc.position" type="fields"
+                   label="COM_HYPERPC_FIELD_TEASER_TABLE_FIELD_LABEL"
+                   desc="COM_HYPERPC_FIELD_TEASER_TABLE_FIELD_DESC" />
+
+            <field type="hpseparator" name="configurator_group_setting_separator" title="COM_HYPERPC_CONFIGURATOR_GROUP_SETTING"/>
+
+            <field name="configurator_layout" type="list" label="COM_HYPERPC_FIELD_CONFIGURATOR_LAYOUT_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_LAYOUT_DESC" default="list">
+                <option value="list">COM_HYPERPC_LIST_LAYOUT</option>
+                <option value="column">COM_HYPERPC_COLUMN_LAYOUT</option>
+                <option value="design">COM_HYPERPC_DESIGN_LAYOUT</option>
+            </field>
+
+            <field name="configurator_cols" type="list" label="COM_HYPERPC_FIELD_CONFIGURATOR_COLS_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_COLS_DESC" default="3">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </field>
+
+            <field name="configurator_enable_toggle" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_CONFIGURATOR_ENABLE_TOGGLE_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_ENABLE_TOGGLE_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="configurator_show_part_info" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_CONFIGURATOR_SHOW_PART_INFO_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_SHOW_PART_INFO_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="configurator_can_deselected" type="radio" class="btn-group btn-group-yesno"
+                   label="COM_HYPERPC_FIELD_CONFIGURATOR_CAN_DESELECTED_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_CAN_DESELECTED_DESC" default="1">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field type="hpseparator" name="mini_configurator_separator" title="COM_HYPERPC_SEPARATOR_MINI_CONFIGURATOR" />
+
+            <field name="mini_allowed_part_fields" type="partfields" multiple="true" context="com_hyperpc.position"
+                   label="COM_HYPERPC_FIELD_MINI_ALLOWED_PART_FIELDS_LABEL"
+                   description="COM_HYPERPC_FIELD_MINI_ALLOWED_PART_FIELDS_DESC"/>
+
+            <!-- Product Category -->
+            <field name="configurator_type" type="radio" class="btn-group" default="default"
+                   label="COM_HYPERPC_PARAM_CONFIGURATOR_TYPE_LABEL" description="COM_HYPERPC_PARAM_CONFIGURATOR_TYPE_DESC">
+                <option value="default">DEFAULT</option>
+                <option value="step">STEP</option>
+            </field>
+
+            <field name="product_type" type="list" label="COM_HYPERPC_PARAM_PRODUCT_TYPE_LABEL"
+                   description="COM_HYPERPC_PARAM_PRODUCT_TYPE_DESC" default="pc">
+                <option value="pc">COM_HYPERPC_PARAM_PRODUCT_TYPE_PC</option>
+                <option value="concept">COM_HYPERPC_PARAM_PRODUCT_TYPE_CONCEPT</option>
+                <option value="notebook">COM_HYPERPC_PARAM_PRODUCT_TYPE_NOTEBOOK</option>
+                <option value="workstation">COM_HYPERPC_PARAM_PRODUCT_TYPE_WORKSTATION</option>
+                <option value="server">COM_HYPERPC_PARAM_PRODUCT_TYPE_SERVER</option>
+                <option value="station">COM_HYPERPC_PARAM_PRODUCT_TYPE_STATION</option>
+            </field>
+
+            <field name="general_review" type="radio" class="btn-group" default="0"
+                   label="COM_HYPERPC_PARAM_GENERAL_REVIEW_LABEL" description="COM_HYPERPC_PARAM_GENERAL_REVIEW_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="complectation_fields" type="productfields" context="com_hyperpc.moysklad" label="COM_HYPERPC_PARAM_COMPLECTATION_FIELDS_LABEL" description="На данный момент не реализован вывод в шаблон"/>
+
+            <field name="days_to_build_min" type="number"  min="1" max="50" default="7" label="COM_HYPERPC_PARAM_PRODUCTS_DAYS_TO_BUILD_MIN"
+                   description="" />
+
+            <field name="days_to_build_max" type="number"  min="1" max="50" default="10" label="COM_HYPERPC_PARAM_PRODUCTS_DAYS_TO_BUILD_MAX"
+                   description="" />
+
+            <field name="hyperbox_type" type="hyperboxtype" label="COM_HYPERPC_FIELD_HYPERBOX_TYPE_LABEL"
+                   description="COM_HYPERPC_FIELD_HYPERBOX_TYPE_DESC" />
+
+            <field name="assembly_kit" type="hplist" context="moyskladPart" order="a.product_folder_id ASC" label="COM_HYPERPC_FIELD_ASSEMBLY_KIT_LABEL"
+                   description="COM_HYPERPC_FIELD_ASSEMBLY_KIT_DESC" />
+
+            <field name="products_cols" type="list" label="COM_HYPERPC_PARAM_COLS_LABEL"
+                   description="COM_HYPERPC_PARAM_PRODUCTS_COLS_DESC" default="4">
+                <option value="">COM_HYPERPC_PARAM_COLS_DESC_DEFAULT_OPTION</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </field>
+
+            <field name="show_elements" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_FIELD_SHOW_ELEMENTS_LABEL" description="">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="teasers_type" type="list" default="default"
+                   label="COM_HYPERPC_FIELD_PRODUCT_TEASER_TYPE_LABEL"
+                   description="COM_HYPERPC_FIELD_PRODUCT_TEASER_TYPE_DESC">
+                <option value="default">JDEFAULT</option>
+                <option value="table">Table</option>
+                <option value="lumen">Lumen</option>
+            </field>
+
+            <field name="groups_in_teaser_table" type="hpfolders" multiple="true"
+                   label="COM_HYPERPC_FIELD_FOLDERS_IN_TEASER_TABLE_LABEL"
+                   description="COM_HYPERPC_FIELD_FOLDERS_IN_TEASER_TABLE_LABEL">
+            </field>
+
+            <field type="hpseparator" name="configurator_separator" title="COM_HYPERPC_CONFIGURATOR" />
+
+            <field name="configurator_instock_default" type="list" label="COM_HYPERPC_FIELD_CONFIGURATOR_INSTOCK_DEFAULT_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_INSTOCK_DEFAULT_DESC" default="-1">
+                <option value="-1">COM_HYPERPC_FROM_GLOBAL_PARAMS</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="configurator_complectations" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_FIELD_CONFIGURATOR_COMPLECTATIONS_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_COMPLECTATIONS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="folders_of_platform_components" type="hpfolders" label="COM_HYPERPC_PARAM_GROUPS_OF_PLATFORM_COMPONENTS_LABEL"
+                   description="COM_HYPERPC_PARAM_GROUPS_OF_PLATFORM_COMPONENTS_DESC" multiple="true"
+                   class="input-xxlarge input-large-text" />
+        </fieldset>
+    </fields>
+
+    <fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+        <fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+            <field name="utp" type="multilanguagetextarea" label="COM_HYPERPC_FIELD_PRODUCT_UTP_LABEL"
+                   description="COM_HYPERPC_FIELD_PRODUCT_UTP_DESC" />
+
+            <field name="meta_title" type="multilanguagetext" label="COM_HYPERPC_FIELD_PAGE_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_PAGE_TITLE_DESC" />
+
+            <field name="meta_title_archive" type="multilanguagetext" label="COM_HYPERPC_FIELD_PAGE_TITLE_ARCHIVE_GROUP_LABEL"
+                   description="COM_HYPERPC_FIELD_PAGE_TITLE_DESC" />
+
+            <field name="yandex_m_name" type="multilanguagetext" label="COM_HYPERPC_FIELD_YANDEX_M_NAME_LABEL" />
+
+            <field name="meta_desc" type="multilanguagetextarea" label="JFIELD_META_DESCRIPTION_LABEL"
+                   description="JFIELD_META_DESCRIPTION_DESC" rows="6" />
+
+            <field name="meta_desc_archive" type="multilanguagetextarea" label="COM_HYPERPC_FIELD_PAGE_DESC_ARCHIVE_GROUP_LABEL"
+                   description="JFIELD_META_DESCRIPTION_DESC" rows="6" />
+
+            <field name="meta_keys" type="multilanguagetextarea" label="JFIELD_META_KEYWORDS_LABEL"
+                   description="JFIELD_META_KEYWORDS_DESC" rows="6" />
+
+            <field name="robots" type="multilanguagelist" label="JFIELD_METADATA_ROBOTS_LABEL"
+                   description="JFIELD_METADATA_ROBOTS_DESC" >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="index, follow" />
+                <option value="noindex, follow" />
+                <option value="index, nofollow" />
+                <option value="noindex, nofollow" />
+            </field>
+        </fieldset>
+    </fields>
+</form>

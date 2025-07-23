@@ -1,0 +1,41 @@
+@page {
+    margin: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.pdf-page {
+    position: relative;
+    page-break-inside: avoid;
+}
+
+.pdf-clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+hr.pdf-pagebreak {
+    page-break-after: always;
+    border: none;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table img {
+    max-width: none;
+}
+
+.pdf-text-center {
+    text-align: center;
+}
+
+.pdf-text-right {
+    text-align: right;
+}

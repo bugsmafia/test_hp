@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov
+-->
+<form>
+    <fields name="filter">
+        <field name="search" type="text" description="COM_HYPERPC_FILTER_NAME_DESC"
+               hint="COM_HYPERPC_FILTER_NAME_HINT" />
+
+        <field
+                name="published"
+                type="status"
+                label="COM_CONTENT_FILTER_PUBLISHED"
+                description="COM_CONTENT_FILTER_PUBLISHED_DESC"
+                onchange="this.form.submit();"
+        >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+    </fields>
+
+    <fields name="list">
+        <field name="limit" type="limitbox" label="COM_CATEGORIES_LIST_LIMIT" default="25"
+               description="COM_CATEGORIES_LIST_LIMIT_DESC" class="input-mini" onchange="this.form.submit();" />
+    </fields>
+</form>

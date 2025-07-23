@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<metadata>
+    <layout title="COM_HYPERPC_PRODUCT_LANDING_VIEW_TITLE" option="COM_HYPERPC">
+        <message>
+            <![CDATA[COM_HYPERPC_PRODUCT_LANDING_VIEW_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="request" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+        <fieldset name="request">
+            <field name="id" type="hplist" context="moyskladProduct" description="COM_HYPERPC_PRODUCT_LANDING_VIEW_FIELD_REQUEST_ID_DESC"
+                   label="COM_HYPERPC_PRODUCT_LANDING_VIEW_FIELD_REQUEST_ID_LABEL" required="true" />
+        </fieldset>
+    </fields>
+    <fields name="params" addfieldpath="/administrator/components/com_hyperpc/models/fields">
+        <fieldset name="content">
+            <field name="description" type="multilanguageeditor"
+                   label="COM_HYPERPC_PRODUCT_LANDING_VIEW_FIELD_DESCRIPTION_LABEL"
+                   filter="safehtml" />
+        </fieldset>
+    </fields>
+</metadata>

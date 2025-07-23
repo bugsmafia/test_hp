@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Artem Vyshnevskiy
+-->
+<extension type="plugin" version="3.1" group="simpleform2">
+    <name>SimpleForm2 - Subject</name>
+    <version>1.0.0</version>
+    <description>Advanced mail subject</description>
+    <creationDate>February 2018</creationDate>
+    <author>Artem Vyshnevskiy</author>
+    <license>Proprietary https://hyperpc.ru/license</license>
+    <copyright>Copyright (C) HYPERPC,  All rights reserved.</copyright>
+    <files>
+        <filename plugin="subject">subject.php</filename>
+    </files>
+</extension>

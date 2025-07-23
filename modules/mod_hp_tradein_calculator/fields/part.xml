@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <field name="part_name" type="text" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_PART_NAME_LABEL" required="true" />
+    <field name="part_price" type="text" label="MOD_HP_TRADEIN_CALCULATOR_FIELD_PART_PRICE_LABEL" required="true" filter="int" />
+</form>

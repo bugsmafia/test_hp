@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="group_id" type="hpgroups" label="COM_HYPERPC_FIELD_GROUPS_LABEL"
+           description="COM_HYPERPC_FIELD_GROUPS_DESC" class="input-xxlarge input-large-text jsGroups" />
+
+    <field name="name" type="text" label="JGLOBAL_TITLE" description="JFIELD_TITLE_DESC"
+            class="input-xxlarge input-large-text" required="true" />
+
+    <field name="alias" type="text" label="JFIELD_ALIAS_LABEL" description="JFIELD_ALIAS_DESC"
+            hint="JFIELD_ALIAS_PLACEHOLDER" />
+
+    <field name="description" type="editor" label="JGLOBAL_DESCRIPTION" description="COM_HYPERPC_FIELD_DESCRIPTION_DESC"
+           filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+    <field name="price" type="number" label="COM_HYPERPC_FIELD_PRICE_LABEL"
+           description="COM_HYPERPC_FIELD_PRICE_DESC" required="true" />
+
+    <field name="rate" type="number" label="COM_HYPERPC_FIELD_PART_RATE_LABEL" description="COM_HYPERPC_FIELD_PART_RATE_DESC"/>
+
+    <field name="image" type="media" label="COM_HYPERPC_FIELD_IMAGE_LABEL"
+           description="COM_HYPERPC_FIELD_IMAGE_DESC" />
+
+    <field name="ordering" type="number" label="COM_HYPERPC_FIELD_ORDERING_LABEL"
+           description="COM_HYPERPC_FIELD_ORDERING_DESC" />
+
+    <field name="published" type="radio" label="JSTATUS"  description="JFIELD_PUBLISHED_DESC" default="1"
+           class="btn-group btn-group-yesno">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field>
+
+    <field name="created_user_id" type="user" label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+           desc="JGLOBAL_FIELD_CREATED_BY_DESC" />
+
+    <field name="created_time" type="calendar" label="JGLOBAL_CREATED_DATE" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <field name="modified_user_id" type="user" label="JGLOBAL_FIELD_MODIFIED_BY_LABEL" class="readonly"
+           readonly="true" filter="unset" />
+
+    <field name="modified_time" type="calendar" label="JGLOBAL_FIELD_MODIFIED_LABEL" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="jparams">
+
+            <field name="option_fields" type="partfields" group_key="group_id" multiple="true"
+                   execute-type="hpseparator"
+                   field_set_title="COM_HYPERPC_OPTION_FIELD_REDEFINITION"
+                   label="COM_HYPERPC_FIELD_CONF_FILTERS_LABEL"
+                   desc="COM_HYPERPC_FIELD_CONF_FILTERS_DESC" />
+
+            <field name="configurator_title" type="textarea" label="COM_HYPERPC_FIELD_CONFIGURATOR_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_CONFIGURATOR_TITLE_DESC" class="col-12" rows="6" filter="RAW" />
+
+            <field name="title" type="text" label="COM_HYPERPC_FIELD_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_TITLE_DESC" class="input-xxlarge input-large-text" />
+
+            <field name="default_option" type="hidden" />
+
+            <field name="option_btn_title" type="text" label="COM_HYPERPC_FIELD_OPTION_BTN_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_OPTION_BTN_TITLE_DESC" />
+
+            <field name="show_title" type="radio" class="btn-group btn-group-yesno" default="1"
+                    label="COM_HYPERPC_FIELD_SHOW_TITLE_LABEL" description="">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field name="short_desc" type="editor" label="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_LABEL"
+                   description="COM_HYPERPC_FIELD_SHORT_DESCRIPTION_DESC"
+                   filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak" />
+
+            <field name="full_width" type="radio" class="btn-group btn-group-yesno" default="0"
+                   label="COM_HYPERPC_CONTENT_WIDTH">
+                <option value="0">COM_HYPERPC_CONTENT_WIDTH_CONTAINER</option>
+                <option value="1">COM_HYPERPC_CONTENT_FULL_WIDTH</option>
+            </field>
+
+            <field name="delivery_order_elements" type="orderelements" multiple="true" form="order"
+                   label="COM_HYPERPC_DELIVERY_ORDER_ELEMENTS_LABEL" />
+
+            <field name="delivery_allowed_payments" type="hpelements" multiple="true" hideDefault="true"
+                   elements="payment" label="COM_HYPERPC_DELIVERY_ALLOWED_PAYMENT_TYPES" />
+
+            <field name="delivery_default_payment" type="hpelements" elements="payment"
+                   label="COM_HYPERPC_DELIVERY_DELAULT_PAUMENT_TYPE" />
+
+            <field name="delivery_add_to_cart_items" type="radio" class="btn-group btn-group-yesno" default="1"
+                   label="COM_HYPERPC_DELIVERY_ADD_TO_CART_ITEMS_LABEL">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+        </fieldset>
+    </fields>
+
+    <fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+        <fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+            <field name="meta_title" type="text" label="COM_HYPERPC_FIELD_PAGE_TITLE_LABEL"
+                   description="COM_HYPERPC_FIELD_PAGE_TITLE_DESC" />
+
+            <field name="meta_desc" type="textarea" label="JFIELD_META_DESCRIPTION_LABEL"
+                   description="JFIELD_META_DESCRIPTION_DESC" rows="6" />
+
+            <field name="meta_keys" type="textarea" label="JFIELD_META_KEYWORDS_LABEL"
+                   description="JFIELD_META_KEYWORDS_DESC" rows="6" />
+
+            <field name="robots" type="list" label="JFIELD_METADATA_ROBOTS_LABEL"
+                   description="JFIELD_METADATA_ROBOTS_DESC" >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+                <option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+                <option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+                <option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

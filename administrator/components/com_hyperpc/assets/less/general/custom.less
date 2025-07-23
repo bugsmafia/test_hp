@@ -1,0 +1,49 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+//
+
+.hp-wrapper {
+    max-width: 1520px;
+}
+
+.hp-wrapper-form {
+    max-width: 1860px;
+}
+
+.hp-group-row {
+    height: 36px;
+
+    td > .btn-group {
+        display: none;
+    }
+
+    .hp-status-row {
+
+        .btn {
+            cursor: inherit !important;
+        }
+
+    }
+
+    &:hover {
+
+        td > .btn-group {
+            display: inline-block;
+            margin-left: 10px;
+            border-left: 1px solid #ddd;
+            padding-left: 10px;
+        }
+
+    }
+
+}

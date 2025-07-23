@@ -1,0 +1,217 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Artem Vyshnevskiy
+//
+
+.hp-step-configurator {
+    overflow: hidden;
+
+    &__aside {
+        width: 30%;
+    
+        &-header,
+        &-toggler {
+            display: none;
+        }
+    
+        @media (max-width: @breakpoint-small-max) {
+            position: fixed;
+            top: 51px;
+            left: 0;
+            right: 0;
+            width: auto;
+            background: #333;
+            z-index: 1000;
+            padding: 0 15px;
+            border-bottom: 1px solid #2a2a2a; // @global border
+    
+            &-header {
+                display: block;
+                padding: 10px 0 25px;
+            }
+    
+            &-content {
+                display: none;
+                padding-right: 0 !important;
+            }
+    
+            &-toggler {
+                display: block;
+                margin: 5px;
+                padding-bottom: 5px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                text-align: center;
+            }
+    
+            img {
+                width: 188px;
+            }
+    
+            &--expanded {
+                background: #111;
+    
+                .hp-step-configurator__aside-header {
+                    display: none;
+                }
+    
+                .hp-step-configurator__aside-content {
+                    display: block;
+                    max-height: 75vh;
+                    overflow: auto;
+                    box-sizing: border-box;
+                }
+            }
+        }
+    
+    }
+
+    &__main {
+        position: relative;
+        background: #191919;
+        padding-top: 40px;
+        padding-bottom: 40px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 100%;
+            right: -9999px;
+            background: #191919;
+        }
+    }
+
+    &__button-platform {
+        padding: 10px 15px;
+        width: ~"calc(100% - 3px)";
+        margin-top: 3px;
+        font-size: 1rem;
+        text-transform: none;
+        background: #1f1f1f;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        text-align: left;
+
+        &, & .uk-text-small {
+            line-height: 1.2;
+        }
+
+        &.uk-button-primary {
+            background: #555;
+            border-color: #a5a5a5;
+            cursor: default;
+        }
+
+        &.uk-disabled {
+            color: #666;
+            opacity: .5;
+        }
+
+        .uk-icon {
+            margin-right: 15px;
+        }
+    }
+
+    &__aside-content {
+        padding: 20px 20px 40px 0;
+    }
+
+    &__progress {
+        transition: transform ease-in-out .2s;
+    }
+
+    &__step {
+        display: block;
+        border-top: 3px solid transparent;
+        padding: 10px;
+        color: #999;
+        min-width: 200px;
+        pointer-events: none;
+
+        &:hover {
+            color: #999;
+            text-decoration: none;
+        }
+
+        &--past {
+            color: #fff;
+            border-color: #555;
+            cursor: pointer;
+            pointer-events: all;
+
+            &:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+
+        &--active {
+            border-color: #94bb4a;
+            color: #fff;
+
+            &:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+
+    &__slider-series-nav {
+        a {
+            border-bottom: 2px solid transparent;
+        }
+
+        > .uk-active > a {
+            border-color: #f51616;
+        }
+    }
+
+    &__price {
+        font-size: 1.25rem;
+        color: #fff;
+    }
+
+    &__sticky {
+        @media (max-width: @breakpoint-small-max) {
+            .uk-container {
+                padding: 0;
+                display: flex;
+
+                > * {
+                    width: 100%;
+                    padding: 0;
+                    margin: 0 !important;
+                }
+            }
+        }
+
+        &--fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+}
+
+@media (max-width: @breakpoint-small-max) {
+    .view-step_configurator {
+        .breadcrumb {
+            padding-top: 67px;
+        }
+    }
+}

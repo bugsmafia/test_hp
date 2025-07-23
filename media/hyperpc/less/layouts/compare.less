@@ -1,0 +1,43 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Artem Vyshnevskiy
+//
+
+.hp-compare-categories-list,
+.hp-compare-products-list {
+    padding: 0;
+    list-style: none;
+
+    & > * {
+        & > * {
+            padding: 15px 15px;
+            cursor: pointer;
+        }
+
+        &:nth-child(n+2) {
+            border-top: 1px solid rgba(128, 128, 128, 0.5);
+        }
+    }
+}
+
+.hp-compare-products-list {
+    & > * {
+        & > * {
+            padding: 20px 0;
+
+            &.inCompare {
+                opacity: 0.3;
+                pointer-events: none;
+            }
+        }
+    }
+}

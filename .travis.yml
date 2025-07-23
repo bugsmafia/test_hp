@@ -1,0 +1,21 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+
+matrix:
+  fast_finish: true
+
+before_script:
+  - chmod ugo+x scripts/package.sh
+  - chmod ugo+x scripts/prepare.sh
+  - composer update
+
+script:
+  - ./scripts/package.sh
+  - ./scripts/prepare.sh
+  - composer test
+
+after_script:
+  - composer coveralls

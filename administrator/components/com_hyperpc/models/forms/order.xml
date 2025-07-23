@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="cid" type="hpcid" label="COM_HYPERPC_ORDER_CID_LABEL" description="COM_HYPERPC_ORDER_CID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="created_user_id" type="user" label="COM_HYPERPC_CREATED_USER_ID_LABEL" default="0" />
+
+    <field name="params" type="hidden" />
+</form>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Roman Evsyukov
+-->
+<form>
+    <field name="field_name" type="text" label="Field name" required="true"/>
+    <field name="entity_field" type="list" label="Entity field">
+        <option value="id">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_ID</option>
+        <option value="title">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_TITLE</option>
+        <option value="shortTitle">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_SHORT_TITLE</option>
+        <option value="description">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_DESCRIPTION</option>
+        <option value="link">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_LINK</option>
+        <option value="imageLink">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_IMAGE_LINK</option>
+        <option value="price">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_PRICE</option>
+        <option value="vendor">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_VENDOR</option>
+        <option value="availability">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_AVAILABILITY</option>
+        <option value="availabilityDate">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_AVAILABILITY_DATE</option>
+        <option value="condition">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_CONDITION</option>
+        <option value="model">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_MODEL</option>
+        <option value="categoryId">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_CATEGORY_ID</option>
+        <option value="manufacturerWarranty">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_MANUFACTURER_WARRANTY</option>
+        <option value="delivery">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_DELIVERY</option>
+        <option value="pickup">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_PICKUP</option>
+        <option value="vendorCode">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_VENDOR_CODE</option>
+        <option value="barcode">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_BARCODE</option>
+        <option value="typePrefix">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_TYPE_PREFIX</option>
+        <option value="salesNotes">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_SALES_NOTES</option>
+        <option value="googleProductCategory">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_GOOGLE_PRODUCT_CATEGORY</option>
+        <option value="measurements">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_MEASUREMENTS</option>
+        <option value="purchasePrice">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_PURCHASE_PRICE</option>
+        <option value="emptyField">HYPER_ELEMENT_PRICE_LIST_CSV_FIELD_EMPTY</option>
+    </field>
+</form>

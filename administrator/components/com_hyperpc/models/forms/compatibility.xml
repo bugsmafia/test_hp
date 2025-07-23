@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    HYPERPC - The shop of powerful computers.
+
+    This file is part of the HYPERPC package.
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @package    HYPERPC
+    @license    Proprietary
+    @copyright  Proprietary https://hyperpc.ru/license
+    @link       https://github.com/HYPER-PC/HYPERPC
+    @author     Sergey Kaslistratov <kalistratov.s.m@gmail.com>
+-->
+<form addfieldpath="/administrator/components/com_hyperpc/models/fields">
+    <field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC" default="0"
+           class="readonly" readonly="true" />
+
+    <field name="type" type="compatibilitytypes" label="COM_HYPERPC_FIELD_COMPATIBILITY_TYPE_LABEL" class="form-select" required="true" />
+
+    <field name="name" type="text" label="JGLOBAL_TITLE" description="JFIELD_TITLE_DESC"
+            class="input-xxlarge input-large-text" required="true" />
+
+    <field name="alias" type="text" label="JFIELD_ALIAS_LABEL" description="JFIELD_ALIAS_DESC"
+            hint="JFIELD_ALIAS_PLACEHOLDER" />
+
+    <field name="published" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" default="1" class="chzn-color-state">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field>
+
+    <field name="created_user_id" type="user" label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+           desc="JGLOBAL_FIELD_CREATED_BY_DESC" />
+
+    <field name="created_time" type="calendar" label="JGLOBAL_CREATED_DATE" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <field name="modified_user_id" type="user" label="JGLOBAL_FIELD_MODIFIED_BY_LABEL" class="readonly"
+           readonly="true" filter="unset" />
+
+    <field name="modified_time" type="calendar" label="JGLOBAL_FIELD_MODIFIED_LABEL" class="form-control"
+           readonly="true" translateformat="true" showtime="true" filter="user_utc" />
+
+    <fields name="params" label="COM_CATEGORIES_FIELD_BASIC_LABEL">
+        <fieldset name="jparams" addfieldpath="/administrator/components/com_content/models/fields">
+            <field type="hpseparator" name="moysklad_separator" title="COM_HYPERPC_SEPARATOR_MOYSKLAD" />
+
+            <field name="moysklad" type="compatibilitymoysklad" label="COM_HYPERPC_FIELD_COMPATIBILITY_TYPE_LABEL" />
+        </fieldset>
+    </fields>
+</form>

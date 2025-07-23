@@ -1,0 +1,101 @@
+//
+// HYPERPC - The shop of powerful computers.
+//
+// This file is part of the HYPERPC package.
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+//
+// @package    HYPERPC
+// @license    Proprietary
+// @copyright  Proprietary https://hyperpc.ru/license
+// @link       https://github.com/HYPER-PC/HYPERPC.
+// @author     Artem Vyshnevskiy
+//
+
+.hp-configurations-table-item {
+    @media (max-width: @breakpoint-small-max) {
+        position: relative;
+        padding: 10px 0 10px 120px;
+
+        &__image-cell {
+            position: absolute;
+            left: 0;
+            top: 10px;
+        }
+
+        &__info-cell {
+            padding-right: 20px !important;
+
+            .uk-text-primary {
+                font-weight: 700;
+            }
+        }
+
+        &__price-cell { padding-left: 0 !important}
+
+        &__date-cell {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        &__more-cell {
+            padding: 0 !important;
+
+            button {
+                position: absolute;
+                right: 0;
+                top: 35px;
+                transform: rotate(90deg);
+                padding: 0 !important;
+                z-index: 1;
+
+                svg {
+                    max-width: 20px;
+                }
+            }
+        }
+    }
+
+    @media (min-width: @breakpoint-medium) {
+        &__price-cell,
+        &__date-cell,
+        &__more-cell {
+            line-height: 67px;
+        }
+
+        &__more-cell {
+            .uk-dropdown {
+                line-height: 1.5;
+            }
+        }
+    }
+}
+
+.hp-element-note {
+    &__leave-btn {
+        .uk-icon {
+            margin-right: 5px;
+        }
+    }
+
+    &__text-wrapper {
+        button {
+            padding: 0 3px;
+        }
+    }
+
+    &__textarea {
+        resize: vertical;
+    }
+}
+
+.hp-profile-reviews {
+    .star-on-png,
+    .star-off-png,
+    .star-half-png {
+        font-size: 1.4rem;
+    }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+    <name>HyperPC</name>
+    <creationDate>July 2023</creationDate>
+    <author>Artem Vyshnevskiy</author>
+    <author>Roman Evsyukov</author>
+    <authorUrl>https://hyperpc.ru</authorUrl>
+    <version>2.0</version>
+    <description>
+        HyperPC main component
+    </description>
+
+    <namespace path="src/">HyperPC\Component\HyperPC</namespace>
+
+    <files folder="site/">
+        <folder>language</folder>
+    </files>
+
+    <languages>
+        <language tag="ru-RU">language/ru-RU/ru-RU.com_hyperpc.ini</language>
+    </languages>
+             
+    <administration>
+        <menu view="cpanel" link="option=com-hyperpc">COM_HYPERPC</menu>
+
+        <submenu>
+            <menu view="dashboard" link="option=com_hyperpc&amp;view=dashboard">COM_HYPERPC_SIDEBAR_DASHBOARD</menu>
+            <menu view="compatibilities" link="option=com_hyperpc&amp;view=compatibilities">COM_HYPERPC_SIDEBAR_COMPATIBILITIES</menu>
+            <menu view="reviews" link="option=com_hyperpc&amp;view=reviews">COM_HYPERPC_SIDEBAR_REVIEWS</menu>
+            <menu view="games" link="option=com_hyperpc&amp;view=games">COM_HYPERPC_SIDEBAR_GAMES</menu>
+            <menu view="orders" link="option=com_hyperpc&amp;view=orders">COM_HYPERPC_SIDEBAR_ORDERS</menu>
+            <menu view="promo_codes" link="option=com_hyperpc&amp;view=promo_codes">COM_HYPERPC_SIDEBAR_PROMO_CODES</menu>
+            <menu view="workers" link="option=com_hyperpc&amp;view=workers">COM_HYPERPC_SIDEBAR_WORKERS</menu>
+            <menu view="statuses" link="option=com_hyperpc&amp;view=statuses">COM_HYPERPC_SIDEBAR_STATUSES</menu>
+            <menu view="positions" link="option=com_hyperpc&amp;view=positions">COM_HYPERPC_SIDEBAR_POSITIONS</menu>
+            <menu view="moysklad_stores" link="option=com_hyperpc&amp;view=moysklad_stores">COM_HYPERPC_SIDEBAR_MOYSKLAD_STORES</menu>
+            <menu view="moysklad" link="option=com_hyperpc&amp;view=moysklad">COM_HYPERPC_SIDEBAR_MOYSKLAD</menu>
+            <menu view="manager" link="option=com_hyperpc&amp;view=manager">COM_HYPERPC_SIDEBAR_MANAGER</menu>
+        </submenu>
+
+        <files folder="admin/">
+            <folder>tmpl</folder>
+        </files>
+
+        <languages>
+            <language tag="ru-RU">language/ru-RU/ru-RU.com_hyperpc.ini</language>
+            <language tag="ru-RU">language/ru-RU/ru-RU.com_hyperpc.sys.ini</language>
+        </languages>
+    </administration>
+</extension>

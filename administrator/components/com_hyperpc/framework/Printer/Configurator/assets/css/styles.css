@@ -1,0 +1,116 @@
+/**
+ * HYPERPC - The shop of powerful computers.
+ *
+ * This file is part of the HYPERPC package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package     HYPERPC
+ * @license     Proprietary
+ * @copyright   Proprietary https://hyperpc.ru/license
+ * @link        https://github.com/HYPER-PC/HYPERPC".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ */
+
+.hp-pdf {
+    width: 180mm;
+    margin: 0 auto;
+    font-size: 11pt;
+}
+
+.hp-pdf .unstyled {
+    list-style: none;
+}
+
+.hp-pdf .hp-pdf-address-list li {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.hp-text-right {
+    text-align: right;
+}
+
+.hp-text-left {
+    text-align: left;
+}
+
+.hp-pdf-site-link {
+    font-size: 10px;
+    line-height: 9px;
+}
+
+.hp-pdf a.hp-link {
+    color: #ff2337;
+    border-bottom: 1px solid #ff2337;
+    text-decoration: none;
+}
+
+.hp-table-content {
+    width: 100%
+}
+
+.hp-table-content td {
+    border-collapse: collapse;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.hp-table-content .hp-is-last td {
+    border-bottom: none;
+}
+
+.hp-table-content .hp-table-separator td {
+    font-size: 12px;
+    background: #ebebeb;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.hp-table-header {
+    border-bottom: 2px solid #ff2337;
+    margin-bottom: 4px;
+}
+
+.hp-pdf .hp-pdf-address-list {
+    font-size: 10px !important;
+    line-height: 9px !important;
+}
+
+.hp-pdf .hp-product-name {
+    margin-top: 0;
+    font-size: 20px;
+    line-height: 16px;
+    margin-bottom: 0;
+}
+
+.hp-pdf .hp-config-title {
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 14px;
+    margin-bottom: 10px;
+}
+
+.hp-pdf .hp-config-link {
+    margin: 0;
+    font-size: 12px;
+}
+
+.hp-pdf .hp-table-parts {
+    font-size: 12px;
+}
+
+.hp-pdf .hp-table-parts td {
+    padding-left: 10px;
+}
+
+.hp-pdf .hp-config-price {
+    line-height: 1;
+}
+
+.hp-pdf .hp-config-price > * {
+    display: block;
+}
+
+.hp-pdf .hp-text-small {
+    font-size: 12px;
+}
