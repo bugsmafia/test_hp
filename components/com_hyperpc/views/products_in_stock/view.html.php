@@ -139,70 +139,28 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     }
 
     /**
-     * Display action.
+     * Display the view.
      *
-     * @param   null|string $tpl
-     *
-     * @throws  Exception
-     *
-     * @since   2.0
+     * @param string $tpl
+     * @return void
      */
     public function display($tpl = null)
     {
         try {
-            // Данные берет верно из нужного Filter
             $this->filterData = $this->_getFilterData();
-            Log::add('filterData инициализирован: ' . (is_object($this->filterData) ? get_class($this->filterData) : 'null'), Log::DEBUG, 'com_hyperpc');
-            
+            $this->groups = $this->_getGroups();
+            $this->options = $this->_getOptions();
+            $this->items = $this->filter->getItems($this->filterData['filters']['current'] ?? []);
+            $this->pagination = $this->get('Pagination');
 
-            dump(__LINE__.__DIR__." --- this->filterData --- ");
-            dump($this->filterData);
-            
-
-            $this->groups   = $this->_getGroups();
-            dump(__LINE__.__DIR__." --- this->groups --- ");
-            dump($this->groups);
-            
-            $this->options  = $this->_getOptions();
-            dump(__LINE__.__DIR__." --- this->options --- ");
-            dump($this->options);
-
-            $this->products = $this->filterData && method_exists($this->filterData, 'getViewItems') && !empty($this->filterData->filter) ? $this->filterData->getViewItems() : [];
-            dump(__LINE__.__DIR__." --- this->filterData->getViewItems --- ");
-            
-
-            
-
-            $activeMenuItem = $this->hyper['app']->getMenu()->getActive();
-
-            if ($activeMenuItem) {
-                $this->description = $activeMenuItem->getParams()->get('description');
-            }
-
-            if ($this->hyper['input']->get->count()) {
-                $url = $this->hyper['route']->build([
-                    'view' => 'products_in_stock',
-                ]);
-
-                $this->hyper['doc']->addHeadLink(Url::pathToUrl($url), 'canonical', 'rel');
-            }
-
-            /** @var GoogleHelper */
-            $googleHelper = $this->hyper['helper']['google'];
-            $googleHelper
-                ->setDataLayerViewProductList($this->products, Text::_('COM_HYPERPC_PRODUCTS_IN_STOCK_HEADER'), 'products_in_stock')
-                ->setJsViewItems($this->products, false, Text::_('COM_HYPERPC_PRODUCTS_IN_STOCK_HEADER'), 'products_in_stock')
-                ->setDataLayerProductClickFunc()
-                ->setDataLayerAddToCart();
-
-            
+            Log::add('filterHelper: ' . get_class($this->filter), Log::DEBUG, 'com_hyperpc');
+            Log::add('renderHelper: ' . get_class($this->hyper['helper']['renderHelper']), Log::DEBUG, 'com_hyperpc');
+            Log::add('uikitHelper: ' . get_class($this->hyper['helper']['uikitHelper']), Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
             Log::add('Error in display: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
-            $this->filterData = new Filter();
-            $this->groups = [];
-            $this->options = [];
-            $this->products = [];
+            throw $e;
         }
+
         parent::display($tpl);
     }
 
@@ -227,66 +185,75 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     }
 
     /**
-     * Get options list
+     * Get options for filters.
      *
-     * @return  mixed
-     *
-     * @since   2.0
+     * @return array
      */
     protected function _getOptions()
     {
-        try {
-            if (empty($this->filterData->optionsHelper)) {
-                Log::add('optionsHelper is null in HyperPcViewProducts_In_Stock::_getOptions', Log::ERROR, 'com_hyperpc');
-                return [];
-            }
-            return $this->filterData->optionsHelper->getVariants();
-        } catch (\Throwable $e) {
-            Log::add('Error in _getOptions: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+        if (empty($this->hyper['helper']['optionsHelper'])) {
+            Log::add('optionsHelper is null in HyperPcViewProducts_In_Stock::_getOptions', Log::ERROR, 'com_hyperpc');
             return [];
         }
+
+        $optionsHelper = $this->hyper['helper']['optionsHelper'];
+        return $optionsHelper->getOptions();
     }
 
     /**
-     * Get groups list
+     * Get groups for filters.
      *
-     * @return  mixed
-     *
-     * @since   2.0
+     * @return array
      */
     protected function _getGroups()
     {
-        try {
-            if (empty($this->filterData->groupHelper)) {
-                Log::add('groupHelper is null in HyperPcViewProducts_In_Stock::_getGroups', Log::ERROR, 'com_hyperpc');
-                return [];
-            }
-            return $this->filterData->groupHelper->getList();
-        } catch (\Throwable $e) {
-            Log::add('Error in _getGroups: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+        if (empty($this->hyper['helper']['groupHelper'])) {
+            Log::add('groupHelper is null in HyperPcViewProducts_In_Stock::_getGroups', Log::ERROR, 'com_hyperpc');
             return [];
         }
+
+        $groupHelper = $this->hyper['helper']['groupHelper'];
+        return $groupHelper->getGroups();
     }
 
     /**
-     * Get filter data
+     * Get filter data for products in stock view.
      *
-     * @return Filter|null
-     *
-     * @throws Exception
-     * @since   2.0
+     * @return array
      */
     protected function _getFilterData()
     {
-        try {
-            $factory = \HYPERPC\Filters\FilterFactory::getInstance('products_in_stock', $this->app);
-            $this->filter = $factory->get('moysklad_product_index', $this->app);
-            $this->filter->find();
-            $this->filterData = $this->filter->getFilterDataJson();
-            Log::add('filterData инициализирован: ' . ($this->filterData ? print_r($this->filterData->toArray(), true) : 'null'), Log::DEBUG, 'com_hyperpc');
-        } catch (\Throwable $e) {
-            Log::add('Error in _getFilterData: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), Log::ERROR, 'com_hyperpc');
-            $this->filterData = null;
+        // Попытка получить фильтры из модели
+        $filters = $this->get('Filters', 'HyperPCModelProducts_In_Stock');
+        if (is_string($filters)) {
+            Log::add('Invalid filters type in _getFilterData, expected array, got string', Log::WARNING, 'com_hyperpc');
+            $filters = [];
         }
+
+        $this->filterData = ['filters' => ['available' => [], 'current' => $filters, 'prices' => ['min' => 0, 'max' => 0]]];
+
+        Log::add('Filters passed to _getFilterData: ' . json_encode($filters), Log::DEBUG, 'com_hyperpc');
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select(['MIN(p.price_a) AS min', 'MAX(p.price_a) AS max'])
+                ->from($db->quoteName('#__hp_moysklad_products_index', 'p'))
+                ->join('LEFT', $db->quoteName('#__hp_positions', 'pos') . ' ON ' . $db->quoteName('pos.id') . ' = ' . $db->quoteName('p.product_id'))
+                ->where($db->quoteName('pos.product_folder_id') . ' = 116');
+
+            $prices = $db->setQuery($query)->loadObject();
+
+            $this->filterData['filters']['prices'] = [
+                'min' => $prices->min ?? 0,
+                'max' => $prices->max ?? 0
+            ];
+            Log::add('Prices query: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
+        } catch (\Throwable $e) {
+            Log::add('Error fetching prices: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+        }
+
+        Log::add('Filter data generated: ' . json_encode($this->filterData), Log::DEBUG, 'com_hyperpc');
+        return $this->filterData;
     }
 }

@@ -217,33 +217,28 @@ class MoyskladProductIndexFilter extends AbstractFilter
     protected function _setMoyskladConditions($query)
     {
         $db = Factory::getDbo();
-        $filters = $this->getCurrentFilters()->toArray();
-        $allowedFilters = $this->hyper['params']->get('filter_product_allowed_moysklad', []);
+        $filters = $this->filters ? json_decode($this->getCurrentFilters()->getRaw(), true) : [];
 
-        // Отладка параметров
+        Log::add('Filters in _setMoyskladConditions: ' . json_encode($filters), Log::DEBUG, 'com_hyperpc');
         Log::add('Hyper params in _setMoyskladConditions: ' . json_encode($this->hyper['params']->toArray()), Log::DEBUG, 'com_hyperpc');
 
-        // Проверка на пустые фильтры
+        $allowedFilters = $this->hyper['params'] ? $this->hyper['params']->get('filter_product_allowed_moysklad', []) : [];
         if (empty($allowedFilters)) {
             Log::add('No allowed filters in MoyskladProductIndexFilter, trying filter_product_allowed', Log::WARNING, 'com_hyperpc');
-            $allowedFilters = $this->hyper['params']->get('filter_product_allowed', []);
+            $allowedFilters = $this->hyper['params'] ? $this->hyper['params']->get('filter_product_allowed', []) : [];
         }
 
-        // Логирование фильтров
         Log::add('Allowed filters in _setMoyskladConditions: ' . json_encode($allowedFilters), Log::DEBUG, 'com_hyperpc');
 
-        // Фильтрация по product_folder_id
         $productFolderId = 116;
         $query->where($db->quoteName('pos.product_folder_id') . ' = ' . (int)$productFolderId);
 
-        // Динамические поля
         foreach ($allowedFilters as $filter) {
             $fieldId = $filter['id'] ?? null;
             if (!$fieldId) {
                 continue;
             }
 
-            // Получить имя поля из #__fields
             $fieldQuery = $db->getQuery(true)
                 ->select($db->quoteName('name'))
                 ->from($db->quoteName('#__fields'))
@@ -257,7 +252,6 @@ class MoyskladProductIndexFilter extends AbstractFilter
             }
         }
 
-        // Фильтр по цене
         if (!empty($filters['price_a']['min']) && is_numeric($filters['price_a']['min'])) {
             $query->where($db->quoteName('p.price_a') . ' >= ' . (float)$filters['price_a']['min']);
         }
