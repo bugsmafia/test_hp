@@ -9,6 +9,10 @@ use Joomla\Registry\Registry;
 use Joomla\Database\DatabaseDriver;
 use HYPERPC\Filters\Filter;
 use HYPERPC\Filters\FilterFactory;
+use HYPERPC\Helper\Manager;
+use HYPERPC\Helper\ProductFolderHelper
+
+
 use HYPERPC\Joomla\Model\Entity\Interfaces\ProductMarker;
 use Joomla\CMS\Log\Log;
 
@@ -71,6 +75,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
      */
     protected $items = [];
 
+    
     /**
      * Constructor.
      *
@@ -78,40 +83,36 @@ class MoyskladProductIndexFilter extends AbstractFilter
      */
     public function __construct($hyper)
     {
-        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- ");
-        
-        if (!is_array($hyper) && !is_object($hyper)) {
+        $this->hyper = App::getInstance();
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- this->hyper: ");
+        dump($this->hyper);
+
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- hyper: ");
+        if (!$hyper instanceof App) {
             Log::add('Invalid hyper parameter in MoyskladProductIndexFilter', Log::ERROR, 'com_hyperpc');
             throw new \InvalidArgumentException('Invalid hyper parameter');
         }
-        parent::__construct($hyper);
-        $this->_filterData = new Registry();
 
-        // Initialize necessary helpers
-        if (!isset($this->hyper['helper']['productFolder'])) {
-            Log::add('Missing productFolder helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            $this->hyper['helper']['productFolder'] = null;
-        }
-        if (!isset($this->hyper['helper']['options'])) {
-            Log::add('Missing options helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            $this->hyper['helper']['options'] = null;
-        }
-        if (!isset($this->hyper['helper']['moyskladProduct'])) {
-            Log::add('Missing moyskladProduct helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            $this->hyper['helper']['moyskladProduct'] = new MoyskladProductHelper();
-        }
-        if (!isset($this->hyper['helper']['money'])) {
-            Log::add('Missing money helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            $this->hyper['helper']['money'] = new MoneyHelper();
-        }
-        if (!isset($this->hyper['helper']['fields'])) {
-            Log::add('Missing fields helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            $this->hyper['helper']['fields'] = new FieldsHelper();
-        }
-        if (!isset($this->hyper['helper']['string'])) {
-            Log::add('Missing string helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            $this->hyper['helper']['string'] = new StringHelper();
-        }
+        // Передаем пустой массив в родительский конструктор, если AbstractFilter ожидает array
+        parent::__construct([]);
+
+        $this->_filterData = new \Joomla\Registry\Registry();
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- hyper 1: ");
+        dump($this->hyper['helper']);
+
+        // Заглушки для отсутствующих сервисов
+        $this->hyper['helper']['productFolder'] = $this->hyper['helper']['productFolder'] ?? null;
+        $this->hyper['helper']['options'] = $this->hyper['helper']['options'] ?? null;
+        $this->hyper['helper']['moyskladProduct'] = $this->hyper['helper']['moyskladProduct'] ?? null;
+        $this->hyper['helper']['money'] = $this->hyper['helper']['money'] ?? null;
+        $this->hyper['helper']['fields'] = $this->hyper['helper']['fields'] ?? null;
+        $this->hyper['helper']['string'] = $this->hyper['helper']['string'] ?? null;
+        $this->hyper['helper']['filter'] = $this->hyper['helper']['filter'] ?? null;
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- hyper 2: ");
+
+        dump($this->hyper['helper']);
+        
+
         Log::add('MoyskladProductIndexFilter initialized', Log::DEBUG, 'com_hyperpc');
     }
 
@@ -126,7 +127,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
     public function findPropertyCount(string $alias, string $value, array $conditions = []): int
     {
         dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::findPropertyCount() --- alias: {$alias}, value: {$value}, conditions: " . print_r($conditions, true));
-        
+
         $db = Factory::getDbo();
         $query = $db->getQuery(true)
             ->select('COUNT(DISTINCT ' . $db->quoteName('id') . ')')
@@ -150,6 +151,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
         }
 
         try {
+            dump(__LINE__.__DIR__." --- Executing query: " . $query->dump());
             $count = (int)$db->setQuery($query)->loadResult();
             Log::add("Property count for {$alias} = {$value}: {$count}", Log::DEBUG, 'com_hyperpc');
             return $count;
@@ -377,61 +379,63 @@ class MoyskladProductIndexFilter extends AbstractFilter
      * @param array $filters
      * @param int $offset
      * @param int $limit
-     * @return ProductMarker[]
+     * @return array
      */
     public function getItems(array $filters = [], int $offset = 0, int $limit = 10): array
     {
-        $db = Factory::getDbo();
+        $db = \Joomla\CMS\Factory::getDbo();
         $query = $db->getQuery(true);
         $this->_setHeadQuery($query);
         $this->_setConditions($query, $filters);
+
+        // Фильтрация по product_folder_id
+        $productFolderId = 116;
+        $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
+
         $query->setLimit($limit, $offset);
 
         try {
             $results = $db->setQuery($query)->loadObjectList();
-            Log::add('Query executed in getItems: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
+            \Joomla\CMS\Log\Log::add('Query executed in getItems: ' . $query->dump(), \Joomla\CMS\Log\Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
-            Log::add('Error fetching items: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            \Joomla\CMS\Log\Log::add('Error fetching items: ' . $e->getMessage(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
             return [];
         }
 
         $products = [];
         foreach ($results as $result) {
             try {
-                $product = $this->hyper['helper']['moyskladProduct'] 
-                    ? $this->hyper['helper']['moyskladProduct']->findBy('id', $result->product_id) 
-                    : null;
-                if ($product instanceof ProductMarker) {
-                    $product->set('saved_configuration', $result->in_stock);
-                    $product->set('list_price', $this->hyper['helper']['money'] 
-                        ? $this->hyper['helper']['money']->get($result->price_a) 
-                        : $result->price_a);
+                $product = new \stdClass();
+                $product->id = $result->product_id;
+                $product->name = $result->name;
+                $product->alias = $result->alias;
+                $product->images = $result->images;
+                $product->saved_configuration = $result->in_stock;
+                $product->list_price = $result->price_a;
 
-                    // Добавляем данные о сборке из p6wjk_hp_saved_configurations
-                    if ($result->in_stock) {
-                        $configQuery = $db->getQuery(true)
-                            ->select('parts')
-                            ->from($db->quoteName('p6wjk_hp_saved_configurations'))
-                            ->where($db->quoteName('id') . ' = ' . (int)$result->in_stock);
-                        $config = $db->setQuery($configQuery)->loadResult();
-                        $product->set('configuration_parts', $config ? json_decode($config, true) : []);
-                    } else {
-                        $product->set('configuration_parts', []);
-                    }
-
-                    // Добавляем данные о комплектации из p6wjk_hp_products_config_values
-                    $configValuesQuery = $db->getQuery(true)
-                        ->select(['value', 'part_id', 'option_id'])
-                        ->from($db->quoteName('p6wjk_hp_products_config_values'))
-                        ->where($db->quoteName('product_id') . ' = ' . (int)$result->product_id)
-                        ->where($db->quoteName('stock_id') . ' = ' . (int)$result->in_stock);
-                    $configValues = $db->setQuery($configValuesQuery)->loadObjectList();
-                    $product->set('config_values', $configValues ?: []);
-
-                    $products[] = $product;
+                // Данные о сборке
+                if ($result->in_stock) {
+                    $configQuery = $db->getQuery(true)
+                        ->select('parts')
+                        ->from($db->quoteName('#__hp_saved_configurations'))
+                        ->where($db->quoteName('id') . ' = ' . (int)$result->in_stock);
+                    $config = $db->setQuery($configQuery)->loadResult();
+                    $product->configuration_parts = $config ? json_decode($config, true) : [];
+                } else {
+                    $product->configuration_parts = [];
                 }
+
+                // Данные о комплектации
+                $configValuesQuery = $db->getQuery(true)
+                    ->select(['value', 'part_id', 'option_id'])
+                    ->from($db->quoteName('#__hp_products_config_values'))
+                    ->where($db->quoteName('product_id') . ' = ' . (int)$result->product_id)
+                    ->where($db->quoteName('stock_id') . ' = ' . (int)$result->in_stock);
+                $product->config_values = $db->setQuery($configValuesQuery)->loadObjectList() ?: [];
+
+                $products[] = $product;
             } catch (\Throwable $e) {
-                Log::add('Error processing product ID ' . $result->product_id . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+                \Joomla\CMS\Log\Log::add('Error processing product ID ' . $result->product_id . ': ' . $e->getMessage(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
             }
         }
 
@@ -495,7 +499,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
             ->select('COUNT(*)')
             ->from($db->quoteName($this->tableName));
         $this->_setConditions($query, $filters);
-
+        dump(__LINE__.__DIR__." --- Executing hasItems query: " . $query->dump());
         try {
             return (int)$db->setQuery($query)->loadResult() > 0;
         } catch (\Throwable $e) {
@@ -673,22 +677,29 @@ class MoyskladProductIndexFilter extends AbstractFilter
     public function find()
     {
         try {
-            $db = Factory::getDbo();
+            $db = \Joomla\CMS\Factory::getDbo();
             $query = $db->getQuery(true);
             $this->_setHeadQuery($query);
             $filters = $this->getCurrentFilters()->toArray();
             $this->_setConditions($query, $filters);
 
+            // Фильтрация по product_folder_id
+            $productFolderId = 116;
+            $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
+
             $db->setQuery($query);
             $this->items = $db->loadObjectList();
-            Log::add('Query executed in find: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
+            \Joomla\CMS\Log\Log::add('Query executed in find: ' . $query->dump(), \Joomla\CMS\Log\Log::DEBUG, 'com_hyperpc');
 
-            // Добавляем данные о сборке и комплектации
             foreach ($this->items as $item) {
+                $item->id = $item->product_id;
+                $item->saved_configuration = $item->in_stock;
+                $item->list_price = $item->price_a;
+
                 if ($item->in_stock) {
                     $configQuery = $db->getQuery(true)
                         ->select('parts')
-                        ->from($db->quoteName('p6wjk_hp_saved_configurations'))
+                        ->from($db->quoteName('#__hp_saved_configurations'))
                         ->where($db->quoteName('id') . ' = ' . (int)$item->in_stock);
                     $config = $db->setQuery($configQuery)->loadResult();
                     $item->configuration_parts = $config ? json_decode($config, true) : [];
@@ -698,13 +709,13 @@ class MoyskladProductIndexFilter extends AbstractFilter
 
                 $configValuesQuery = $db->getQuery(true)
                     ->select(['value', 'part_id', 'option_id'])
-                    ->from($db->quoteName('p6wjk_hp_products_config_values'))
+                    ->from($db->quoteName('#__hp_products_config_values'))
                     ->where($db->quoteName('product_id') . ' = ' . (int)$item->product_id)
                     ->where($db->quoteName('stock_id') . ' = ' . (int)$item->in_stock);
                 $item->config_values = $db->setQuery($configValuesQuery)->loadObjectList() ?: [];
             }
         } catch (\Throwable $e) {
-            Log::add('Error in find: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), Log::ERROR, 'com_hyperpc');
+            \Joomla\CMS\Log\Log::add('Error in find: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
             $this->items = [];
         }
     }
@@ -753,6 +764,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
             ? $this->hyper['params']->get('filter_product_allowed_moysklad', []) 
             : [];
         $initState = [];
+        dump(__LINE__.__DIR__." --- Initializing filter state with allowed fields: " . print_r($allowedFields, true));
 
         foreach ($allowedFields as $field) {
             $fieldName = $this->getFieldName($field['id']);
