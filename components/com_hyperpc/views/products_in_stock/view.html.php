@@ -90,19 +90,37 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     {
         parent::__construct($config);
 
+        // Подготовка helper для передачи в фильтр
+        $helper = [
+            'renderHelper' => new \HYPERPC\Helper\RenderHelper(),
+            'uikitHelper' => new \HYPERPC\Helper\UikitHelper(),
+            'groupHelper' => null,
+            'productFolder' => null
+        ];
+
+        // Если $this->hyper['helper'] существует и является объектом Manager, извлекаем сервисы
+        if (!empty($this->hyper['helper']) && $this->hyper['helper'] instanceof \HYPERPC\Helper\Manager) {
+            $helper['renderHelper'] = $this->hyper['helper']->get('renderHelper', $helper['renderHelper']);
+            $helper['uikitHelper'] = $this->hyper['helper']->get('uikitHelper', $helper['uikitHelper']);
+            // Другие сервисы, если они поддерживаются Manager
+        }
+
         // Инициализация filter
         if (empty($this->filter)) {
-            $this->filter = new \HYPERPC\Filters\MoyskladProductIndexFilter([
-                'params' => ComponentHelper::getParams('com_hyperpc'),
-                'helper' => [
-                    'renderHelper' => new \HYPERPC\Helper\RenderHelper(),
-                    'uikitHelper' => new \HYPERPC\Helper\UikitHelper()
-                ]
-            ]);
-            Log::add('filter initialized: ' . get_class($this->filter), Log::DEBUG, 'com_hyperpc');
+            try {
+                $this->filter = new \HYPERPC\Filters\MoyskladProductIndexFilter([
+                    'hyper' => [
+                        'params' => ComponentHelper::getParams('com_hyperpc'),
+                        'helper' => $helper
+                    ]
+                ]);
+                Log::add('filter initialized: ' . get_class($this->filter), Log::DEBUG, 'com_hyperpc');
+            } catch (\Throwable $e) {
+                Log::add('Error initializing filter: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+                $this->filter = null;
+            }
         }
     }
-
     /**
      * Display the view.
      *
@@ -156,13 +174,51 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
      */
     protected function _getOptions()
     {
-        if (empty($this->hyper['helper']['optionsHelper'])) {
-            Log::add('optionsHelper is null in HyperPcViewProducts_In_Stock::_getOptions', Log::ERROR, 'com_hyperpc');
-            return []; // Возвращаем пустой массив как заглушку
+        $db = Factory::getDbo();
+        $allowedFilters = $this->hyper['params']->get('filter_product_allowed_moysklad', []);
+
+        if (empty($allowedFilters)) {
+            Log::add('No allowed filters for options in _getOptions', Log::WARNING, 'com_hyperpc');
+            return [];
         }
 
-        $optionsHelper = $this->hyper['helper']['optionsHelper'];
-        return $optionsHelper->getOptions();
+        $fieldIds = array_column($allowedFilters, 'id');
+        if (empty($fieldIds)) {
+            Log::add('No field IDs found in allowed filters for options', Log::WARNING, 'com_hyperpc');
+            return [];
+        }
+
+        try {
+            $fieldQuery = $db->getQuery(true)
+                ->select(['id', 'name'])
+                ->from($db->quoteName('#__fields'))
+                ->where($db->quoteName('id') . ' IN (' . implode(',', array_map('intval', $fieldIds)) . ')');
+            $fields = $db->setQuery($fieldQuery)->loadObjectList('id');
+
+            $query = $db->getQuery(true)
+                ->select(['fv.value', 'fv.label', 'fv.field_id'])
+                ->from($db->quoteName('#__fields_values', 'fv'))
+                ->where($db->quoteName('fv.field_id') . ' IN (' . implode(',', array_map('intval', $fieldIds)) . ')');
+            
+            $results = $db->setQuery($query)->loadObjectList();
+            $options = [];
+
+            foreach ($results as $row) {
+                $fieldName = $fields[$row->field_id]->name ?? null;
+                if ($fieldName) {
+                    $options[$fieldName][] = [
+                        'value' => $row->value,
+                        'label' => $row->label ?: $row->value
+                    ];
+                }
+            }
+
+            Log::add('Options fetched: ' . json_encode($options), Log::DEBUG, 'com_hyperpc');
+            return $options;
+        } catch (\Throwable $e) {
+            Log::add('Error fetching options: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            return [];
+        }
     }
 
     /**
@@ -188,9 +244,14 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
      */
     protected function _getFilterData()
     {
-        $filters = $this->filter ? json_decode($this->filter->getCurrentFilters()->getRaw(), true) : [];
+        $filters = [];
+        if ($this->filter) {
+            $filtersRaw = $this->filter->getCurrentFilters();
+            $filters = $filtersRaw ? json_decode($filtersRaw->getRaw(), true) : [];
+        }
+
         if (empty($filters)) {
-            Log::add('Invalid filters type in _getFilterData, expected array, got: ' . gettype($filters), Log::WARNING, 'com_hyperpc');
+            Log::add('No filters available in _getFilterData', Log::WARNING, 'com_hyperpc');
         }
 
         $this->filterData = ['filters' => ['available' => [], 'current' => $filters, 'prices' => ['min' => 0, 'max' => 0]]];

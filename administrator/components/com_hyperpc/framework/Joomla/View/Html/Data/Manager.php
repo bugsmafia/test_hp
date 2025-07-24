@@ -20,6 +20,9 @@ use HYPERPC\App;
 use JBZoo\Utils\FS;
 use Cake\Utility\Inflector;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Log\Log;
+
+use HYPERPC\ORM\Filter\AbstractFilter;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -81,20 +84,40 @@ class Manager
      */
     public function get($dataName, array $args = [])
     {
-        list ($group, $name) = explode('.', $dataName);
+        try {
+            list($group, $name) = explode('.', $dataName);
+            $name = strtolower($name);
+            $group = strtolower($group);
 
-        $name  = strtolower($name);
-        $group = strtolower($group);
+            if (!isset($this->_map[$group][$name])) {
+                Log::add("Класс для {$dataName} не найден в _map: " . print_r($this->_map, true), Log::ERROR, 'com_hyperpc');
+                return null;
+            }
 
-        if (isset($this->_map[$group][$name])) {
             $viewData = $this->_map[$group][$name];
+            Log::add("Создание объекта для {$dataName}: {$viewData}", Log::DEBUG, 'com_hyperpc');
+
             /** @var HtmlData $data */
             $data = new $viewData();
-            call_user_func_array([$data, 'initialize'], $args);
-            return $data;
-        }
+            if (method_exists($data, 'initialize')) {
+                // Проверяем, что первый аргумент является экземпляром AbstractFilter
+                if (!empty($args[0]) && $args[0] instanceof AbstractFilter) {
+                    Log::add("Вызов initialize для {$dataName} с аргументами: " . print_r($args, true), Log::DEBUG, 'com_hyperpc');
+                    call_user_func_array([$data, 'initialize'], $args);
+                } else {
+                    Log::add("Первый аргумент для initialize не является AbstractFilter: " . print_r($args, true), Log::ERROR, 'com_hyperpc');
+                    return null;
+                }
+            } else {
+                Log::add("Метод initialize отсутствует в классе {$viewData}", Log::WARNING, 'com_hyperpc');
+            }
 
-        return null;
+            Log::add("HtmlData создан для {$dataName}: " . get_class($data), Log::DEBUG, 'com_hyperpc');
+            return $data;
+        } catch (\Throwable $e) {
+            Log::add("Ошибка в Manager::get для {$dataName}: " . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), Log::ERROR, 'com_hyperpc');
+            return null;
+        }
     }
 
     /**
@@ -151,20 +174,32 @@ class Manager
     protected function _register()
     {
         foreach ($this->_paths as $ns => $path) {
+            if (!is_dir($path)) {
+                Log::add("Путь {$path} не существует для пространства имен {$ns}", Log::ERROR, 'com_hyperpc');
+                continue;
+            }
             $groups = Folder::folders($path);
             foreach ($groups as $group) {
                 $itemPath = FS::clean($path . '/' . $group);
-                $items    = Folder::files($itemPath);
+                if (!is_dir($itemPath)) {
+                    Log::add("Путь группы {$itemPath} не существует", Log::ERROR, 'com_hyperpc');
+                    continue;
+                }
+                $items = Folder::files($itemPath);
                 foreach ($items as $item) {
-                    $dataName  = FS::filename($item);
+                    $dataName = FS::filename($item);
                     $itemClass = $ns . '\\' . $group . '\\' . $dataName;
-                    if (class_exists($itemClass) && is_subclass_of($itemClass,  HtmlData::class)) {
+                    if (class_exists($itemClass) && is_subclass_of($itemClass, HtmlData::class)) {
                         $nameAlias = $this->getNameAlias($dataName);
                         $this->_map[strtolower($group)][$nameAlias] = $itemClass;
+                        Log::add("Зарегистрирован класс: {$itemClass} для {$group}.{$nameAlias}", Log::DEBUG, 'com_hyperpc');
+                    } else {
+                        Log::add("Класс {$itemClass} не существует или не является наследником HtmlData", Log::WARNING, 'com_hyperpc');
                     }
                 }
             }
         }
+        Log::add("Карта классов _map: " . print_r($this->_map, true), Log::DEBUG, 'com_hyperpc');
     }
 
     /**
@@ -180,6 +215,7 @@ class Manager
             'HYPERPC\\Html\\Data' => $this->hyper['path']->get('framework:Html/Data'),
             __NAMESPACE__         => $this->hyper['path']->get('framework:Joomla/View/Html/Data')
         ];
+        Log::add("Пути зарегистрированы: " . print_r($this->_paths, true), Log::DEBUG, 'com_hyperpc');
     }
 
     /**
@@ -193,18 +229,6 @@ class Manager
     {
         $this->hyper = App::getInstance();
         $this->_setPaths();
-        $this->__initialize();
-    }
-
-    /**
-     * Initialize method.
-     *
-     * @return  void
-     *
-     * @since   2.0
-     */
-    private function __initialize()
-    {
         $this->_register();
     }
 }

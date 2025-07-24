@@ -68,17 +68,29 @@ class MoyskladProductIndexFilter extends AbstractFilter
     /**
      * Constructor.
      *
-     * @param array $hyper Application instance
+     * @param array $config
+     * @throws \InvalidArgumentException
      */
-    public function __construct($hyper)
+    public function __construct(array $config = [])
     {
-        if (!$hyper instanceof App) {
-            Log::add('Invalid hyper parameter in MoyskladProductIndexFilter', Log::ERROR, 'com_hyperpc');
+        if (empty($config['hyper']['params']) || empty($config['hyper']['helper'])) {
+            Log::add('Invalid hyper parameter in MoyskladProductIndexFilter: missing params or helper', Log::ERROR, 'com_hyperpc');
             throw new \InvalidArgumentException('Invalid hyper parameter');
         }
 
-        $this->hyper = $hyper;
-        $this->_filterData = new Registry();
+        $this->hyper = [
+            'params' => $config['hyper']['params'],
+            'helper' => array_merge([
+                'renderHelper' => null,
+                'uikitHelper' => null,
+                'groupHelper' => null,
+                'productFolder' => null
+            ], $config['hyper']['helper'])
+        ];
+
+        $this->filters = $config['filters'] ?? [];
+        $this->tableName = '#__hp_moysklad_products_index';
+
         Log::add('MoyskladProductIndexFilter initialized', Log::DEBUG, 'com_hyperpc');
     }
 

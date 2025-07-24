@@ -332,6 +332,7 @@ class Filter extends FilterHtmlData
      */
     public function initialize(AbstractFilter $filter, $groupId = null)
     {
+        dump(__LINE__.__DIR__." --- Filter::initialize() --- ");
         $this->filter           = $filter;
         $this->groupId          = $groupId;
         $this->helper           = $this->filter->getFilterHelper();
@@ -339,6 +340,7 @@ class Filter extends FilterHtmlData
         $this->optionsHelper    = $this->filter->getOptionsHelper();
 
         $this->loadAssets();
+        dump(__LINE__.__DIR__." --- Filter::initialize() DONE --- ");
     }
 
     /**
