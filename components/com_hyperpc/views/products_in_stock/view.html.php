@@ -280,26 +280,13 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     {
         try {
             $factory = \HYPERPC\Filters\FilterFactory::getInstance('products_in_stock', $this->app);
-            dump(__LINE__.__DIR__." --- FilterFactory::getInstance() --- ");
-            dump($factory);
-
-            $filter = $factory->get('moysklad_product_index', $this->app);
-            
-            if (!$filter) {
-                \Joomla\CMS\Log\Log::add('Failed to load MoyskladProductIndexFilter', \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
-                return null;
-            }
-
-            $filters = $filter->getCurrentFilters()->toArray();
-            $filterData = new \HYPERPC\Joomla\View\Html\Data\Product\Filter($filter);
-            $filterData->set('filters', $filter->getFilterData($filters));
-            
-            \Joomla\CMS\Log\Log::add('Filter data initialized: ' . get_class($filterData), \Joomla\CMS\Log\Log::DEBUG, 'com_hyperpc');
-            return $filterData;
+            $this->filter = $factory->get('moysklad_product_index', $this->app);
+            $this->filter->find();
+            $this->filterData = $this->filter->getFilterDataJson();
+            Log::add('filterData инициализирован: ' . ($this->filterData ? print_r($this->filterData->toArray(), true) : 'null'), Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
-            dump(__LINE__.__DIR__." --- FilterFactory::getInstance() FAIL --- ");
-            \Joomla\CMS\Log\Log::add('Error in _getFilterData: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
-            return null;
+            Log::add('Error in _getFilterData: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), Log::ERROR, 'com_hyperpc');
+            $this->filterData = null;
         }
     }
 }

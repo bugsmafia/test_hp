@@ -198,29 +198,43 @@ class MoyskladProductIndexFilter extends AbstractFilter
     }
 
     /**
-     * Set conditions for query.
+     * Set query conditions (override to maintain compatibility with AbstractFilter).
      *
-     * @param \Joomla\Database\DatabaseQuery $query
-     * @param array $filters
      * @return void
      */
     protected function _setConditions()
     {
+        // Пустая реализация или вызов родительского метода
+        parent::_setConditions();
+    }
+
+    /**
+     * Set query conditions for MoyskladProductIndexFilter.
+     *
+     * @param \JDatabaseQuery $query
+     * @return void
+     */
+    protected function _setMoyskladConditions($query)
+    {
         $db = Factory::getDbo();
-        $query = $this->getQuery();
         $filters = $this->getCurrentFilters()->toArray();
         $allowedFilters = $this->hyper['params']->get('filter_product_allowed_moysklad', []);
 
+        // Отладка параметров
+        Log::add('Hyper params in _setMoyskladConditions: ' . json_encode($this->hyper['params']->toArray()), Log::DEBUG, 'com_hyperpc');
+
         // Проверка на пустые фильтры
         if (empty($allowedFilters)) {
-            Log::add('No allowed filters in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
-            // Попробуем использовать альтернативный ключ
+            Log::add('No allowed filters in MoyskladProductIndexFilter, trying filter_product_allowed', Log::WARNING, 'com_hyperpc');
             $allowedFilters = $this->hyper['params']->get('filter_product_allowed', []);
         }
 
+        // Логирование фильтров
+        Log::add('Allowed filters in _setMoyskladConditions: ' . json_encode($allowedFilters), Log::DEBUG, 'com_hyperpc');
+
         // Фильтрация по product_folder_id
         $productFolderId = 116;
-        $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
+        $query->where($db->quoteName('pos.product_folder_id') . ' = ' . (int)$productFolderId);
 
         // Динамические поля
         foreach ($allowedFilters as $filter) {
@@ -263,14 +277,14 @@ class MoyskladProductIndexFilter extends AbstractFilter
     protected function _setHeadQuery(array $select = [])
     {
         $db = Factory::getDbo();
-        $query = $this->getQuery();
+        $query = $db->getQuery(true);
 
         // Default select fields if not provided
         $select = !empty($select) ? $select : [
             'p.product_id',
-            'p.name',
-            'p.alias',
-            'p.images',
+            'pos.name',
+            'pos.alias',
+            'pos.images',
             'p.in_stock',
             'p.price_a'
         ];
@@ -278,9 +292,9 @@ class MoyskladProductIndexFilter extends AbstractFilter
         $query->select(array_map([$db, 'quoteName'], $select))
             ->from($db->quoteName($this->tableName, 'p'))
             ->join('LEFT', $db->quoteName('#__hp_positions', 'pos') . ' ON ' . $db->quoteName('pos.id') . ' = ' . $db->quoteName('p.product_id'));
-
-        // Сохраняем запрос в свойство, если требуется
-        $this->_query = $query;
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::_setHeadQuery() --- " . $query->dump());
+        
+        return $query;
     }
 
 
@@ -384,10 +398,9 @@ class MoyskladProductIndexFilter extends AbstractFilter
     public function getItems(array $filters = [], int $offset = 0, int $limit = 10): array
     {
         $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-        $this->_setHeadQuery();
+        $query = $this->_setHeadQuery();
         $this->setCurrentFilters($filters);
-        $this->_setConditions();
+        $this->_setMoyskladConditions($query);
         $query->setLimit($limit, $offset);
 
         try {
@@ -674,9 +687,8 @@ class MoyskladProductIndexFilter extends AbstractFilter
     {
         try {
             $db = Factory::getDbo();
-            $query = $db->getQuery(true);
-            $this->_setHeadQuery();
-            $this->_setConditions();
+            $query = $this->_setHeadQuery();
+            $this->_setMoyskladConditions($query);
             $db->setQuery($query);
             $this->items = $db->loadObjectList();
             Log::add('Query executed in find: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
