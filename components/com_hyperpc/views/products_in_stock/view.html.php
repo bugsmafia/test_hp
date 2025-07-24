@@ -22,6 +22,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
 
 use HYPERPC\App;
 use HYPERPC\Helper\GoogleHelper;
@@ -80,62 +81,26 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
      */
     public string $description = '';
 
+    /**
+     * Constructor.
+     *
+     * @param array $config
+     */
     public function __construct($config = [])
     {
         parent::__construct($config);
-        $app = Factory::getApplication();
-        $this->hyper = App::getInstance();
-        dump(__LINE__.__DIR__." --- this->hyper --- ");
-        dump($this->hyper);
 
-        
-        // Обеспечиваем наличие необходимых сервисов
-        if (!$this->hyper->offsetExists('input')) {
-            $this->hyper['input'] = Factory::getApplication()->input;
-            Log::add('Инициализирован отсутствующий сервис input в hyper', Log::WARNING, 'com_hyperpc');
+        // Инициализация filter
+        if (empty($this->filter)) {
+            $this->filter = new \HYPERPC\Filters\MoyskladProductIndexFilter([
+                'params' => ComponentHelper::getParams('com_hyperpc'),
+                'helper' => [
+                    'renderHelper' => new \HYPERPC\Helper\RenderHelper(),
+                    'uikitHelper' => new \HYPERPC\Helper\UikitHelper()
+                ]
+            ]);
+            Log::add('filter initialized: ' . get_class($this->filter), Log::DEBUG, 'com_hyperpc');
         }
-        if (!$this->hyper->offsetExists('app')) {
-            $this->hyper['app'] = Factory::getApplication();
-            Log::add('Инициализирован отсутствующий сервис app в hyper', Log::WARNING, 'com_hyperpc');
-        }
-        if (!$this->hyper->offsetExists('params')) {
-            $this->hyper['params'] = new Registry();
-            Log::add('Инициализирован отсутствующий сервис params в hyper', Log::WARNING, 'com_hyperpc');
-        }
-        if (!$this->hyper->offsetExists('helper')) {
-            dump(__LINE__.__DIR__." --- this->hyper['helper'] --- ");
-            // Инициализируем необходимые сервисы в hyper['helper']
-            $this->hyper['helper'] = [
-                'google' => new GoogleHelper(),
-                'moyskladProduct' => null,
-                'money' => null,
-                'fields' => null,
-                'string' => null,
-                'productFolder' => new \HYPERPC\Helper\ProductFolderHelper(),
-                'options' => null,
-                'render' => new RenderHelper(),
-                'uikit' => new UikitHelper(),
-                'html' => null,
-                'filter' => new FilterHelper()
-            ];
-            Log::add('Инициализирован отсутствующий сервис helper в hyper', Log::WARNING, 'com_hyperpc');
-        } else {
-            // Проверяем наличие необходимых ключей в helper
-
-            if (empty($this->hyper['helper']['productFolder'])) {
-                $this->hyper['helper']['productFolder'] = new \HYPERPC\Helper\ProductFolderHelper();
-                Log::add('Инициализирован отсутствующий сервис productFolder в hyper[helper]', Log::WARNING, 'com_hyperpc');
-            }
-            if (empty($this->hyper['helper']['options'])) {
-                $this->hyper['helper']['options'] = null;
-                Log::add('Инициализирован отсутствующий сервис options в hyper[helper]', Log::WARNING, 'com_hyperpc');
-            }
-            if (empty($this->hyper['helper']['filter'])) {
-                $this->hyper['helper']['filter'] = new FilterHelper();
-                Log::add('Инициализирован отсутствующий сервис filter в hyper[helper]', Log::WARNING, 'com_hyperpc');
-            }
-        }
-        // Log::add('hyper инициализирован: ' . print_r($this->hyper, true), Log::DEBUG, 'com_hyperpc');
     }
 
     /**
@@ -150,10 +115,10 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
             $this->filterData = $this->_getFilterData();
             $this->groups = $this->_getGroups();
             $this->options = $this->_getOptions();
-            $this->items = $this->filter->getItems($this->filterData['filters']['current'] ?? []);
+            $this->items = $this->filter ? $this->filter->getItems($this->filterData['filters']['current'] ?? []) : [];
             $this->pagination = $this->get('Pagination');
 
-            Log::add('filterHelper: ' . get_class($this->filter), Log::DEBUG, 'com_hyperpc');
+            Log::add('filterHelper: ' . ($this->filter ? get_class($this->filter) : 'null'), Log::DEBUG, 'com_hyperpc');
             Log::add('renderHelper: ' . get_class($this->hyper['helper']['renderHelper']), Log::DEBUG, 'com_hyperpc');
             Log::add('uikitHelper: ' . get_class($this->hyper['helper']['uikitHelper']), Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
@@ -193,7 +158,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     {
         if (empty($this->hyper['helper']['optionsHelper'])) {
             Log::add('optionsHelper is null in HyperPcViewProducts_In_Stock::_getOptions', Log::ERROR, 'com_hyperpc');
-            return [];
+            return []; // Возвращаем пустой массив как заглушку
         }
 
         $optionsHelper = $this->hyper['helper']['optionsHelper'];
@@ -209,7 +174,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     {
         if (empty($this->hyper['helper']['groupHelper'])) {
             Log::add('groupHelper is null in HyperPcViewProducts_In_Stock::_getGroups', Log::ERROR, 'com_hyperpc');
-            return [];
+            return []; // Возвращаем пустой массив как заглушку
         }
 
         $groupHelper = $this->hyper['helper']['groupHelper'];
@@ -223,11 +188,9 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
      */
     protected function _getFilterData()
     {
-        // Попытка получить фильтры из модели
-        $filters = $this->get('Filters', 'HyperPCModelProducts_In_Stock');
-        if (is_string($filters)) {
-            Log::add('Invalid filters type in _getFilterData, expected array, got string', Log::WARNING, 'com_hyperpc');
-            $filters = [];
+        $filters = $this->filter ? json_decode($this->filter->getCurrentFilters()->getRaw(), true) : [];
+        if (empty($filters)) {
+            Log::add('Invalid filters type in _getFilterData, expected array, got: ' . gettype($filters), Log::WARNING, 'com_hyperpc');
         }
 
         $this->filterData = ['filters' => ['available' => [], 'current' => $filters, 'prices' => ['min' => 0, 'max' => 0]]];
