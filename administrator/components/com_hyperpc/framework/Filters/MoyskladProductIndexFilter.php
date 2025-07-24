@@ -12,24 +12,64 @@ use HYPERPC\Filters\FilterFactory;
 use HYPERPC\Joomla\Model\Entity\Interfaces\ProductMarker;
 use Joomla\CMS\Log\Log;
 
+use HYPERPC\ORM\Filter\AbstractFilter;
+
 /**
  * Class MoyskladProductIndexFilter
  *
  * @package HYPERPC\Filters
  * @since   2.0
  */
-class MoyskladProductIndexFilter extends Filter
+class MoyskladProductIndexFilter extends AbstractFilter
 {
     /**
      * Database table name for product index.
      *
      * @var string
      */
-    protected $tableName = 'p6wjk_hp_moysklad_products_index';
-    protected $context = 'com_hyperpc.position';
-    protected $categoryKey = 'product_folder_id';
+    public $tableName = '#__hp_moysklad_products_index';
+
+    /**
+     * Context for filter.
+     *
+     * @var string
+     */
+    public string $context = 'com_hyperpc.position'; // Явно указан тип string и видимость public
+
+    /**
+     * Category key for filter.
+     *
+     * @var string
+     */
+    public $categoryKey = 'product_folder_id';
+
+    /**
+     * Filter data.
+     *
+     * @var \Joomla\Registry\Registry
+     */
     protected $_filterData;
+
+    /**
+     * Query dump.
+     *
+     * @var string
+     */
+    protected $_queryDump = '';
+
+    /**
+     * Filter type.
+     *
+     * @var string
+     */
     protected $_type = 'moysklad_product_index';
+
+    /**
+     * Items array.
+     *
+     * @var array
+     */
+    protected $items = [];
 
     /**
      * Constructor.
@@ -38,17 +78,210 @@ class MoyskladProductIndexFilter extends Filter
      */
     public function __construct($hyper)
     {
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- ");
+        
         if (!is_array($hyper) && !is_object($hyper)) {
             Log::add('Invalid hyper parameter in MoyskladProductIndexFilter', Log::ERROR, 'com_hyperpc');
             throw new \InvalidArgumentException('Invalid hyper parameter');
         }
         parent::__construct($hyper);
         $this->_filterData = new Registry();
-        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter hyper --- ");
-        dump($hyper);
-        exit;
-        Log::add('MoyskladProductIndexFilter initialized with hyper: ' . print_r($hyper, true), Log::DEBUG, 'com_hyperpc');
+
+        // Initialize necessary helpers
+        if (!isset($this->hyper['helper']['productFolder'])) {
+            Log::add('Missing productFolder helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            $this->hyper['helper']['productFolder'] = null;
+        }
+        if (!isset($this->hyper['helper']['options'])) {
+            Log::add('Missing options helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            $this->hyper['helper']['options'] = null;
+        }
+        if (!isset($this->hyper['helper']['moyskladProduct'])) {
+            Log::add('Missing moyskladProduct helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            $this->hyper['helper']['moyskladProduct'] = new MoyskladProductHelper();
+        }
+        if (!isset($this->hyper['helper']['money'])) {
+            Log::add('Missing money helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            $this->hyper['helper']['money'] = new MoneyHelper();
+        }
+        if (!isset($this->hyper['helper']['fields'])) {
+            Log::add('Missing fields helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            $this->hyper['helper']['fields'] = new FieldsHelper();
+        }
+        if (!isset($this->hyper['helper']['string'])) {
+            Log::add('Missing string helper in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            $this->hyper['helper']['string'] = new StringHelper();
+        }
+        Log::add('MoyskladProductIndexFilter initialized', Log::DEBUG, 'com_hyperpc');
     }
+
+    /**
+     * Find property count.
+     *
+     * @param string $alias
+     * @param string $value
+     * @param array $conditions
+     * @return int
+     */
+    public function findPropertyCount(string $alias, string $value, array $conditions = []): int
+    {
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::findPropertyCount() --- alias: {$alias}, value: {$value}, conditions: " . print_r($conditions, true));
+        
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('COUNT(DISTINCT ' . $db->quoteName('id') . ')')
+            ->from($db->quoteName($this->tableName))
+            ->where($db->quoteName($alias) . ' = ' . $db->quote($value));
+
+        foreach ($conditions as $key => $values) {
+            if (!empty($values) && $key !== $alias) {
+                if ($key === 'price_a') {
+                    if (!empty($values['min'])) {
+                        $query->where($db->quoteName('price_a') . ' >= ' . (float)$values['min']);
+                    }
+                    if (!empty($values['max'])) {
+                        $query->where($db->quoteName('price_a') . ' <= ' . (float)$values['max']);
+                    }
+                } else {
+                    $quotedValues = array_map([$db, 'quote'], (array)$values);
+                    $query->where($db->quoteName($key) . ' IN (' . implode(',', $quotedValues) . ')');
+                }
+            }
+        }
+
+        try {
+            $count = (int)$db->setQuery($query)->loadResult();
+            Log::add("Property count for {$alias} = {$value}: {$count}", Log::DEBUG, 'com_hyperpc');
+            return $count;
+        } catch (\Throwable $e) {
+            Log::add("Error in findPropertyCount for {$alias} = {$value}: " . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            return 0;
+        }
+    }
+
+    /**
+     * Get store helper.
+     *
+     * @return mixed
+     */
+    public function getStoreHelper()
+    {
+        return $this->hyper['helper']['store'] ?? null;
+    }
+
+    /**
+     * Get category helper.
+     *
+     * @return mixed
+     */
+    public function getCategoryHelper()
+    {
+        return $this->hyper['helper']['productFolder'] ?? null;
+    }
+
+    /**
+     * Get stock table name.
+     *
+     * @return string
+     */
+    public function getStockTable(): string
+    {
+        return $this->tableName;
+    }
+
+    /**
+     * Get products table name.
+     *
+     * @return string
+     */
+    public function getProductsTable(): string
+    {
+        return 'p6wjk_hp_positions';
+    }
+
+    /**
+     * Get index table name.
+     *
+     * @return string
+     */
+    public function getIndexTable(): string
+    {
+        return $this->tableName;
+    }
+
+    /**
+     * Get stores.
+     *
+     * @return array
+     */
+    public function getStores(): array
+    {
+        return [];
+    }
+
+    /**
+     * Render filter output.
+     *
+     * @return string
+     */
+    public function render(): string
+    {
+        return '';
+    }
+
+    /**
+     * Set conditions for query.
+     *
+     * @param \Joomla\Database\DatabaseQuery $query
+     * @param array $filters
+     * @return void
+     */
+    protected function _setConditions()
+    {
+        $db = Factory::getDbo();
+        $filters = $this->getCurrentFilters()->toArray();
+        foreach ($filters as $key => $values) {
+            if (!empty($values)) {
+                if ($key === 'price_a') {
+                    if (!empty($values['min'])) {
+                        $this->query->where($db->quoteName('price_a') . ' >= ' . (float)$values['min']);
+                    }
+                    if (!empty($values['max'])) {
+                        $this->query->where($db->quoteName('price_a') . ' <= ' . (float)$values['max']);
+                    }
+                } else {
+                    $quotedValues = array_map([$db, 'quote'], (array)$values);
+                    $this->query->where($db->quoteName($key) . ' IN (' . implode(',', $quotedValues) . ')');
+                }
+            }
+        }
+    }
+
+    /**
+     * Set head query.
+     *
+     * @param array $select
+     * @return void
+     */
+    protected function _setHeadQuery(array $select = [
+        'a.*',
+        'p.name',
+        'p.alias',
+        'p.images',
+        'p.product_folder_id',
+        'p.type_id',
+        'p.state',
+        'p.ordering'
+    ])
+    {
+        $db = Factory::getDbo();
+        $this->query->select($select)
+            ->from($db->quoteName($this->tableName, 'a'))
+            ->join('INNER', $db->quoteName('p6wjk_hp_positions', 'p') . ' ON a.product_id = p.id')
+            ->order($db->quoteName('p.ordering') . ' ASC');
+    }
+
+
 
     /**
      * Get filter data for products in stock.
@@ -67,9 +300,6 @@ class MoyskladProductIndexFilter extends Filter
             Log::add('No allowed filters in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
         }
 
-        // Initialize filter factory
-        $factory = new FilterFactory($this->hyper);
-        
         // Prepare filter conditions
         $conditions = [];
         foreach ($filters as $key => $values) {
@@ -89,18 +319,21 @@ class MoyskladProductIndexFilter extends Filter
 
         // Get unique filter values and counts
         $filterData = ['available' => [], 'current' => $filters];
+        $factory = new FilterFactory($this->hyper);
+
         foreach ($allowedFilters as $filter) {
             $fieldName = $this->getFieldName($filter['id']);
             if (!$fieldName) {
+                Log::add('Field name not found for ID ' . $filter['id'], Log::WARNING, 'com_hyperpc');
                 continue;
             }
 
-            // Use FilterFactory to create field-specific filter
             try {
                 $fieldFilter = $factory->create($this->context, ['field' => $fieldName]);
                 $fieldOptions = $this->getFieldOptions($fieldFilter, $filters, $fieldName);
             } catch (\Throwable $e) {
                 Log::add('Error creating filter for field ' . $fieldName . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+                continue;
             }
 
             foreach ($fieldOptions as $value => $data) {
@@ -133,8 +366,10 @@ class MoyskladProductIndexFilter extends Filter
         }
 
         $this->_filterData->set('filters', $filterData);
+        Log::add('Filter data generated: ' . print_r($filterData, true), Log::DEBUG, 'com_hyperpc');
         return $filterData;
     }
+
 
     /**
      * Get filtered items.
@@ -147,53 +382,58 @@ class MoyskladProductIndexFilter extends Filter
     public function getItems(array $filters = [], int $offset = 0, int $limit = 10): array
     {
         $db = Factory::getDbo();
-        $conditions = [];
-        foreach ($filters as $key => $values) {
-            if (!empty($values)) {
-                if ($key === 'price_a') {
-                    if (!empty($values['min'])) {
-                        $conditions[] = $db->quoteName('price_a') . ' >= ' . (float)$values['min'];
-                    }
-                    if (!empty($values['max'])) {
-                        $conditions[] = $db->quoteName('price_a') . ' <= ' . (float)$values['max'];
-                    }
-                } else {
-                    $quotedValues = array_map([$db, 'quote'], (array)$values);
-                    $conditions[] = $db->quoteName($key) . ' IN (' . implode(',', $quotedValues) . ')';
-                }
-            }
-        }
-
-        $query = $db->getQuery(true)
-            ->select('a.*, p.name, p.alias, p.images, p.product_folder_id, p.type_id, p.state, p.ordering')
-            ->from($db->quoteName($this->tableName, 'a'))
-            ->join('INNER', $db->quoteName('p6wjk_hp_positions', 'p') . ' ON a.product_id = p.id')
-            ->where($conditions)
-            ->order($db->quoteName('p.ordering') . ' ASC')
-            ->setLimit($limit, $offset);
+        $query = $db->getQuery(true);
+        $this->_setHeadQuery($query);
+        $this->_setConditions($query, $filters);
+        $query->setLimit($limit, $offset);
 
         try {
             $results = $db->setQuery($query)->loadObjectList();
+            Log::add('Query executed in getItems: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
             Log::add('Error fetching items: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             return [];
         }
-        $products = [];
 
+        $products = [];
         foreach ($results as $result) {
             try {
-                $product = $this->hyper['helper']['moyskladProduct'] ? $this->hyper['helper']['moyskladProduct']->findBy('id', $result->product_id) : null;
+                $product = $this->hyper['helper']['moyskladProduct'] 
+                    ? $this->hyper['helper']['moyskladProduct']->findBy('id', $result->product_id) 
+                    : null;
                 if ($product instanceof ProductMarker) {
                     $product->set('saved_configuration', $result->in_stock);
-                    $product->set('list_price', $this->hyper['helper']['money'] ? $this->hyper['helper']['money']->get($result->price_a) : $result->price_a);
+                    $product->set('list_price', $this->hyper['helper']['money'] 
+                        ? $this->hyper['helper']['money']->get($result->price_a) 
+                        : $result->price_a);
+
+                    // Добавляем данные о сборке из p6wjk_hp_saved_configurations
+                    if ($result->in_stock) {
+                        $configQuery = $db->getQuery(true)
+                            ->select('parts')
+                            ->from($db->quoteName('p6wjk_hp_saved_configurations'))
+                            ->where($db->quoteName('id') . ' = ' . (int)$result->in_stock);
+                        $config = $db->setQuery($configQuery)->loadResult();
+                        $product->set('configuration_parts', $config ? json_decode($config, true) : []);
+                    } else {
+                        $product->set('configuration_parts', []);
+                    }
+
+                    // Добавляем данные о комплектации из p6wjk_hp_products_config_values
+                    $configValuesQuery = $db->getQuery(true)
+                        ->select(['value', 'part_id', 'option_id'])
+                        ->from($db->quoteName('p6wjk_hp_products_config_values'))
+                        ->where($db->quoteName('product_id') . ' = ' . (int)$result->product_id)
+                        ->where($db->quoteName('stock_id') . ' = ' . (int)$result->in_stock);
+                    $configValues = $db->setQuery($configValuesQuery)->loadObjectList();
+                    $product->set('config_values', $configValues ?: []);
+
                     $products[] = $product;
                 }
             } catch (\Throwable $e) {
                 Log::add('Error processing product ID ' . $result->product_id . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             }
         }
-        dump(__LINE__.__DIR__." --- getItems --- ");
-        exit;
 
         return $products;
     }
@@ -206,9 +446,22 @@ class MoyskladProductIndexFilter extends Filter
     public function getState(): array
     {
         try {
-            return $this->hyper['input'] ? $this->hyper['input']->get('filters', [], 'array') : [];
+            $state = [];
+            $filters = $this->getCurrentFilters()->toArray();
+            dump(__LINE__.__DIR__." --- filters --- ");
+            dump($filters);
+
+
+            foreach ($filters as $key => $value) {
+                if (!empty($value)) {
+                    $state[$key] = (array)$value;
+                }
+            }
+
+            Log::add('Filter state in MoyskladProductIndexFilter: ' . print_r($state, true), Log::DEBUG, 'com_hyperpc');
+            return $state;
         } catch (\Throwable $e) {
-            Log::add('Error getting filter state: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            Log::add('Error getting filter state in MoyskladProductIndexFilter: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             return [];
         }
     }
@@ -238,27 +491,10 @@ class MoyskladProductIndexFilter extends Filter
     public function hasItems(array $filters = []): bool
     {
         $db = Factory::getDbo();
-        $conditions = [];
-        foreach ($filters as $key => $values) {
-            if (!empty($values)) {
-                if ($key === 'price_a') {
-                    if (!empty($values['min'])) {
-                        $conditions[] = $db->quoteName('price_a') . ' >= ' . (float)$values['min'];
-                    }
-                    if (!empty($values['max'])) {
-                        $conditions[] = $db->quoteName('price_a') . ' <= ' . (float)$values['max'];
-                    }
-                } else {
-                    $quotedValues = array_map([$db, 'quote'], (array)$values);
-                    $conditions[] = $db->quoteName($key) . ' IN (' . implode(',', $quotedValues) . ')';
-                }
-            }
-        }
-
         $query = $db->getQuery(true)
             ->select('COUNT(*)')
-            ->from($db->quoteName($this->tableName))
-            ->where($conditions);
+            ->from($db->quoteName($this->tableName));
+        $this->_setConditions($query, $filters);
 
         try {
             return (int)$db->setQuery($query)->loadResult() > 0;
@@ -274,16 +510,18 @@ class MoyskladProductIndexFilter extends Filter
      * @param int $fieldId
      * @return string|null
      */
-    protected function getFieldName(int $fieldId): ?string
+    protected function getFieldName($fieldId)
     {
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true)
-            ->select($db->quoteName('name'))
-            ->from($db->quoteName('p6wjk_fields'))
-            ->where($db->quoteName('id') . ' = ' . (int)$fieldId);
-
         try {
-            return $db->setQuery($query)->loadResult();
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('name'))
+                ->from($db->quoteName('p6wjk_fields'))
+                ->where($db->quoteName('id') . ' = ' . (int)$fieldId);
+            $db->setQuery($query);
+            $fieldName = $db->loadResult();
+            Log::add('Field name for ID ' . $fieldId . ': ' . $fieldName, Log::DEBUG, 'com_hyperpc');
+            return $fieldName;
         } catch (\Throwable $e) {
             Log::add('Error fetching field name for ID ' . $fieldId . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             return null;
@@ -306,7 +544,9 @@ class MoyskladProductIndexFilter extends Filter
                 $options = $field->fieldparams->get('options', []);
                 foreach ($options as $option) {
                     if ($option['value'] === $value) {
-                        return $this->hyper['helper']['string'] ? $this->hyper['helper']['string']->filterLanguage($option['name']) : $value;
+                        return $this->hyper['helper']['string'] 
+                            ? $this->hyper['helper']['string']->filterLanguage($option['name']) 
+                            : $value;
                     }
                 }
             }
@@ -319,12 +559,12 @@ class MoyskladProductIndexFilter extends Filter
     /**
      * Get field options with counts.
      *
-     * @param Filter $fieldFilter
+     * @param AbstractFilter $fieldFilter
      * @param array $filters
      * @param string $fieldName
      * @return array
      */
-    protected function getFieldOptions(Filter $fieldFilter, array $filters, string $fieldName): array
+    protected function getFieldOptions($fieldFilter, array $filters, string $fieldName): array
     {
         $db = Factory::getDbo();
         $conditions = [];
@@ -345,7 +585,7 @@ class MoyskladProductIndexFilter extends Filter
         $query = $db->getQuery(true)
             ->select([
                 $db->quoteName($fieldName),
-                'COUNT(*) AS count'
+                'COUNT(DISTINCT ' . $db->quoteName('id') . ') AS count'
             ])
             ->from($db->quoteName($this->tableName))
             ->where($conditions)
@@ -353,11 +593,13 @@ class MoyskladProductIndexFilter extends Filter
 
         try {
             $results = $db->setQuery($query)->loadObjectList();
+            Log::add('Field options query for ' . $fieldName . ': ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
             Log::add('Error fetching field options for ' . $fieldName . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            return [];
         }
-        $options = [];
 
+        $options = [];
         foreach ($results as $result) {
             $value = $result->$fieldName;
             if (!empty($value)) {
@@ -380,14 +622,16 @@ class MoyskladProductIndexFilter extends Filter
      */
     protected function getFieldId(string $fieldName): ?int
     {
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true)
-            ->select($db->quoteName('id'))
-            ->from($db->quoteName('p6wjk_fields'))
-            ->where($db->quoteName('name') . ' = ' . $db->quote($fieldName));
-
         try {
-            return (int)$db->setQuery($query)->loadResult();
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('id'))
+                ->from($db->quoteName('#__fields'))
+                ->where($db->quoteName('name') . ' = ' . $db->quote($fieldName));
+            $db->setQuery($query);
+            $fieldId = (int)$db->loadResult();
+            Log::add('Field ID for name ' . $fieldName . ': ' . $fieldId, Log::DEBUG, 'com_hyperpc');
+            return $fieldId;
         } catch (\Throwable $e) {
             Log::add('Error fetching field ID for ' . $fieldName . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             return null;
@@ -419,4 +663,181 @@ class MoyskladProductIndexFilter extends Filter
     {
         return $this->_type;
     }
+
+
+    /**
+     * Find items.
+     *
+     * @return void
+     */
+    public function find()
+    {
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+            $this->_setHeadQuery($query);
+            $filters = $this->getCurrentFilters()->toArray();
+            $this->_setConditions($query, $filters);
+
+            $db->setQuery($query);
+            $this->items = $db->loadObjectList();
+            Log::add('Query executed in find: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
+
+            // Добавляем данные о сборке и комплектации
+            foreach ($this->items as $item) {
+                if ($item->in_stock) {
+                    $configQuery = $db->getQuery(true)
+                        ->select('parts')
+                        ->from($db->quoteName('p6wjk_hp_saved_configurations'))
+                        ->where($db->quoteName('id') . ' = ' . (int)$item->in_stock);
+                    $config = $db->setQuery($configQuery)->loadResult();
+                    $item->configuration_parts = $config ? json_decode($config, true) : [];
+                } else {
+                    $item->configuration_parts = [];
+                }
+
+                $configValuesQuery = $db->getQuery(true)
+                    ->select(['value', 'part_id', 'option_id'])
+                    ->from($db->quoteName('p6wjk_hp_products_config_values'))
+                    ->where($db->quoteName('product_id') . ' = ' . (int)$item->product_id)
+                    ->where($db->quoteName('stock_id') . ' = ' . (int)$item->in_stock);
+                $item->config_values = $db->setQuery($configValuesQuery)->loadObjectList() ?: [];
+            }
+        } catch (\Throwable $e) {
+            Log::add('Error in find: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), Log::ERROR, 'com_hyperpc');
+            $this->items = [];
+        }
+    }
+
+    /**
+     * Get items (non-paginated).
+     *
+     * @return array
+     */
+    public function getItemsNonPaginated(): array
+    {
+        $filters = $this->getCurrentFilters()->toArray();
+        return $this->getItems($filters, 0, 0);
+    }
+
+    /**
+     * Get current filters.
+     *
+     * @return Registry
+     */
+    public function getCurrentFilters(): Registry
+    {
+        return new Registry($this->hyper['input'] ? $this->hyper['input']->get('filter', [], 'array') : []);
+    }
+
+    /**
+     * Set field options count.
+     *
+     * @return void
+     */
+    public function setFieldOptionsCount()
+    {
+        $filters = $this->getCurrentFilters()->toArray();
+        $this->getFilterData($filters);
+        Log::add('Field options count set', Log::DEBUG, 'com_hyperpc');
+    }
+
+    /**
+     * Get initial state for filters.
+     *
+     * @return array
+     */
+    public function getInitState(): array
+    {
+        $allowedFields = $this->hyper['params'] instanceof Registry 
+            ? $this->hyper['params']->get('filter_product_allowed_moysklad', []) 
+            : [];
+        $initState = [];
+
+        foreach ($allowedFields as $field) {
+            $fieldName = $this->getFieldName($field['id']);
+            if ($fieldName) {
+                $initState[$fieldName] = [
+                    'title' => $field['title'],
+                    'id' => $field['id'],
+                    'group_id' => $field['group_id'],
+                    'from' => $field['from'],
+                    'options' => $this->getFieldOptions(new Filter($this->hyper), [], $fieldName)
+                ];
+            }
+        }
+
+        Log::add('Initial filter state: ' . print_r($initState, true), Log::DEBUG, 'com_hyperpc');
+        return $initState;
+    }
+
+    /**
+     * Get query dump.
+     *
+     * @return string
+     */
+    public function getQueryDump(): string
+    {
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+            $this->_setHeadQuery($query);
+            $filters = $this->getCurrentFilters()->toArray();
+            $this->_setConditions($query, $filters);
+
+            $dump = $query->dump();
+            Log::add('Query dump: ' . $dump, Log::DEBUG, 'com_hyperpc');
+            return $dump;
+        } catch (\Throwable $e) {
+            Log::add('Error in getQueryDump: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            return '';
+        }
+    }
+
+    /*
+    * Set filter data.
+    *
+    * @param mixed $data
+    * @return void
+    */
+    public function setFilterData($data)
+    {
+        $this->_filterData = $data instanceof Registry ? $data : new Registry($data);
+        Log::add('Filter data set: ' . print_r($this->_filterData->toArray(), true), Log::DEBUG, 'com_hyperpc');
+    }
+
+    /**
+     * Get filter helper.
+     *
+     * @return mixed
+     */
+    public function getFilterHelper()
+    {
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::getFilterHelper() --- ");
+        return $this->hyper['helper']['filter'] ?? null;
+    }
+
+    /**
+     * Get group helper.
+     *
+     * @return mixed
+     */
+    public function getGroupHelper()
+    {
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::getGroupHelper() --- ");
+        return $this->hyper['helper']['productFolder'] ?? null;
+    }
+
+    /**
+     * Get options helper.
+     *
+     * @return mixed
+     */
+    public function getOptionsHelper()
+    {
+        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::getOptionsHelper() --- ");
+        return $this->hyper['helper']['options'] ?? null;
+    }
+
+
 }
