@@ -211,6 +211,13 @@ class MoyskladProductIndexFilter extends AbstractFilter
         $filters = $this->getCurrentFilters()->toArray();
         $allowedFilters = $this->hyper['params']->get('filter_product_allowed_moysklad', []);
 
+        // Проверка на пустые фильтры
+        if (empty($allowedFilters)) {
+            Log::add('No allowed filters in MoyskladProductIndexFilter', Log::WARNING, 'com_hyperpc');
+            // Попробуем использовать альтернативный ключ
+            $allowedFilters = $this->hyper['params']->get('filter_product_allowed', []);
+        }
+
         // Фильтрация по product_folder_id
         $productFolderId = 116;
         $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
@@ -237,10 +244,10 @@ class MoyskladProductIndexFilter extends AbstractFilter
         }
 
         // Фильтр по цене
-        if (!empty($filters['price_a']['min'])) {
+        if (!empty($filters['price_a']['min']) && is_numeric($filters['price_a']['min'])) {
             $query->where($db->quoteName('p.price_a') . ' >= ' . (float)$filters['price_a']['min']);
         }
-        if (!empty($filters['price_a']['max'])) {
+        if (!empty($filters['price_a']['max']) && is_numeric($filters['price_a']['max'])) {
             $query->where($db->quoteName('p.price_a') . ' <= ' . (float)$filters['price_a']['max']);
         }
     }
@@ -256,7 +263,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
     protected function _setHeadQuery(array $select = [])
     {
         $db = Factory::getDbo();
-        $query = $db->getQuery(true);
+        $query = $this->getQuery();
 
         // Default select fields if not provided
         $select = !empty($select) ? $select : [
@@ -272,7 +279,8 @@ class MoyskladProductIndexFilter extends AbstractFilter
             ->from($db->quoteName($this->tableName, 'p'))
             ->join('LEFT', $db->quoteName('#__hp_positions', 'pos') . ' ON ' . $db->quoteName('pos.id') . ' = ' . $db->quoteName('p.product_id'));
 
-        $this->setQuery($query);
+        // Сохраняем запрос в свойство, если требуется
+        $this->_query = $query;
     }
 
 
