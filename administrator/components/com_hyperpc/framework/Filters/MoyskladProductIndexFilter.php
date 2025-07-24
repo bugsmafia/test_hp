@@ -1,22 +1,11 @@
 <?php
 namespace HYPERPC\Filters;
 
-use HYPERPC\App;
-use HYPERPC\Joomla\Model\Entity\ProductFolder;
-
 use Joomla\CMS\Factory;
-use Joomla\Registry\Registry;
-use Joomla\Database\DatabaseDriver;
-use HYPERPC\Filters\Filter;
-use HYPERPC\Filters\FilterFactory;
-use HYPERPC\Helper\Manager;
-use HYPERPC\Helper\ProductFolderHelper
-
-
-use HYPERPC\Joomla\Model\Entity\Interfaces\ProductMarker;
 use Joomla\CMS\Log\Log;
-
+use Joomla\Registry\Registry;
 use HYPERPC\ORM\Filter\AbstractFilter;
+use HYPERPC\App;
 
 /**
  * Class MoyskladProductIndexFilter
@@ -83,36 +72,13 @@ class MoyskladProductIndexFilter extends AbstractFilter
      */
     public function __construct($hyper)
     {
-        $this->hyper = App::getInstance();
-        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- this->hyper: ");
-        dump($this->hyper);
-
-        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- hyper: ");
         if (!$hyper instanceof App) {
             Log::add('Invalid hyper parameter in MoyskladProductIndexFilter', Log::ERROR, 'com_hyperpc');
             throw new \InvalidArgumentException('Invalid hyper parameter');
         }
 
-        // Передаем пустой массив в родительский конструктор, если AbstractFilter ожидает array
-        parent::__construct([]);
-
-        $this->_filterData = new \Joomla\Registry\Registry();
-        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- hyper 1: ");
-        dump($this->hyper['helper']);
-
-        // Заглушки для отсутствующих сервисов
-        $this->hyper['helper']['productFolder'] = $this->hyper['helper']['productFolder'] ?? null;
-        $this->hyper['helper']['options'] = $this->hyper['helper']['options'] ?? null;
-        $this->hyper['helper']['moyskladProduct'] = $this->hyper['helper']['moyskladProduct'] ?? null;
-        $this->hyper['helper']['money'] = $this->hyper['helper']['money'] ?? null;
-        $this->hyper['helper']['fields'] = $this->hyper['helper']['fields'] ?? null;
-        $this->hyper['helper']['string'] = $this->hyper['helper']['string'] ?? null;
-        $this->hyper['helper']['filter'] = $this->hyper['helper']['filter'] ?? null;
-        dump(__LINE__.__DIR__." --- MoyskladProductIndexFilter::__construct() --- hyper 2: ");
-
-        dump($this->hyper['helper']);
-        
-
+        $this->hyper = $hyper;
+        $this->_filterData = new Registry();
         Log::add('MoyskladProductIndexFilter initialized', Log::DEBUG, 'com_hyperpc');
     }
 
@@ -241,21 +207,41 @@ class MoyskladProductIndexFilter extends AbstractFilter
     protected function _setConditions()
     {
         $db = Factory::getDbo();
+        $query = $this->getQuery();
         $filters = $this->getCurrentFilters()->toArray();
-        foreach ($filters as $key => $values) {
-            if (!empty($values)) {
-                if ($key === 'price_a') {
-                    if (!empty($values['min'])) {
-                        $this->query->where($db->quoteName('price_a') . ' >= ' . (float)$values['min']);
-                    }
-                    if (!empty($values['max'])) {
-                        $this->query->where($db->quoteName('price_a') . ' <= ' . (float)$values['max']);
-                    }
-                } else {
-                    $quotedValues = array_map([$db, 'quote'], (array)$values);
-                    $this->query->where($db->quoteName($key) . ' IN (' . implode(',', $quotedValues) . ')');
-                }
+        $allowedFilters = $this->hyper['params']->get('filter_product_allowed_moysklad', []);
+
+        // Фильтрация по product_folder_id
+        $productFolderId = 116;
+        $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
+
+        // Динамические поля
+        foreach ($allowedFilters as $filter) {
+            $fieldId = $filter['id'] ?? null;
+            if (!$fieldId) {
+                continue;
             }
+
+            // Получить имя поля из #__fields
+            $fieldQuery = $db->getQuery(true)
+                ->select($db->quoteName('name'))
+                ->from($db->quoteName('#__fields'))
+                ->where($db->quoteName('id') . ' = ' . (int)$fieldId);
+            $fieldName = $db->setQuery($fieldQuery)->loadResult();
+
+            if ($fieldName && !empty($filters[$fieldName])) {
+                $values = (array)$filters[$fieldName];
+                $quotedValues = array_map([$db, 'quote'], $values);
+                $query->where($db->quoteName('p.' . $fieldName) . ' IN (' . implode(',', $quotedValues) . ')');
+            }
+        }
+
+        // Фильтр по цене
+        if (!empty($filters['price_a']['min'])) {
+            $query->where($db->quoteName('p.price_a') . ' >= ' . (float)$filters['price_a']['min']);
+        }
+        if (!empty($filters['price_a']['max'])) {
+            $query->where($db->quoteName('p.price_a') . ' <= ' . (float)$filters['price_a']['max']);
         }
     }
 
@@ -264,23 +250,29 @@ class MoyskladProductIndexFilter extends AbstractFilter
      *
      * @param array $select
      * @return void
+     * 
+     * abstract protected function _setHeadQuery(array $select = ['stock.*', 'tIndex.*']);
      */
-    protected function _setHeadQuery(array $select = [
-        'a.*',
-        'p.name',
-        'p.alias',
-        'p.images',
-        'p.product_folder_id',
-        'p.type_id',
-        'p.state',
-        'p.ordering'
-    ])
+    protected function _setHeadQuery(array $select = [])
     {
         $db = Factory::getDbo();
-        $this->query->select($select)
-            ->from($db->quoteName($this->tableName, 'a'))
-            ->join('INNER', $db->quoteName('p6wjk_hp_positions', 'p') . ' ON a.product_id = p.id')
-            ->order($db->quoteName('p.ordering') . ' ASC');
+        $query = $db->getQuery(true);
+
+        // Default select fields if not provided
+        $select = !empty($select) ? $select : [
+            'p.product_id',
+            'p.name',
+            'p.alias',
+            'p.images',
+            'p.in_stock',
+            'p.price_a'
+        ];
+
+        $query->select(array_map([$db, 'quoteName'], $select))
+            ->from($db->quoteName($this->tableName, 'p'))
+            ->join('LEFT', $db->quoteName('#__hp_positions', 'pos') . ' ON ' . $db->quoteName('pos.id') . ' = ' . $db->quoteName('p.product_id'));
+
+        $this->setQuery($query);
     }
 
 
@@ -383,22 +375,18 @@ class MoyskladProductIndexFilter extends AbstractFilter
      */
     public function getItems(array $filters = [], int $offset = 0, int $limit = 10): array
     {
-        $db = \Joomla\CMS\Factory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
-        $this->_setHeadQuery($query);
-        $this->_setConditions($query, $filters);
-
-        // Фильтрация по product_folder_id
-        $productFolderId = 116;
-        $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
-
+        $this->_setHeadQuery();
+        $this->setCurrentFilters($filters);
+        $this->_setConditions();
         $query->setLimit($limit, $offset);
 
         try {
             $results = $db->setQuery($query)->loadObjectList();
-            \Joomla\CMS\Log\Log::add('Query executed in getItems: ' . $query->dump(), \Joomla\CMS\Log\Log::DEBUG, 'com_hyperpc');
+            Log::add('Query executed in getItems: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
         } catch (\Throwable $e) {
-            \Joomla\CMS\Log\Log::add('Error fetching items: ' . $e->getMessage(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
+            Log::add('Error fetching items: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             return [];
         }
 
@@ -435,7 +423,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
 
                 $products[] = $product;
             } catch (\Throwable $e) {
-                \Joomla\CMS\Log\Log::add('Error processing product ID ' . $result->product_id . ': ' . $e->getMessage(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
+                Log::add('Error processing product ID ' . $result->product_id . ': ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
             }
         }
 
@@ -677,19 +665,13 @@ class MoyskladProductIndexFilter extends AbstractFilter
     public function find()
     {
         try {
-            $db = \Joomla\CMS\Factory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
-            $this->_setHeadQuery($query);
-            $filters = $this->getCurrentFilters()->toArray();
-            $this->_setConditions($query, $filters);
-
-            // Фильтрация по product_folder_id
-            $productFolderId = 116;
-            $query->where($db->quoteName('p.product_folder_id') . ' = ' . (int)$productFolderId);
-
+            $this->_setHeadQuery();
+            $this->_setConditions();
             $db->setQuery($query);
             $this->items = $db->loadObjectList();
-            \Joomla\CMS\Log\Log::add('Query executed in find: ' . $query->dump(), \Joomla\CMS\Log\Log::DEBUG, 'com_hyperpc');
+            Log::add('Query executed in find: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
 
             foreach ($this->items as $item) {
                 $item->id = $item->product_id;
@@ -715,7 +697,7 @@ class MoyskladProductIndexFilter extends AbstractFilter
                 $item->config_values = $db->setQuery($configValuesQuery)->loadObjectList() ?: [];
             }
         } catch (\Throwable $e) {
-            \Joomla\CMS\Log\Log::add('Error in find: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), \Joomla\CMS\Log\Log::ERROR, 'com_hyperpc');
+            Log::add('Error in find: ' . $e->getMessage() . "\nTrace: " . $e->getTraceAsString(), Log::ERROR, 'com_hyperpc');
             $this->items = [];
         }
     }
