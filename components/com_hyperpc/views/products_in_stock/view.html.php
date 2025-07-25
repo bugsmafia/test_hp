@@ -81,6 +81,13 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
      */
     public string $description = '';
 
+    protected $filter;
+    protected $items;
+    protected $pagination;
+    protected $groups;
+    protected $options;
+
+
     /**
      * Constructor.
      *
@@ -89,21 +96,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     public function __construct($config = [])
     {
         parent::__construct($config);
-
-        // Подготовка helper для передачи в фильтр
-        $helper = [
-            'renderHelper' => new \HYPERPC\Helper\RenderHelper(),
-            'uikitHelper' => new \HYPERPC\Helper\UikitHelper(),
-            'groupHelper' => null,
-            'productFolder' => null
-        ];
-
-        // Если $this->hyper['helper'] существует и является объектом Manager, извлекаем сервисы
-        if (!empty($this->hyper['helper']) && $this->hyper['helper'] instanceof \HYPERPC\Helper\Manager) {
-            $helper['renderHelper'] = $this->hyper['helper']->get('renderHelper', $helper['renderHelper']);
-            $helper['uikitHelper'] = $this->hyper['helper']->get('uikitHelper', $helper['uikitHelper']);
-            // Другие сервисы, если они поддерживаются Manager
-        }
+        $this->hyper = App::getInstance();
 
         // Инициализация filter
         if (empty($this->filter)) {
@@ -111,7 +104,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
                 $this->filter = new \HYPERPC\Filters\MoyskladProductIndexFilter([
                     'hyper' => [
                         'params' => ComponentHelper::getParams('com_hyperpc'),
-                        'helper' => $helper
+                        'helper' => $this->hyper['helper']
                     ]
                 ]);
                 Log::add('filter initialized: ' . get_class($this->filter), Log::DEBUG, 'com_hyperpc');
@@ -120,7 +113,18 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
                 $this->filter = null;
             }
         }
+
+        // Инициализация filterData->helper для шаблона
+        $this->filterData = new \stdClass();
+        try {
+            $this->filterData->helper = $this->hyper['helper']['filter'] ?? new FilterHelper();
+            Log::add('FilterHelper initialized for filterData', Log::DEBUG, 'com_hyperpc');
+        } catch (\Throwable $e) {
+            Log::add('Error initializing FilterHelper: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            $this->filterData->helper = null;
+        }
     }
+
     /**
      * Display the view.
      *
@@ -130,17 +134,25 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     public function display($tpl = null)
     {
         try {
-            $this->filterData = $this->_getFilterData();
-            $this->groups = $this->_getGroups();
-            $this->options = $this->_getOptions();
-            $this->items = $this->filter ? $this->filter->getItems($this->filterData['filters']['current'] ?? []) : [];
-            $this->pagination = $this->get('Pagination');
+            $this->filterData->filters = $this->_getFilterData() ?? ['available' => [], 'current' => [], 'prices' => ['min' => 0, 'max' => 0]];
+            $this->groups = $this->_getGroups() ?? [];
+            $this->options = $this->_getOptions() ?? [];
+            $this->items = $this->filter ? ($this->filter->getItems($this->filterData->filters['current'] ?? []) ?? []) : [];
+            $this->pagination = $this->get('Pagination') ?? null;
+            $this->showFps = $this->hyper['params']->get('show_fps', false);
 
-            Log::add('filterHelper: ' . ($this->filter ? get_class($this->filter) : 'null'), Log::DEBUG, 'com_hyperpc');
-            Log::add('renderHelper: ' . get_class($this->hyper['helper']['renderHelper']), Log::DEBUG, 'com_hyperpc');
-            Log::add('uikitHelper: ' . get_class($this->hyper['helper']['uikitHelper']), Log::DEBUG, 'com_hyperpc');
+            Log::add('filterHelper: ' . ($this->filterData->helper ? get_class($this->filterData->helper) : 'null'), Log::DEBUG, 'com_hyperpc');
+            Log::add('renderHelper: ' . get_class($this->hyper['helper']['render']), Log::DEBUG, 'com_hyperpc');
+            Log::add('uikitHelper: ' . get_class($this->hyper['helper']['uikit']), Log::DEBUG, 'com_hyperpc');
+            Log::add('Items count: ' . count($this->items), Log::DEBUG, 'com_hyperpc');
+            Log::add('AssetsHelper available: ' . (isset($this->hyper['helper']['assets']) ? 'yes' : 'no'), Log::DEBUG, 'com_hyperpc');
+            Log::add('Filters data: ' . json_encode($this->filterData->filters), Log::DEBUG, 'com_hyperpc');
+            Log::add('Options data: ' . json_encode($this->options), Log::DEBUG, 'com_hyperpc');
+            Log::add('Show FPS: ' . ($this->showFps ? 'true' : 'false'), Log::DEBUG, 'com_hyperpc');
+
+            $this->_loadAssets();
         } catch (\Throwable $e) {
-            Log::add('Error in display: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
+            Log::add('Error in display: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR, 'com_hyperpc');
             throw $e;
         }
 
@@ -157,15 +169,12 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     protected function _loadAssets()
     {
         parent::_loadAssets();
-
-        if (!count($this->products)) {
-            if (isset($this->hyper['wa'])) {
-                $this->hyper['wa']->useScript('product.teaser');
-            } else {
-                Log::add('wa service is missing in hyper', Log::ERROR, 'com_hyperpc');
-            }
+        $this->hyper['wa']->useScript('product.teaser');
+        if (!count($this->items)) {
+            $this->hyper['wa']->useScript('product.teaser');
         }
     }
+
 
     /**
      * Get options for filters.
@@ -176,6 +185,8 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     {
         $db = Factory::getDbo();
         $allowedFilters = $this->hyper['params']->get('filter_product_allowed_moysklad', []);
+
+        Log::add('Allowed filters in _getOptions: ' . json_encode($allowedFilters), Log::DEBUG, 'com_hyperpc');
 
         if (empty($allowedFilters)) {
             Log::add('No allowed filters for options in _getOptions', Log::WARNING, 'com_hyperpc');
@@ -190,13 +201,16 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
 
         try {
             $fieldQuery = $db->getQuery(true)
-                ->select(['id', 'name'])
+                ->select(['id', 'name', 'title'])
                 ->from($db->quoteName('#__fields'))
-                ->where($db->quoteName('id') . ' IN (' . implode(',', array_map('intval', $fieldIds)) . ')');
+                ->where($db->quoteName('id') . ' IN (' . implode(',', array_map('intval', $fieldIds)) . ')')
+                ->where($db->quoteName('context') . ' = ' . $db->quote('com_hyperpc.product'));
             $fields = $db->setQuery($fieldQuery)->loadObjectList('id');
 
+            Log::add('Fields fetched for options: ' . json_encode($fields), Log::DEBUG, 'com_hyperpc');
+
             $query = $db->getQuery(true)
-                ->select(['fv.value', 'fv.label', 'fv.field_id'])
+                ->select(['fv.field_id', 'fv.value', 'fv.value AS label'])
                 ->from($db->quoteName('#__fields_values', 'fv'))
                 ->where($db->quoteName('fv.field_id') . ' IN (' . implode(',', array_map('intval', $fieldIds)) . ')');
             
@@ -208,7 +222,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
                 if ($fieldName) {
                     $options[$fieldName][] = [
                         'value' => $row->value,
-                        'label' => $row->label ?: $row->value
+                        'label' => $row->label
                     ];
                 }
             }
@@ -230,7 +244,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     {
         if (empty($this->hyper['helper']['groupHelper'])) {
             Log::add('groupHelper is null in HyperPcViewProducts_In_Stock::_getGroups', Log::ERROR, 'com_hyperpc');
-            return []; // Возвращаем пустой массив как заглушку
+            return [];
         }
 
         $groupHelper = $this->hyper['helper']['groupHelper'];
@@ -247,14 +261,17 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
         $filters = [];
         if ($this->filter) {
             $filtersRaw = $this->filter->getCurrentFilters();
-            $filters = $filtersRaw ? json_decode($filtersRaw->getRaw(), true) : [];
+            $filters = $filtersRaw ? $filtersRaw->toArray() : [];
+            Log::add('Raw filters from getCurrentFilters: ' . json_encode($filtersRaw ? $filtersRaw->toArray() : null), Log::DEBUG, 'com_hyperpc');
+        } else {
+            Log::add('Filter object is null in _getFilterData', Log::ERROR, 'com_hyperpc');
         }
 
         if (empty($filters)) {
             Log::add('No filters available in _getFilterData', Log::WARNING, 'com_hyperpc');
         }
 
-        $this->filterData = ['filters' => ['available' => [], 'current' => $filters, 'prices' => ['min' => 0, 'max' => 0]]];
+        $this->filterData->filters = ['available' => [], 'current' => $filters, 'prices' => ['min' => 0, 'max' => 0]];
 
         Log::add('Filters passed to _getFilterData: ' . json_encode($filters), Log::DEBUG, 'com_hyperpc');
 
@@ -268,7 +285,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
 
             $prices = $db->setQuery($query)->loadObject();
 
-            $this->filterData['filters']['prices'] = [
+            $this->filterData->filters['prices'] = [
                 'min' => $prices->min ?? 0,
                 'max' => $prices->max ?? 0
             ];
@@ -277,7 +294,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
             Log::add('Error fetching prices: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
         }
 
-        Log::add('Filter data generated: ' . json_encode($this->filterData), Log::DEBUG, 'com_hyperpc');
-        return $this->filterData;
+        Log::add('Filter data generated: ' . json_encode($this->filterData->filters), Log::DEBUG, 'com_hyperpc');
+        return $this->filterData->filters;
     }
 }
