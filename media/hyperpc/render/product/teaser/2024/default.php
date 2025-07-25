@@ -20,6 +20,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use HYPERPC\Helper\RenderHelper;
+use HYPERPC\Helper\MicrodataHelper;
 use HYPERPC\Joomla\Model\Entity\Interfaces\Stockable;
 use HYPERPC\Joomla\Model\Entity\Interfaces\ProductMarker;
 use HYPERPC\Joomla\Model\Entity\Interfaces\CategoryMarker;
@@ -54,10 +55,13 @@ foreach ($products as $product) :
     if (!$category->id) {
         continue;
     }
-
     $productRender = $product->getRender();
-    $productRender->setEntity($product);
 
+    $productRender->setEntity($product);
+    dump(__LINE__.__DIR__." --- productRender --- ");
+    dump($product);
+
+    
     $productDescription = trim(strip_tags($product->get('description', '')));
 
     $price = $product->getConfigPrice(true);
@@ -67,15 +71,20 @@ foreach ($products as $product) :
 
     if (!$fromStock && $instock === 'default') {
         $images = $product->get('images')?->get('teaser_color_variants');
+
         if (\is_array($images) && \count($images)) {
             $image = $images[\array_key_first($images)];
             $image['color'] = '1';
             $product->get('images')->set('teaser_color_variants', [$image]);
         }
     }
+    dump(__LINE__.__DIR__." --- productRender->image() --- ");
+    dump($product);
+    
     ?>
     <div class="tm-product-teaser">
-        <?= $this->hyper['helper']['microdata']->getEntityMicrodata($product) ?>
+
+        
 
         <div class="tm-product-teaser__body uk-card uk-card-default uk-card-body uk-transition-toggle">
             <?php if ($fromStock && !$this->hyper['detect']->isMobile()) : ?>

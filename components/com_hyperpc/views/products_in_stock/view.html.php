@@ -137,6 +137,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
             $this->filterData->filters = $this->_getFilterData() ?? ['available' => [], 'current' => [], 'prices' => ['min' => 0, 'max' => 0]];
             $this->groups = $this->_getGroups() ?? [];
             $this->options = $this->_getOptions() ?? [];
+            $this->products = $this->filter ? $this->_prepareProducts($this->filter->getItems($this->filterData->filters['current'] ?? []) ?? []) : [];
             $this->items = $this->filter ? ($this->filter->getItems($this->filterData->filters['current'] ?? []) ?? []) : [];
             $this->pagination = $this->get('Pagination') ?? null;
             $this->showFps = $this->hyper['params']->get('show_fps', false);
@@ -144,7 +145,7 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
             Log::add('filterHelper: ' . ($this->filterData->helper ? get_class($this->filterData->helper) : 'null'), Log::DEBUG, 'com_hyperpc');
             Log::add('renderHelper: ' . get_class($this->hyper['helper']['render']), Log::DEBUG, 'com_hyperpc');
             Log::add('uikitHelper: ' . get_class($this->hyper['helper']['uikit']), Log::DEBUG, 'com_hyperpc');
-            Log::add('Items count: ' . count($this->items), Log::DEBUG, 'com_hyperpc');
+            Log::add('Products count: ' . count($this->products), Log::DEBUG, 'com_hyperpc');
             Log::add('AssetsHelper available: ' . (isset($this->hyper['helper']['assets']) ? 'yes' : 'no'), Log::DEBUG, 'com_hyperpc');
             Log::add('Filters data: ' . json_encode($this->filterData->filters), Log::DEBUG, 'com_hyperpc');
             Log::add('Options data: ' . json_encode($this->options), Log::DEBUG, 'com_hyperpc');
@@ -157,6 +158,89 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
         }
 
         parent::display($tpl);
+    }
+
+    /**
+     * Prepare products with necessary methods.
+     *
+     * @param array $items
+     * @return array
+     */
+    protected function _prepareProducts(array $items): array
+    {
+        $db = Factory::getDbo();
+        $products = [];
+
+        foreach ($items as $item) {
+            $product = new class($item) {
+                private $data;
+
+                public function __construct($data)
+                {
+                    $this->data = $data;
+                }
+
+                public function __get($name)
+                {
+                    return $this->data->$name ?? null;
+                }
+
+                public function getFolder()
+                {
+                    $db = Factory::getDbo();
+                    $query = $db->getQuery(true)
+                        ->select(['id', 'title', 'alias'])
+                        ->from($db->quoteName('#__hp_product_folders'))
+                        ->where($db->quoteName('id') . ' = ' . (int)($this->data->product_folder_id ?? 116));
+                    $folder = $db->setQuery($query)->loadObject() ?? new \stdClass();
+                    Log::add('Folder fetched for product ID ' . ($this->data->id ?? 'unknown') . ': ' . json_encode($folder), Log::DEBUG, 'com_hyperpc');
+                    return $folder;
+                }
+
+                public function getRender($type = 'teaser')
+                {
+                    $renderData = new class {
+                        public $html;
+                        public $data;
+                        private $entity;
+
+                        public function __construct($html = '', $data = null)
+                        {
+                            $this->html = $html;
+                            $this->data = $data ?? new \stdClass();
+                        }
+
+                        public function setEntity($entity)
+                        {
+                            $this->entity = $entity;
+                            Log::add('setEntity called with entity: ' . (is_object($entity) ? get_class($entity) : gettype($entity)), Log::DEBUG, 'com_hyperpc');
+                            return $this;
+                        }
+                    };
+
+                    // Генерация HTML с учетом данных изображения
+                    $html = '<div class="product-render-' . htmlspecialchars($type) . '">';
+                    $html .= '<h3>' . htmlspecialchars($this->data->name ?? '') . '</h3>';
+                    if (!empty($this->data->images)) {
+                        $images = json_decode($this->data->images, true);
+                        if (!empty($images['image_teaser'])) {
+                            $html .= '<img src="' . htmlspecialchars($images['image_teaser']) . '" alt="' . htmlspecialchars($this->data->name ?? '') . '">';
+                        }
+                    }
+                    $html .= '</div>';
+
+                    $renderData = new $renderData($html, $this->data);
+
+                    Log::add('Render data for product ID ' . ($this->data->id ?? 'unknown') . ': ' . json_encode(['html' => $renderData->html, 'data' => $renderData->data]), Log::DEBUG, 'com_hyperpc');
+                    return $renderData;
+                }
+            };
+
+            $products[] = $product;
+        }
+
+        Log::add('Prepared products: ' . count($products), Log::DEBUG, 'com_hyperpc');
+        return $products;
     }
 
     /**
@@ -207,7 +291,13 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
                 ->where($db->quoteName('context') . ' = ' . $db->quote('com_hyperpc.product'));
             $fields = $db->setQuery($fieldQuery)->loadObjectList('id');
 
+            Log::add('Fields query: ' . $fieldQuery->dump(), Log::DEBUG, 'com_hyperpc');
             Log::add('Fields fetched for options: ' . json_encode($fields), Log::DEBUG, 'com_hyperpc');
+
+            if (empty($fields)) {
+                Log::add('No fields found for IDs: ' . implode(',', $fieldIds), Log::WARNING, 'com_hyperpc');
+                return [];
+            }
 
             $query = $db->getQuery(true)
                 ->select(['fv.field_id', 'fv.value', 'fv.value AS label'])
@@ -215,14 +305,15 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
                 ->where($db->quoteName('fv.field_id') . ' IN (' . implode(',', array_map('intval', $fieldIds)) . ')');
             
             $results = $db->setQuery($query)->loadObjectList();
-            $options = [];
+            Log::add('Options query: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
 
+            $options = [];
             foreach ($results as $row) {
                 $fieldName = $fields[$row->field_id]->name ?? null;
                 if ($fieldName) {
                     $options[$fieldName][] = [
                         'value' => $row->value,
-                        'label' => $row->label
+                        'label' => $row->value
                     ];
                 }
             }
@@ -243,58 +334,60 @@ class HyperPcViewProducts_In_Stock extends ViewLegacy
     protected function _getGroups()
     {
         if (empty($this->hyper['helper']['groupHelper'])) {
-            Log::add('groupHelper is null in HyperPcViewProducts_In_Stock::_getGroups', Log::ERROR, 'com_hyperpc');
+            Log::add('groupHelper is not available, returning empty array', Log::WARNING, 'com_hyperpc');
             return [];
         }
 
         $groupHelper = $this->hyper['helper']['groupHelper'];
-        return $groupHelper->getGroups();
+        $groups = $groupHelper->getGroups() ?? [];
+        Log::add('Groups fetched: ' . json_encode($groups), Log::DEBUG, 'com_hyperpc');
+        return $groups;
     }
 
     /**
-     * Get filter data for products in stock view.
+     * Get filter data.
      *
      * @return array
      */
     protected function _getFilterData()
     {
+        $db = Factory::getDbo();
+        $input = $this->hyper['input'];
+        $filterHelper = $this->hyper['helper']['filter'] ?? null;
+
+        // Используем FilterHelper для получения фильтров, если метод доступен
         $filters = [];
-        if ($this->filter) {
-            $filtersRaw = $this->filter->getCurrentFilters();
-            $filters = $filtersRaw ? $filtersRaw->toArray() : [];
-            Log::add('Raw filters from getCurrentFilters: ' . json_encode($filtersRaw ? $filtersRaw->toArray() : null), Log::DEBUG, 'com_hyperpc');
+        if ($filterHelper && method_exists($filterHelper, 'getFilterData')) {
+            $filters = $filterHelper->getFilterData([], [])['current'] ?? [];
+            Log::add('Filters from FilterHelper::getFilterData: ' . json_encode($filters), Log::DEBUG, 'com_hyperpc');
         } else {
-            Log::add('Filter object is null in _getFilterData', Log::ERROR, 'com_hyperpc');
+            $filters = $input->get('filter', [], 'array');
+            Log::add('Raw filters from input: ' . json_encode($filters), Log::DEBUG, 'com_hyperpc');
         }
 
         if (empty($filters)) {
             Log::add('No filters available in _getFilterData', Log::WARNING, 'com_hyperpc');
         }
 
-        $this->filterData->filters = ['available' => [], 'current' => $filters, 'prices' => ['min' => 0, 'max' => 0]];
+        $query = $db->getQuery(true)
+            ->select(['MIN(p.price_a) AS min', 'MAX(p.price_a) AS max'])
+            ->from($db->quoteName('#__hp_moysklad_products_index', 'p'))
+            ->join('LEFT', $db->quoteName('#__hp_positions', 'pos') . ' ON pos.id = p.product_id')
+            ->where($db->quoteName('pos.product_folder_id') . ' = ' . (int)($input->getInt('folder_id', 116)));
 
-        Log::add('Filters passed to _getFilterData: ' . json_encode($filters), Log::DEBUG, 'com_hyperpc');
+        Log::add('Prices query: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
+        $prices = $db->setQuery($query)->loadObject();
 
-        try {
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true)
-                ->select(['MIN(p.price_a) AS min', 'MAX(p.price_a) AS max'])
-                ->from($db->quoteName('#__hp_moysklad_products_index', 'p'))
-                ->join('LEFT', $db->quoteName('#__hp_positions', 'pos') . ' ON ' . $db->quoteName('pos.id') . ' = ' . $db->quoteName('p.product_id'))
-                ->where($db->quoteName('pos.product_folder_id') . ' = 116');
-
-            $prices = $db->setQuery($query)->loadObject();
-
-            $this->filterData->filters['prices'] = [
+        $filterData = [
+            'available' => [],
+            'current' => $filters,
+            'prices' => [
                 'min' => $prices->min ?? 0,
                 'max' => $prices->max ?? 0
-            ];
-            Log::add('Prices query: ' . $query->dump(), Log::DEBUG, 'com_hyperpc');
-        } catch (\Throwable $e) {
-            Log::add('Error fetching prices: ' . $e->getMessage(), Log::ERROR, 'com_hyperpc');
-        }
+            ]
+        ];
 
-        Log::add('Filter data generated: ' . json_encode($this->filterData->filters), Log::DEBUG, 'com_hyperpc');
-        return $this->filterData->filters;
+        Log::add('Filter data generated: ' . json_encode($filterData), Log::DEBUG, 'com_hyperpc');
+        return $filterData;
     }
 }
